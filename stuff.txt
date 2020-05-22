@@ -1,0 +1,72 @@
+if url in reply to status = none run the search else
+
+
+
+maybe hovering over it sents to be checked if it is valid then clicking activates
+it could come up with a message saying this isn't the first one
+
+
+
+console.log("content working");
+let greyTwit = "images/greytwitview.png";
+let url;
+var config = require("./config");
+const Twit = require("twit");
+var T = new Twit(config);
+// chrome.runtime.getURL(greyTwit);
+
+
+const findElements = function () {
+  // chrome.runtime.getURL(greyTwit);
+  console.log("check");
+  let elements = document.querySelector("div[role=group]");
+  console.log(elements);
+  if (elements) {
+    let node = document.createElement("div");
+    let imgnode = document.createElement("img");
+    imgnode.src = chrome.runtime.getURL(greyTwit);
+    imgnode.style.cssText = "padding:50%;";
+    node.style.cssText = "min-height: 1.875rem;";
+    node.setAttribute("class", "btnDiv");
+    imgnode.setAttribute("id", "btnTv");
+
+
+   
+
+    node.appendChild(imgnode);// add the node to the new div
+    elements.appendChild(node);// tweetbar div add on the div
+    clearInterval(myTimer);
+    btnHover();
+    // alert("found");
+  }
+}
+let myTimer = setInterval(findElements, 500);
+
+// imgnode.addEventListener("click", console.log("hover"));
+// object.addEventListener("mouseover", console.log("hover"));
+// imgnode.setAttribute("id", "btnTv");
+
+function btnAction() {
+  console.log(document.getElementById("btnTv"));
+  let btnTv = document.getElementById("btnTv");
+  btnTv.addEventListener("mouseover", function () {
+    alert("The URL of this page is: " + window.location.href);
+    // btnTv.style.cssText = "transform:rotate(360deg);transform-origin:50% 50%;;transition: 8s;transition-timing: ease-in-out;";
+    console.log("hover");
+  });
+
+  btnTv.addEventListener("click", function () {
+    url = window.location.href;
+    console.log("twitViewSearch is starting");
+
+
+
+
+    console.log("clicked");
+  });
+
+}
+
+node_modules/browserify/bin/cmd.js contentScript.js -o bundle.js
+
+
