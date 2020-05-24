@@ -22,11 +22,12 @@
       "48": "images/twitView48.png",
       "128": "images/twitView128.png"
     },
-    "default_title":"Click to disable extension"
+    "default_title":"TwitView - Click to disable extension"
   },
   "content_scripts": [
     {
       "matches": ["*://twitter.com/*/status/*"],
+      "css" : ["style.css"],
       "js": ["bundle.js"]
     }
   ],
