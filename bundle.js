@@ -1,152 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-
-console.log("content working");
-const Twit = require("twit");
-let T = new Twit({
-  consumer_key: 'MT9iShqi7z8HASwCBkHvQVq40',
-  consumer_secret: 'T0o5AU8NBcUaLAv8YfyDHPl6God3ocwywQdscoMPAgyFgd2yxO',
-  access_token: '1254584570575351814-xl64J2QaqRzLUfvTURAVgeHmeSYvWE',
-  access_token_secret: 'H1kWtw9tgB7Denk7iDY5TJIsjXkt3iKhrqvMBkEgJ2ADG',
-});
-
-let replies;
-let since_id;
-let max_id;
-let screenName;
-let tweetId;
-let firstTweet;
-let tweets;
-
-
-
-//was going to remove the listener but it's good to keep it on I think
-let getIds = function(request) {
-  console.log("Max ID: " + request.maxId + " Since ID: " +request.sinceId);
-  since_id = request.sinceId;
-  max_id = request.maxId;
-  twitView();
-}
-
-chrome.runtime.onMessage.addListener(getIds);
-
-
-function twitView() {
-
-  addModal();
-
-let addModal = function() {
-  let greyTwit = "images/greytwitview.png";
-  let elements = document.getElementsByTagName("section");
-  if (elements) {
-    let node = document.createElement("div");
-    let imgnode = document.createElement("img");
-    imgnode.src = chrome.runtime.getURL(greyTwit);
-    imgnode.style.cssText = "padding:50%;";
-    node.style.cssText = "min-height: 1.875rem;";
-    node.setAttribute("class", "btnDiv");
-    imgnode.setAttribute("id", "btnTv");
-    node.appendChild(imgnode);// add the node to the new div
-    elements.appendChild(node);// tweetbar div add on the div
-  }
-}
-
-
-
-
-  
-  // T.get("statuses/show", { id: since_id, count: 1 }, function (err, data, response) {
-  //   // tweets = data.statuses;
-  //   tweets = data;
-
-  //   // console.log(JSON.stringify(data, null, ' '));
-
-  //   // screenName = ('@' + data["user"]["screen_name"]);
-  //   screenName = data["user"]["screen_name"];
-  //   // console.log(screenName);
-
-  //   firstTweet = data["id_str"];
-  //   // console.log(firstTweet);
-
-  //   // tweetId = data["id_str"];
-  //   // console.log(tweetId);
-
-  //   tweetId = BigInt(data["id_str"]) - 1n;
-  //   // console.log(tweetId);
-
-  //   tweetId = tweetId.toString();
-  //   // console.log(tweetId);
-  //   threadSort();
-  // });
-
-
-
-  // function threadSort() {
-  //   // console.log(typeof tweetId);
-  //   params = {
-  //     screen_name: screenName,
-  //     since_id: tweetId,
-  //     max_id: max_id,
-  //     include_rts: false,
-  //     tweet_mode: 'extended',
-  //     count: 1600,
-  //   };
-  //   // console.log("           up" + screenName);
-
-  //   //since_id is the oldest 1257907084156301312
-  //   //max_id is the newest newest 1257958024888627200
-
-  //   console.log(params);
-
-  //   T.get("statuses/user_timeline", params, function (err, data, response) {
-
-
-  //     let replies = [];
-  //     let comments = [];
-  //     let count = 0;
-  //     let previousId;
-
-  //     for (var i = data.length - 1; i >= 0; i--) {
-
-  //       // console.log(JSON.stringify(data[i]["user"]["screen_name"], null, ' '));
-
-  //       if ((data[i]["in_reply_to_status_id_str"]) === firstTweet || (data[i]["id_str"]) === firstTweet) {
-  //         if ((data[i]["user"]["screen_name"]) === screenName) {
-  //           count += 1;
-  //           replies[i] = data[i];
-  //         } else {
-  //           comments[i] = data[i];
-  //         }
-  //       } else if ((data[i]["in_reply_to_status_id_str"]) === previousId && (data[i]["user"]["screen_name"]) === screenName) {
-  //         replies[i] = data[i];
-  //       } else {
-  //         comments[i] = data[i];
-  //       }
-  //       previousId = data[i].id_str;
-  //     }
-  //     // for (var i = comments.length - 1; i >= 0; i--) {
-  //     //   if (comments[i] != undefined) {
-  //     //     console.log([i] + " Comments      " + comments[i]);
-  //     //   }
-  //     // }
-
-  //     for (var i = (replies.length - 1); i >= 0; i--) {
-  //       if (replies[i] != undefined) {
-  //         console.log([i] + " Replies      \n\n " + (JSON.stringify(replies[i]["full_text"], null, ' ')));
-  //       }
-        
-
-  //     }
-  //   });
-
-  // }
-}
-
-
-
-
-
-
-},{"twit":405}],2:[function(require,module,exports){
 'use strict';
 
 var compileSchema = require('./compile')
@@ -654,7 +506,7 @@ function setLogger(self) {
 
 function noop() {}
 
-},{"./cache":3,"./compile":7,"./compile/async":4,"./compile/error_classes":5,"./compile/formats":6,"./compile/resolve":8,"./compile/rules":9,"./compile/schema_obj":10,"./compile/util":12,"./data":13,"./keyword":41,"./refs/data.json":42,"./refs/json-schema-draft-07.json":44,"fast-json-stable-stringify":178}],3:[function(require,module,exports){
+},{"./cache":2,"./compile":6,"./compile/async":3,"./compile/error_classes":4,"./compile/formats":5,"./compile/resolve":7,"./compile/rules":8,"./compile/schema_obj":9,"./compile/util":11,"./data":12,"./keyword":40,"./refs/data.json":41,"./refs/json-schema-draft-07.json":43,"fast-json-stable-stringify":203}],2:[function(require,module,exports){
 'use strict';
 
 
@@ -682,7 +534,7 @@ Cache.prototype.clear = function Cache_clear() {
   this._cache = {};
 };
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 var MissingRefError = require('./error_classes').MissingRef;
@@ -774,7 +626,7 @@ function compileAsync(schema, meta, callback) {
   }
 }
 
-},{"./error_classes":5}],5:[function(require,module,exports){
+},{"./error_classes":4}],4:[function(require,module,exports){
 'use strict';
 
 var resolve = require('./resolve');
@@ -810,7 +662,7 @@ function errorSubclass(Subclass) {
   return Subclass;
 }
 
-},{"./resolve":8}],6:[function(require,module,exports){
+},{"./resolve":7}],5:[function(require,module,exports){
 'use strict';
 
 var util = require('./util');
@@ -954,7 +806,7 @@ function regex(str) {
   }
 }
 
-},{"./util":12}],7:[function(require,module,exports){
+},{"./util":11}],6:[function(require,module,exports){
 'use strict';
 
 var resolve = require('./resolve')
@@ -1343,7 +1195,7 @@ function vars(arr, statement) {
   return code;
 }
 
-},{"../dotjs/validate":40,"./error_classes":5,"./resolve":8,"./util":12,"fast-deep-equal":177,"fast-json-stable-stringify":178}],8:[function(require,module,exports){
+},{"../dotjs/validate":39,"./error_classes":4,"./resolve":7,"./util":11,"fast-deep-equal":202,"fast-json-stable-stringify":203}],7:[function(require,module,exports){
 'use strict';
 
 var URI = require('uri-js')
@@ -1615,7 +1467,7 @@ function resolveIds(schema) {
   return localRefs;
 }
 
-},{"./schema_obj":10,"./util":12,"fast-deep-equal":177,"json-schema-traverse":244,"uri-js":406}],9:[function(require,module,exports){
+},{"./schema_obj":9,"./util":11,"fast-deep-equal":202,"json-schema-traverse":269,"uri-js":432}],8:[function(require,module,exports){
 'use strict';
 
 var ruleModules = require('../dotjs')
@@ -1683,7 +1535,7 @@ module.exports = function rules() {
   return RULES;
 };
 
-},{"../dotjs":29,"./util":12}],10:[function(require,module,exports){
+},{"../dotjs":28,"./util":11}],9:[function(require,module,exports){
 'use strict';
 
 var util = require('./util');
@@ -1694,7 +1546,7 @@ function SchemaObject(obj) {
   util.copy(obj, this);
 }
 
-},{"./util":12}],11:[function(require,module,exports){
+},{"./util":11}],10:[function(require,module,exports){
 'use strict';
 
 // https://mathiasbynens.be/notes/javascript-encoding
@@ -1716,7 +1568,7 @@ module.exports = function ucs2length(str) {
   return length;
 };
 
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 
@@ -1992,7 +1844,7 @@ function unescapeJsonPointer(str) {
   return str.replace(/~1/g, '/').replace(/~0/g, '~');
 }
 
-},{"./ucs2length":11,"fast-deep-equal":177}],13:[function(require,module,exports){
+},{"./ucs2length":10,"fast-deep-equal":202}],12:[function(require,module,exports){
 'use strict';
 
 var KEYWORDS = [
@@ -2043,7 +1895,7 @@ module.exports = function (metaSchema, keywordsJsonPointers) {
   return metaSchema;
 };
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 var metaSchema = require('./refs/json-schema-draft-07.json');
@@ -2082,7 +1934,7 @@ module.exports = {
   }
 };
 
-},{"./refs/json-schema-draft-07.json":44}],15:[function(require,module,exports){
+},{"./refs/json-schema-draft-07.json":43}],14:[function(require,module,exports){
 'use strict';
 module.exports = function generate__limit(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2241,7 +2093,7 @@ module.exports = function generate__limit(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 module.exports = function generate__limitItems(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2320,7 +2172,7 @@ module.exports = function generate__limitItems(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 module.exports = function generate__limitLength(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2404,7 +2256,7 @@ module.exports = function generate__limitLength(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 module.exports = function generate__limitProperties(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2483,7 +2335,7 @@ module.exports = function generate__limitProperties(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 module.exports = function generate_allOf(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2528,7 +2380,7 @@ module.exports = function generate_allOf(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 module.exports = function generate_anyOf(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2604,7 +2456,7 @@ module.exports = function generate_anyOf(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 module.exports = function generate_comment(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2620,7 +2472,7 @@ module.exports = function generate_comment(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 module.exports = function generate_const(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2678,7 +2530,7 @@ module.exports = function generate_const(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 module.exports = function generate_contains(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2762,7 +2614,7 @@ module.exports = function generate_contains(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 module.exports = function generate_custom(it, $keyword, $ruleType) {
   var out = ' ';
@@ -2992,7 +2844,7 @@ module.exports = function generate_custom(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],25:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 module.exports = function generate_dependencies(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3162,7 +3014,7 @@ module.exports = function generate_dependencies(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 module.exports = function generate_enum(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3230,7 +3082,7 @@ module.exports = function generate_enum(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 module.exports = function generate_format(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3382,7 +3234,7 @@ module.exports = function generate_format(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 module.exports = function generate_if(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3488,7 +3340,7 @@ module.exports = function generate_if(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 //all requires must be explicit because browserify won't work with dynamic requires
@@ -3523,7 +3375,7 @@ module.exports = {
   validate: require('./validate')
 };
 
-},{"./_limit":15,"./_limitItems":16,"./_limitLength":17,"./_limitProperties":18,"./allOf":19,"./anyOf":20,"./comment":21,"./const":22,"./contains":23,"./dependencies":25,"./enum":26,"./format":27,"./if":28,"./items":30,"./multipleOf":31,"./not":32,"./oneOf":33,"./pattern":34,"./properties":35,"./propertyNames":36,"./ref":37,"./required":38,"./uniqueItems":39,"./validate":40}],30:[function(require,module,exports){
+},{"./_limit":14,"./_limitItems":15,"./_limitLength":16,"./_limitProperties":17,"./allOf":18,"./anyOf":19,"./comment":20,"./const":21,"./contains":22,"./dependencies":24,"./enum":25,"./format":26,"./if":27,"./items":29,"./multipleOf":30,"./not":31,"./oneOf":32,"./pattern":33,"./properties":34,"./propertyNames":35,"./ref":36,"./required":37,"./uniqueItems":38,"./validate":39}],29:[function(require,module,exports){
 'use strict';
 module.exports = function generate_items(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3666,7 +3518,7 @@ module.exports = function generate_items(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 module.exports = function generate_multipleOf(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3745,7 +3597,7 @@ module.exports = function generate_multipleOf(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 module.exports = function generate_not(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3831,7 +3683,7 @@ module.exports = function generate_not(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 module.exports = function generate_oneOf(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3906,7 +3758,7 @@ module.exports = function generate_oneOf(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 module.exports = function generate_pattern(it, $keyword, $ruleType) {
   var out = ' ';
@@ -3983,7 +3835,7 @@ module.exports = function generate_pattern(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict';
 module.exports = function generate_properties(it, $keyword, $ruleType) {
   var out = ' ';
@@ -4315,7 +4167,7 @@ module.exports = function generate_properties(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict';
 module.exports = function generate_propertyNames(it, $keyword, $ruleType) {
   var out = ' ';
@@ -4399,7 +4251,7 @@ module.exports = function generate_propertyNames(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 module.exports = function generate_ref(it, $keyword, $ruleType) {
   var out = ' ';
@@ -4525,7 +4377,7 @@ module.exports = function generate_ref(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 'use strict';
 module.exports = function generate_required(it, $keyword, $ruleType) {
   var out = ' ';
@@ -4797,7 +4649,7 @@ module.exports = function generate_required(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 'use strict';
 module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
   var out = ' ';
@@ -4885,7 +4737,7 @@ module.exports = function generate_uniqueItems(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 module.exports = function generate_validate(it, $keyword, $ruleType) {
   var out = '';
@@ -5381,7 +5233,7 @@ module.exports = function generate_validate(it, $keyword, $ruleType) {
   return out;
 }
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 'use strict';
 
 var IDENTIFIER = /^[a-z_$][a-z0-9_$-]*$/i;
@@ -5529,7 +5381,7 @@ function validateKeyword(definition, throwError) {
     return false;
 }
 
-},{"./definition_schema":14,"./dotjs/custom":24}],42:[function(require,module,exports){
+},{"./definition_schema":13,"./dotjs/custom":23}],41:[function(require,module,exports){
 module.exports={
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/data.json#",
@@ -5548,7 +5400,7 @@ module.exports={
     "additionalProperties": false
 }
 
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 module.exports={
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "http://json-schema.org/draft-06/schema#",
@@ -5704,7 +5556,7 @@ module.exports={
     "default": {}
 }
 
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports={
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "http://json-schema.org/draft-07/schema#",
@@ -5874,7 +5726,7 @@ module.exports={
     "default": true
 }
 
-},{}],45:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var asn1 = exports;
 
 asn1.bignum = require('bn.js');
@@ -5885,7 +5737,7 @@ asn1.constants = require('./asn1/constants');
 asn1.decoders = require('./asn1/decoders');
 asn1.encoders = require('./asn1/encoders');
 
-},{"./asn1/api":46,"./asn1/base":48,"./asn1/constants":52,"./asn1/decoders":54,"./asn1/encoders":57,"bn.js":59}],46:[function(require,module,exports){
+},{"./asn1/api":45,"./asn1/base":47,"./asn1/constants":51,"./asn1/decoders":53,"./asn1/encoders":56,"bn.js":58}],45:[function(require,module,exports){
 var asn1 = require('../asn1');
 var inherits = require('inherits');
 
@@ -5948,7 +5800,7 @@ Entity.prototype.encode = function encode(data, enc, /* internal */ reporter) {
   return this._getEncoder(enc).encode(data, reporter);
 };
 
-},{"../asn1":45,"inherits":238,"vm":417}],47:[function(require,module,exports){
+},{"../asn1":44,"inherits":263,"vm":443}],46:[function(require,module,exports){
 var inherits = require('inherits');
 var Reporter = require('../base').Reporter;
 var Buffer = require('buffer').Buffer;
@@ -6066,7 +5918,7 @@ EncoderBuffer.prototype.join = function join(out, offset) {
   return out;
 };
 
-},{"../base":48,"buffer":128,"inherits":238}],48:[function(require,module,exports){
+},{"../base":47,"buffer":153,"inherits":263}],47:[function(require,module,exports){
 var base = exports;
 
 base.Reporter = require('./reporter').Reporter;
@@ -6074,7 +5926,7 @@ base.DecoderBuffer = require('./buffer').DecoderBuffer;
 base.EncoderBuffer = require('./buffer').EncoderBuffer;
 base.Node = require('./node');
 
-},{"./buffer":47,"./node":49,"./reporter":50}],49:[function(require,module,exports){
+},{"./buffer":46,"./node":48,"./reporter":49}],48:[function(require,module,exports){
 var Reporter = require('../base').Reporter;
 var EncoderBuffer = require('../base').EncoderBuffer;
 var DecoderBuffer = require('../base').DecoderBuffer;
@@ -6710,7 +6562,7 @@ Node.prototype._isPrintstr = function isPrintstr(str) {
   return /^[A-Za-z0-9 '\(\)\+,\-\.\/:=\?]*$/.test(str);
 };
 
-},{"../base":48,"minimalistic-assert":256}],50:[function(require,module,exports){
+},{"../base":47,"minimalistic-assert":281}],49:[function(require,module,exports){
 var inherits = require('inherits');
 
 function Reporter(options) {
@@ -6833,7 +6685,7 @@ ReporterError.prototype.rethrow = function rethrow(msg) {
   return this;
 };
 
-},{"inherits":238}],51:[function(require,module,exports){
+},{"inherits":263}],50:[function(require,module,exports){
 var constants = require('../constants');
 
 exports.tagClass = {
@@ -6877,7 +6729,7 @@ exports.tag = {
 };
 exports.tagByName = constants._reverse(exports.tag);
 
-},{"../constants":52}],52:[function(require,module,exports){
+},{"../constants":51}],51:[function(require,module,exports){
 var constants = exports;
 
 // Helper
@@ -6898,7 +6750,7 @@ constants._reverse = function reverse(map) {
 
 constants.der = require('./der');
 
-},{"./der":51}],53:[function(require,module,exports){
+},{"./der":50}],52:[function(require,module,exports){
 var inherits = require('inherits');
 
 var asn1 = require('../../asn1');
@@ -7224,13 +7076,13 @@ function derDecodeLen(buf, primitive, fail) {
   return len;
 }
 
-},{"../../asn1":45,"inherits":238}],54:[function(require,module,exports){
+},{"../../asn1":44,"inherits":263}],53:[function(require,module,exports){
 var decoders = exports;
 
 decoders.der = require('./der');
 decoders.pem = require('./pem');
 
-},{"./der":53,"./pem":55}],55:[function(require,module,exports){
+},{"./der":52,"./pem":54}],54:[function(require,module,exports){
 var inherits = require('inherits');
 var Buffer = require('buffer').Buffer;
 
@@ -7281,7 +7133,7 @@ PEMDecoder.prototype.decode = function decode(data, options) {
   return DERDecoder.prototype.decode.call(this, input, options);
 };
 
-},{"./der":53,"buffer":128,"inherits":238}],56:[function(require,module,exports){
+},{"./der":52,"buffer":153,"inherits":263}],55:[function(require,module,exports){
 var inherits = require('inherits');
 var Buffer = require('buffer').Buffer;
 
@@ -7578,13 +7430,13 @@ function encodeTag(tag, primitive, cls, reporter) {
   return res;
 }
 
-},{"../../asn1":45,"buffer":128,"inherits":238}],57:[function(require,module,exports){
+},{"../../asn1":44,"buffer":153,"inherits":263}],56:[function(require,module,exports){
 var encoders = exports;
 
 encoders.der = require('./der');
 encoders.pem = require('./pem');
 
-},{"./der":56,"./pem":58}],58:[function(require,module,exports){
+},{"./der":55,"./pem":57}],57:[function(require,module,exports){
 var inherits = require('inherits');
 
 var DEREncoder = require('./der');
@@ -7607,7 +7459,7 @@ PEMEncoder.prototype.encode = function encode(data, options) {
   return out.join('\n');
 };
 
-},{"./der":56,"inherits":238}],59:[function(require,module,exports){
+},{"./der":55,"inherits":263}],58:[function(require,module,exports){
 (function (module, exports) {
   'use strict';
 
@@ -10582,7 +10434,13 @@ PEMEncoder.prototype.encode = function encode(data, options) {
     } else if (cmp > 0) {
       r.isub(this.p);
     } else {
-      r.strip();
+      if (r.strip !== undefined) {
+        // r is BN v4 instance
+        r.strip();
+      } else {
+        // r is BN v5 instance
+        r._strip();
+      }
     }
 
     return r;
@@ -11036,7 +10894,7 @@ PEMEncoder.prototype.encode = function encode(data, options) {
   };
 })(typeof module === 'undefined' || module, this);
 
-},{"buffer":79}],60:[function(require,module,exports){
+},{"buffer":104}],59:[function(require,module,exports){
 // Copyright 2011 Mark Cavage <mcavage@gmail.com> All rights reserved.
 
 
@@ -11051,7 +10909,7 @@ module.exports = {
 
 };
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 // Copyright 2011 Mark Cavage <mcavage@gmail.com> All rights reserved.
 
 var errors = require('./errors');
@@ -11080,7 +10938,7 @@ for (var e in errors) {
     module.exports[e] = errors[e];
 }
 
-},{"./errors":60,"./reader":62,"./types":63,"./writer":64}],62:[function(require,module,exports){
+},{"./errors":59,"./reader":61,"./types":62,"./writer":63}],61:[function(require,module,exports){
 // Copyright 2011 Mark Cavage <mcavage@gmail.com> All rights reserved.
 
 var assert = require('assert');
@@ -11344,7 +11202,7 @@ Reader.prototype._readTag = function (tag) {
 
 module.exports = Reader;
 
-},{"./errors":60,"./types":63,"assert":67,"safer-buffer":334}],63:[function(require,module,exports){
+},{"./errors":59,"./types":62,"assert":66,"safer-buffer":359}],62:[function(require,module,exports){
 // Copyright 2011 Mark Cavage <mcavage@gmail.com> All rights reserved.
 
 
@@ -11382,7 +11240,7 @@ module.exports = {
   Context: 128
 };
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 // Copyright 2011 Mark Cavage <mcavage@gmail.com> All rights reserved.
 
 var assert = require('assert');
@@ -11701,7 +11559,7 @@ Writer.prototype._ensure = function (len) {
 
 module.exports = Writer;
 
-},{"./errors":60,"./types":63,"assert":67,"safer-buffer":334}],65:[function(require,module,exports){
+},{"./errors":59,"./types":62,"assert":66,"safer-buffer":359}],64:[function(require,module,exports){
 // Copyright 2011 Mark Cavage <mcavage@gmail.com> All rights reserved.
 
 // If you have no idea what ASN.1 or BER is, see this:
@@ -11723,7 +11581,7 @@ module.exports = {
 
 };
 
-},{"./ber/index":61}],66:[function(require,module,exports){
+},{"./ber/index":60}],65:[function(require,module,exports){
 (function (Buffer,process){
 // Copyright (c) 2012, Mark Cavage. All rights reserved.
 // Copyright 2015 Joyent, Inc.
@@ -11938,7 +11796,7 @@ function _setExports(ndebug) {
 module.exports = _setExports(process.env.NODE_NDEBUG);
 
 }).call(this,{"isBuffer":require("../is-buffer/index.js")},require('_process'))
-},{"../is-buffer/index.js":239,"_process":284,"assert":67,"stream":368,"util":412}],67:[function(require,module,exports){
+},{"../is-buffer/index.js":264,"_process":309,"assert":66,"stream":393,"util":438}],66:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -12448,7 +12306,7 @@ var objectKeys = Object.keys || function (obj) {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"object-assign":259,"util/":70}],68:[function(require,module,exports){
+},{"object-assign":284,"util/":69}],67:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -12473,14 +12331,14 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],69:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],70:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -13070,7 +12928,4531 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":69,"_process":284,"inherits":68}],71:[function(require,module,exports){
+},{"./support/isBuffer":68,"_process":309,"inherits":67}],70:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var html_tag_1 = require("./html-tag");
+var truncate_smart_1 = require("./truncate/truncate-smart");
+var truncate_middle_1 = require("./truncate/truncate-middle");
+var truncate_end_1 = require("./truncate/truncate-end");
+/**
+ * @protected
+ * @class Autolinker.AnchorTagBuilder
+ * @extends Object
+ *
+ * Builds anchor (&lt;a&gt;) tags for the Autolinker utility when a match is
+ * found.
+ *
+ * Normally this class is instantiated, configured, and used internally by an
+ * {@link Autolinker} instance, but may actually be used indirectly in a
+ * {@link Autolinker#replaceFn replaceFn} to create {@link Autolinker.HtmlTag HtmlTag}
+ * instances which may be modified before returning from the
+ * {@link Autolinker#replaceFn replaceFn}. For example:
+ *
+ *     var html = Autolinker.link( "Test google.com", {
+ *         replaceFn : function( match ) {
+ *             var tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance
+ *             tag.setAttr( 'rel', 'nofollow' );
+ *
+ *             return tag;
+ *         }
+ *     } );
+ *
+ *     // generated html:
+ *     //   Test <a href="http://google.com" target="_blank" rel="nofollow">google.com</a>
+ */
+var AnchorTagBuilder = /** @class */ (function () {
+    /**
+     * @method constructor
+     * @param {Object} [cfg] The configuration options for the AnchorTagBuilder instance, specified in an Object (map).
+     */
+    function AnchorTagBuilder(cfg) {
+        if (cfg === void 0) { cfg = {}; }
+        /**
+         * @cfg {Boolean} newWindow
+         * @inheritdoc Autolinker#newWindow
+         */
+        this.newWindow = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Object} truncate
+         * @inheritdoc Autolinker#truncate
+         */
+        this.truncate = {}; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {String} className
+         * @inheritdoc Autolinker#className
+         */
+        this.className = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        this.newWindow = cfg.newWindow || false;
+        this.truncate = cfg.truncate || {};
+        this.className = cfg.className || '';
+    }
+    /**
+     * Generates the actual anchor (&lt;a&gt;) tag to use in place of the
+     * matched text, via its `match` object.
+     *
+     * @param {Autolinker.match.Match} match The Match instance to generate an
+     *   anchor tag from.
+     * @return {Autolinker.HtmlTag} The HtmlTag instance for the anchor tag.
+     */
+    AnchorTagBuilder.prototype.build = function (match) {
+        return new html_tag_1.HtmlTag({
+            tagName: 'a',
+            attrs: this.createAttrs(match),
+            innerHtml: this.processAnchorText(match.getAnchorText())
+        });
+    };
+    /**
+     * Creates the Object (map) of the HTML attributes for the anchor (&lt;a&gt;)
+     *   tag being generated.
+     *
+     * @protected
+     * @param {Autolinker.match.Match} match The Match instance to generate an
+     *   anchor tag from.
+     * @return {Object} A key/value Object (map) of the anchor tag's attributes.
+     */
+    AnchorTagBuilder.prototype.createAttrs = function (match) {
+        var attrs = {
+            'href': match.getAnchorHref() // we'll always have the `href` attribute
+        };
+        var cssClass = this.createCssClass(match);
+        if (cssClass) {
+            attrs['class'] = cssClass;
+        }
+        if (this.newWindow) {
+            attrs['target'] = "_blank";
+            attrs['rel'] = "noopener noreferrer"; // Issue #149. See https://mathiasbynens.github.io/rel-noopener/
+        }
+        if (this.truncate) {
+            if (this.truncate.length && this.truncate.length < match.getAnchorText().length) {
+                attrs['title'] = match.getAnchorHref();
+            }
+        }
+        return attrs;
+    };
+    /**
+     * Creates the CSS class that will be used for a given anchor tag, based on
+     * the `matchType` and the {@link #className} config.
+     *
+     * Example returns:
+     *
+     * - ""                                      // no {@link #className}
+     * - "myLink myLink-url"                     // url match
+     * - "myLink myLink-email"                   // email match
+     * - "myLink myLink-phone"                   // phone match
+     * - "myLink myLink-hashtag"                 // hashtag match
+     * - "myLink myLink-mention myLink-twitter"  // mention match with Twitter service
+     *
+     * @protected
+     * @param {Autolinker.match.Match} match The Match instance to generate an
+     *   anchor tag from.
+     * @return {String} The CSS class string for the link. Example return:
+     *   "myLink myLink-url". If no {@link #className} was configured, returns
+     *   an empty string.
+     */
+    AnchorTagBuilder.prototype.createCssClass = function (match) {
+        var className = this.className;
+        if (!className) {
+            return "";
+        }
+        else {
+            var returnClasses = [className], cssClassSuffixes = match.getCssClassSuffixes();
+            for (var i = 0, len = cssClassSuffixes.length; i < len; i++) {
+                returnClasses.push(className + '-' + cssClassSuffixes[i]);
+            }
+            return returnClasses.join(' ');
+        }
+    };
+    /**
+     * Processes the `anchorText` by truncating the text according to the
+     * {@link #truncate} config.
+     *
+     * @private
+     * @param {String} anchorText The anchor tag's text (i.e. what will be
+     *   displayed).
+     * @return {String} The processed `anchorText`.
+     */
+    AnchorTagBuilder.prototype.processAnchorText = function (anchorText) {
+        anchorText = this.doTruncate(anchorText);
+        return anchorText;
+    };
+    /**
+     * Performs the truncation of the `anchorText` based on the {@link #truncate}
+     * option. If the `anchorText` is longer than the length specified by the
+     * {@link #truncate} option, the truncation is performed based on the
+     * `location` property. See {@link #truncate} for details.
+     *
+     * @private
+     * @param {String} anchorText The anchor tag's text (i.e. what will be
+     *   displayed).
+     * @return {String} The truncated anchor text.
+     */
+    AnchorTagBuilder.prototype.doTruncate = function (anchorText) {
+        var truncate = this.truncate;
+        if (!truncate || !truncate.length)
+            return anchorText;
+        var truncateLength = truncate.length, truncateLocation = truncate.location;
+        if (truncateLocation === 'smart') {
+            return truncate_smart_1.truncateSmart(anchorText, truncateLength);
+        }
+        else if (truncateLocation === 'middle') {
+            return truncate_middle_1.truncateMiddle(anchorText, truncateLength);
+        }
+        else {
+            return truncate_end_1.truncateEnd(anchorText, truncateLength);
+        }
+    };
+    return AnchorTagBuilder;
+}());
+exports.AnchorTagBuilder = AnchorTagBuilder;
+
+
+
+},{"./html-tag":72,"./truncate/truncate-end":92,"./truncate/truncate-middle":93,"./truncate/truncate-smart":94}],71:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = require("./utils");
+var anchor_tag_builder_1 = require("./anchor-tag-builder");
+var match_1 = require("./match/match");
+var email_match_1 = require("./match/email-match");
+var hashtag_match_1 = require("./match/hashtag-match");
+var mention_match_1 = require("./match/mention-match");
+var phone_match_1 = require("./match/phone-match");
+var url_match_1 = require("./match/url-match");
+var matcher_1 = require("./matcher/matcher");
+var html_tag_1 = require("./html-tag");
+var email_matcher_1 = require("./matcher/email-matcher");
+var url_matcher_1 = require("./matcher/url-matcher");
+var hashtag_matcher_1 = require("./matcher/hashtag-matcher");
+var phone_matcher_1 = require("./matcher/phone-matcher");
+var mention_matcher_1 = require("./matcher/mention-matcher");
+var parse_html_1 = require("./htmlParser/parse-html");
+/**
+ * @class Autolinker
+ * @extends Object
+ *
+ * Utility class used to process a given string of text, and wrap the matches in
+ * the appropriate anchor (&lt;a&gt;) tags to turn them into links.
+ *
+ * Any of the configuration options may be provided in an Object provided
+ * to the Autolinker constructor, which will configure how the {@link #link link()}
+ * method will process the links.
+ *
+ * For example:
+ *
+ *     var autolinker = new Autolinker( {
+ *         newWindow : false,
+ *         truncate  : 30
+ *     } );
+ *
+ *     var html = autolinker.link( "Joe went to www.yahoo.com" );
+ *     // produces: 'Joe went to <a href="http://www.yahoo.com">yahoo.com</a>'
+ *
+ *
+ * The {@link #static-link static link()} method may also be used to inline
+ * options into a single call, which may be more convenient for one-off uses.
+ * For example:
+ *
+ *     var html = Autolinker.link( "Joe went to www.yahoo.com", {
+ *         newWindow : false,
+ *         truncate  : 30
+ *     } );
+ *     // produces: 'Joe went to <a href="http://www.yahoo.com">yahoo.com</a>'
+ *
+ *
+ * ## Custom Replacements of Links
+ *
+ * If the configuration options do not provide enough flexibility, a {@link #replaceFn}
+ * may be provided to fully customize the output of Autolinker. This function is
+ * called once for each URL/Email/Phone#/Hashtag/Mention (Twitter, Instagram, Soundcloud)
+ * match that is encountered.
+ *
+ * For example:
+ *
+ *     var input = "...";  // string with URLs, Email Addresses, Phone #s, Hashtags, and Mentions (Twitter, Instagram, Soundcloud)
+ *
+ *     var linkedText = Autolinker.link( input, {
+ *         replaceFn : function( match ) {
+ *             console.log( "href = ", match.getAnchorHref() );
+ *             console.log( "text = ", match.getAnchorText() );
+ *
+ *             switch( match.getType() ) {
+ *                 case 'url' :
+ *                     console.log( "url: ", match.getUrl() );
+ *
+ *                     if( match.getUrl().indexOf( 'mysite.com' ) === -1 ) {
+ *                         var tag = match.buildTag();  // returns an `Autolinker.HtmlTag` instance, which provides mutator methods for easy changes
+ *                         tag.setAttr( 'rel', 'nofollow' );
+ *                         tag.addClass( 'external-link' );
+ *
+ *                         return tag;
+ *
+ *                     } else {
+ *                         return true;  // let Autolinker perform its normal anchor tag replacement
+ *                     }
+ *
+ *                 case 'email' :
+ *                     var email = match.getEmail();
+ *                     console.log( "email: ", email );
+ *
+ *                     if( email === "my@own.address" ) {
+ *                         return false;  // don't auto-link this particular email address; leave as-is
+ *                     } else {
+ *                         return;  // no return value will have Autolinker perform its normal anchor tag replacement (same as returning `true`)
+ *                     }
+ *
+ *                 case 'phone' :
+ *                     var phoneNumber = match.getPhoneNumber();
+ *                     console.log( phoneNumber );
+ *
+ *                     return '<a href="http://newplace.to.link.phone.numbers.to/">' + phoneNumber + '</a>';
+ *
+ *                 case 'hashtag' :
+ *                     var hashtag = match.getHashtag();
+ *                     console.log( hashtag );
+ *
+ *                     return '<a href="http://newplace.to.link.hashtag.handles.to/">' + hashtag + '</a>';
+ *
+ *                 case 'mention' :
+ *                     var mention = match.getMention();
+ *                     console.log( mention );
+ *
+ *                     return '<a href="http://newplace.to.link.mention.to/">' + mention + '</a>';
+ *             }
+ *         }
+ *     } );
+ *
+ *
+ * The function may return the following values:
+ *
+ * - `true` (Boolean): Allow Autolinker to replace the match as it normally
+ *   would.
+ * - `false` (Boolean): Do not replace the current match at all - leave as-is.
+ * - Any String: If a string is returned from the function, the string will be
+ *   used directly as the replacement HTML for the match.
+ * - An {@link Autolinker.HtmlTag} instance, which can be used to build/modify
+ *   an HTML tag before writing out its HTML text.
+ */
+var Autolinker = /** @class */ (function () {
+    /**
+     * @method constructor
+     * @param {Object} [cfg] The configuration options for the Autolinker instance,
+     *   specified in an Object (map).
+     */
+    function Autolinker(cfg) {
+        if (cfg === void 0) { cfg = {}; }
+        /**
+         * The Autolinker version number exposed on the instance itself.
+         *
+         * Ex: 0.25.1
+         */
+        this.version = Autolinker.version;
+        /**
+         * @cfg {Boolean/Object} [urls]
+         *
+         * `true` if URLs should be automatically linked, `false` if they should not
+         * be. Defaults to `true`.
+         *
+         * Examples:
+         *
+         *     urls: true
+         *
+         *     // or
+         *
+         *     urls: {
+         *         schemeMatches : true,
+         *         wwwMatches    : true,
+         *         tldMatches    : true
+         *     }
+         *
+         * As shown above, this option also accepts an Object form with 3 properties
+         * to allow for more customization of what exactly gets linked. All default
+         * to `true`:
+         *
+         * @cfg {Boolean} [urls.schemeMatches] `true` to match URLs found prefixed
+         *   with a scheme, i.e. `http://google.com`, or `other+scheme://google.com`,
+         *   `false` to prevent these types of matches.
+         * @cfg {Boolean} [urls.wwwMatches] `true` to match urls found prefixed with
+         *   `'www.'`, i.e. `www.google.com`. `false` to prevent these types of
+         *   matches. Note that if the URL had a prefixed scheme, and
+         *   `schemeMatches` is true, it will still be linked.
+         * @cfg {Boolean} [urls.tldMatches] `true` to match URLs with known top
+         *   level domains (.com, .net, etc.) that are not prefixed with a scheme or
+         *   `'www.'`. This option attempts to match anything that looks like a URL
+         *   in the given text. Ex: `google.com`, `asdf.org/?page=1`, etc. `false`
+         *   to prevent these types of matches.
+         */
+        this.urls = {}; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} [email=true]
+         *
+         * `true` if email addresses should be automatically linked, `false` if they
+         * should not be.
+         */
+        this.email = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} [phone=true]
+         *
+         * `true` if Phone numbers ("(555)555-5555") should be automatically linked,
+         * `false` if they should not be.
+         */
+        this.phone = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean/String} [hashtag=false]
+         *
+         * A string for the service name to have hashtags (ex: "#myHashtag")
+         * auto-linked to. The currently-supported values are:
+         *
+         * - 'twitter'
+         * - 'facebook'
+         * - 'instagram'
+         *
+         * Pass `false` to skip auto-linking of hashtags.
+         */
+        this.hashtag = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {String/Boolean} [mention=false]
+         *
+         * A string for the service name to have mentions (ex: "@myuser")
+         * auto-linked to. The currently supported values are:
+         *
+         * - 'twitter'
+         * - 'instagram'
+         * - 'soundcloud'
+         *
+         * Defaults to `false` to skip auto-linking of mentions.
+         */
+        this.mention = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} [newWindow=true]
+         *
+         * `true` if the links should open in a new window, `false` otherwise.
+         */
+        this.newWindow = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean/Object} [stripPrefix=true]
+         *
+         * `true` if 'http://' (or 'https://') and/or the 'www.' should be stripped
+         * from the beginning of URL links' text, `false` otherwise. Defaults to
+         * `true`.
+         *
+         * Examples:
+         *
+         *     stripPrefix: true
+         *
+         *     // or
+         *
+         *     stripPrefix: {
+         *         scheme : true,
+         *         www    : true
+         *     }
+         *
+         * As shown above, this option also accepts an Object form with 2 properties
+         * to allow for more customization of what exactly is prevented from being
+         * displayed. Both default to `true`:
+         *
+         * @cfg {Boolean} [stripPrefix.scheme] `true` to prevent the scheme part of
+         *   a URL match from being displayed to the user. Example:
+         *   `'http://google.com'` will be displayed as `'google.com'`. `false` to
+         *   not strip the scheme. NOTE: Only an `'http://'` or `'https://'` scheme
+         *   will be removed, so as not to remove a potentially dangerous scheme
+         *   (such as `'file://'` or `'javascript:'`)
+         * @cfg {Boolean} [stripPrefix.www] www (Boolean): `true` to prevent the
+         *   `'www.'` part of a URL match from being displayed to the user. Ex:
+         *   `'www.google.com'` will be displayed as `'google.com'`. `false` to not
+         *   strip the `'www'`.
+         */
+        this.stripPrefix = { scheme: true, www: true }; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} [stripTrailingSlash=true]
+         *
+         * `true` to remove the trailing slash from URL matches, `false` to keep
+         *  the trailing slash.
+         *
+         *  Example when `true`: `http://google.com/` will be displayed as
+         *  `http://google.com`.
+         */
+        this.stripTrailingSlash = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} [decodePercentEncoding=true]
+         *
+         * `true` to decode percent-encoded characters in URL matches, `false` to keep
+         *  the percent-encoded characters.
+         *
+         *  Example when `true`: `https://en.wikipedia.org/wiki/San_Jos%C3%A9` will
+         *  be displayed as `https://en.wikipedia.org/wiki/San_José`.
+         */
+        this.decodePercentEncoding = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Number/Object} [truncate=0]
+         *
+         * ## Number Form
+         *
+         * A number for how many characters matched text should be truncated to
+         * inside the text of a link. If the matched text is over this number of
+         * characters, it will be truncated to this length by adding a two period
+         * ellipsis ('..') to the end of the string.
+         *
+         * For example: A url like 'http://www.yahoo.com/some/long/path/to/a/file'
+         * truncated to 25 characters might look something like this:
+         * 'yahoo.com/some/long/pat..'
+         *
+         * Example Usage:
+         *
+         *     truncate: 25
+         *
+         *
+         *  Defaults to `0` for "no truncation."
+         *
+         *
+         * ## Object Form
+         *
+         * An Object may also be provided with two properties: `length` (Number) and
+         * `location` (String). `location` may be one of the following: 'end'
+         * (default), 'middle', or 'smart'.
+         *
+         * Example Usage:
+         *
+         *     truncate: { length: 25, location: 'middle' }
+         *
+         * @cfg {Number} [truncate.length=0] How many characters to allow before
+         *   truncation will occur. Defaults to `0` for "no truncation."
+         * @cfg {"end"/"middle"/"smart"} [truncate.location="end"]
+         *
+         * - 'end' (default): will truncate up to the number of characters, and then
+         *   add an ellipsis at the end. Ex: 'yahoo.com/some/long/pat..'
+         * - 'middle': will truncate and add the ellipsis in the middle. Ex:
+         *   'yahoo.com/s..th/to/a/file'
+         * - 'smart': for URLs where the algorithm attempts to strip out unnecessary
+         *   parts first (such as the 'www.', then URL scheme, hash, etc.),
+         *   attempting to make the URL human-readable before looking for a good
+         *   point to insert the ellipsis if it is still too long. Ex:
+         *   'yahoo.com/some..to/a/file'. For more details, see
+         *   {@link Autolinker.truncate.TruncateSmart}.
+         */
+        this.truncate = { length: 0, location: 'end' }; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {String} className
+         *
+         * A CSS class name to add to the generated links. This class will be added
+         * to all links, as well as this class plus match suffixes for styling
+         * url/email/phone/hashtag/mention links differently.
+         *
+         * For example, if this config is provided as "myLink", then:
+         *
+         * - URL links will have the CSS classes: "myLink myLink-url"
+         * - Email links will have the CSS classes: "myLink myLink-email", and
+         * - Phone links will have the CSS classes: "myLink myLink-phone"
+         * - Hashtag links will have the CSS classes: "myLink myLink-hashtag"
+         * - Mention links will have the CSS classes: "myLink myLink-mention myLink-[type]"
+         *   where [type] is either "instagram", "twitter" or "soundcloud"
+         */
+        this.className = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Function} replaceFn
+         *
+         * A function to individually process each match found in the input string.
+         *
+         * See the class's description for usage.
+         *
+         * The `replaceFn` can be called with a different context object (`this`
+         * reference) using the {@link #context} cfg.
+         *
+         * This function is called with the following parameter:
+         *
+         * @cfg {Autolinker.match.Match} replaceFn.match The Match instance which
+         *   can be used to retrieve information about the match that the `replaceFn`
+         *   is currently processing. See {@link Autolinker.match.Match} subclasses
+         *   for details.
+         */
+        this.replaceFn = null; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Object} context
+         *
+         * The context object (`this` reference) to call the `replaceFn` with.
+         *
+         * Defaults to this Autolinker instance.
+         */
+        this.context = undefined; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} [sanitizeHtml=false]
+         *
+         * `true` to HTML-encode the start and end brackets of existing HTML tags found
+         * in the input string. This will escape `<` and `>` characters to `&lt;` and
+         * `&gt;`, respectively.
+         *
+         * Setting this to `true` will prevent XSS (Cross-site Scripting) attacks,
+         * but will remove the significance of existing HTML tags in the input string. If
+         * you would like to maintain the significance of existing HTML tags while also
+         * making the output HTML string safe, leave this option as `false` and use a
+         * tool like https://github.com/cure53/DOMPurify (or others) on the input string
+         * before running Autolinker.
+         */
+        this.sanitizeHtml = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @private
+         * @property {Autolinker.matcher.Matcher[]} matchers
+         *
+         * The {@link Autolinker.matcher.Matcher} instances for this Autolinker
+         * instance.
+         *
+         * This is lazily created in {@link #getMatchers}.
+         */
+        this.matchers = null;
+        /**
+         * @private
+         * @property {Autolinker.AnchorTagBuilder} tagBuilder
+         *
+         * The AnchorTagBuilder instance used to build match replacement anchor tags.
+         * Note: this is lazily instantiated in the {@link #getTagBuilder} method.
+         */
+        this.tagBuilder = null;
+        // Note: when `this.something` is used in the rhs of these assignments,
+        //       it refers to the default values set above the constructor
+        this.urls = this.normalizeUrlsCfg(cfg.urls);
+        this.email = typeof cfg.email === 'boolean' ? cfg.email : this.email;
+        this.phone = typeof cfg.phone === 'boolean' ? cfg.phone : this.phone;
+        this.hashtag = cfg.hashtag || this.hashtag;
+        this.mention = cfg.mention || this.mention;
+        this.newWindow = typeof cfg.newWindow === 'boolean' ? cfg.newWindow : this.newWindow;
+        this.stripPrefix = this.normalizeStripPrefixCfg(cfg.stripPrefix);
+        this.stripTrailingSlash = typeof cfg.stripTrailingSlash === 'boolean' ? cfg.stripTrailingSlash : this.stripTrailingSlash;
+        this.decodePercentEncoding = typeof cfg.decodePercentEncoding === 'boolean' ? cfg.decodePercentEncoding : this.decodePercentEncoding;
+        this.sanitizeHtml = cfg.sanitizeHtml || false;
+        // Validate the value of the `mention` cfg
+        var mention = this.mention;
+        if (mention !== false && mention !== 'twitter' && mention !== 'instagram' && mention !== 'soundcloud') {
+            throw new Error("invalid `mention` cfg - see docs");
+        }
+        // Validate the value of the `hashtag` cfg
+        var hashtag = this.hashtag;
+        if (hashtag !== false && hashtag !== 'twitter' && hashtag !== 'facebook' && hashtag !== 'instagram') {
+            throw new Error("invalid `hashtag` cfg - see docs");
+        }
+        this.truncate = this.normalizeTruncateCfg(cfg.truncate);
+        this.className = cfg.className || this.className;
+        this.replaceFn = cfg.replaceFn || this.replaceFn;
+        this.context = cfg.context || this;
+    }
+    /**
+     * Automatically links URLs, Email addresses, Phone Numbers, Twitter handles,
+     * Hashtags, and Mentions found in the given chunk of HTML. Does not link URLs
+     * found within HTML tags.
+     *
+     * For instance, if given the text: `You should go to http://www.yahoo.com`,
+     * then the result will be `You should go to &lt;a href="http://www.yahoo.com"&gt;http://www.yahoo.com&lt;/a&gt;`
+     *
+     * Example:
+     *
+     *     var linkedText = Autolinker.link( "Go to google.com", { newWindow: false } );
+     *     // Produces: "Go to <a href="http://google.com">google.com</a>"
+     *
+     * @static
+     * @param {String} textOrHtml The HTML or text to find matches within (depending
+     *   on if the {@link #urls}, {@link #email}, {@link #phone}, {@link #mention},
+     *   {@link #hashtag}, and {@link #mention} options are enabled).
+     * @param {Object} [options] Any of the configuration options for the Autolinker
+     *   class, specified in an Object (map). See the class description for an
+     *   example call.
+     * @return {String} The HTML text, with matches automatically linked.
+     */
+    Autolinker.link = function (textOrHtml, options) {
+        var autolinker = new Autolinker(options);
+        return autolinker.link(textOrHtml);
+    };
+    /**
+     * Parses the input `textOrHtml` looking for URLs, email addresses, phone
+     * numbers, username handles, and hashtags (depending on the configuration
+     * of the Autolinker instance), and returns an array of {@link Autolinker.match.Match}
+     * objects describing those matches (without making any replacements).
+     *
+     * Note that if parsing multiple pieces of text, it is slightly more efficient
+     * to create an Autolinker instance, and use the instance-level {@link #parse}
+     * method.
+     *
+     * Example:
+     *
+     *     var matches = Autolinker.parse( "Hello google.com, I am asdf@asdf.com", {
+     *         urls: true,
+     *         email: true
+     *     } );
+     *
+     *     console.log( matches.length );           // 2
+     *     console.log( matches[ 0 ].getType() );   // 'url'
+     *     console.log( matches[ 0 ].getUrl() );    // 'google.com'
+     *     console.log( matches[ 1 ].getType() );   // 'email'
+     *     console.log( matches[ 1 ].getEmail() );  // 'asdf@asdf.com'
+     *
+     * @static
+     * @param {String} textOrHtml The HTML or text to find matches within
+     *   (depending on if the {@link #urls}, {@link #email}, {@link #phone},
+     *   {@link #hashtag}, and {@link #mention} options are enabled).
+     * @param {Object} [options] Any of the configuration options for the Autolinker
+     *   class, specified in an Object (map). See the class description for an
+     *   example call.
+     * @return {Autolinker.match.Match[]} The array of Matches found in the
+     *   given input `textOrHtml`.
+     */
+    Autolinker.parse = function (textOrHtml, options) {
+        var autolinker = new Autolinker(options);
+        return autolinker.parse(textOrHtml);
+    };
+    /**
+     * Normalizes the {@link #urls} config into an Object with 3 properties:
+     * `schemeMatches`, `wwwMatches`, and `tldMatches`, all Booleans.
+     *
+     * See {@link #urls} config for details.
+     *
+     * @private
+     * @param {Boolean/Object} urls
+     * @return {Object}
+     */
+    Autolinker.prototype.normalizeUrlsCfg = function (urls) {
+        if (urls == null)
+            urls = true; // default to `true`
+        if (typeof urls === 'boolean') {
+            return { schemeMatches: urls, wwwMatches: urls, tldMatches: urls };
+        }
+        else { // object form
+            return {
+                schemeMatches: typeof urls.schemeMatches === 'boolean' ? urls.schemeMatches : true,
+                wwwMatches: typeof urls.wwwMatches === 'boolean' ? urls.wwwMatches : true,
+                tldMatches: typeof urls.tldMatches === 'boolean' ? urls.tldMatches : true
+            };
+        }
+    };
+    /**
+     * Normalizes the {@link #stripPrefix} config into an Object with 2
+     * properties: `scheme`, and `www` - both Booleans.
+     *
+     * See {@link #stripPrefix} config for details.
+     *
+     * @private
+     * @param {Boolean/Object} stripPrefix
+     * @return {Object}
+     */
+    Autolinker.prototype.normalizeStripPrefixCfg = function (stripPrefix) {
+        if (stripPrefix == null)
+            stripPrefix = true; // default to `true`
+        if (typeof stripPrefix === 'boolean') {
+            return { scheme: stripPrefix, www: stripPrefix };
+        }
+        else { // object form
+            return {
+                scheme: typeof stripPrefix.scheme === 'boolean' ? stripPrefix.scheme : true,
+                www: typeof stripPrefix.www === 'boolean' ? stripPrefix.www : true
+            };
+        }
+    };
+    /**
+     * Normalizes the {@link #truncate} config into an Object with 2 properties:
+     * `length` (Number), and `location` (String).
+     *
+     * See {@link #truncate} config for details.
+     *
+     * @private
+     * @param {Number/Object} truncate
+     * @return {Object}
+     */
+    Autolinker.prototype.normalizeTruncateCfg = function (truncate) {
+        if (typeof truncate === 'number') {
+            return { length: truncate, location: 'end' };
+        }
+        else { // object, or undefined/null
+            return utils_1.defaults(truncate || {}, {
+                length: Number.POSITIVE_INFINITY,
+                location: 'end'
+            });
+        }
+    };
+    /**
+     * Parses the input `textOrHtml` looking for URLs, email addresses, phone
+     * numbers, username handles, and hashtags (depending on the configuration
+     * of the Autolinker instance), and returns an array of {@link Autolinker.match.Match}
+     * objects describing those matches (without making any replacements).
+     *
+     * This method is used by the {@link #link} method, but can also be used to
+     * simply do parsing of the input in order to discover what kinds of links
+     * there are and how many.
+     *
+     * Example usage:
+     *
+     *     var autolinker = new Autolinker( {
+     *         urls: true,
+     *         email: true
+     *     } );
+     *
+     *     var matches = autolinker.parse( "Hello google.com, I am asdf@asdf.com" );
+     *
+     *     console.log( matches.length );           // 2
+     *     console.log( matches[ 0 ].getType() );   // 'url'
+     *     console.log( matches[ 0 ].getUrl() );    // 'google.com'
+     *     console.log( matches[ 1 ].getType() );   // 'email'
+     *     console.log( matches[ 1 ].getEmail() );  // 'asdf@asdf.com'
+     *
+     * @param {String} textOrHtml The HTML or text to find matches within
+     *   (depending on if the {@link #urls}, {@link #email}, {@link #phone},
+     *   {@link #hashtag}, and {@link #mention} options are enabled).
+     * @return {Autolinker.match.Match[]} The array of Matches found in the
+     *   given input `textOrHtml`.
+     */
+    Autolinker.prototype.parse = function (textOrHtml) {
+        var _this = this;
+        var skipTagNames = ['a', 'style', 'script'], skipTagsStackCount = 0, // used to only Autolink text outside of anchor/script/style tags. We don't want to autolink something that is already linked inside of an <a> tag, for instance
+        matches = [];
+        // Find all matches within the `textOrHtml` (but not matches that are
+        // already nested within <a>, <style> and <script> tags)
+        parse_html_1.parseHtml(textOrHtml, {
+            onOpenTag: function (tagName) {
+                if (skipTagNames.indexOf(tagName) >= 0) {
+                    skipTagsStackCount++;
+                }
+            },
+            onText: function (text, offset) {
+                // Only process text nodes that are not within an <a>, <style> or <script> tag
+                if (skipTagsStackCount === 0) {
+                    // "Walk around" common HTML entities. An '&nbsp;' (for example)
+                    // could be at the end of a URL, but we don't want to 
+                    // include the trailing '&' in the URL. See issue #76
+                    // TODO: Handle HTML entities separately in parseHtml() and
+                    // don't emit them as "text" except for &amp; entities
+                    var htmlCharacterEntitiesRegex = /(&nbsp;|&#160;|&lt;|&#60;|&gt;|&#62;|&quot;|&#34;|&#39;)/gi;
+                    var textSplit = utils_1.splitAndCapture(text, htmlCharacterEntitiesRegex);
+                    var currentOffset_1 = offset;
+                    textSplit.forEach(function (splitText, i) {
+                        // even number matches are text, odd numbers are html entities
+                        if (i % 2 === 0) {
+                            var textNodeMatches = _this.parseText(splitText, currentOffset_1);
+                            matches.push.apply(matches, textNodeMatches);
+                        }
+                        currentOffset_1 += splitText.length;
+                    });
+                }
+            },
+            onCloseTag: function (tagName) {
+                if (skipTagNames.indexOf(tagName) >= 0) {
+                    skipTagsStackCount = Math.max(skipTagsStackCount - 1, 0); // attempt to handle extraneous </a> tags by making sure the stack count never goes below 0
+                }
+            },
+            onComment: function (offset) { },
+            onDoctype: function (offset) { },
+        });
+        // After we have found all matches, remove subsequent matches that
+        // overlap with a previous match. This can happen for instance with URLs,
+        // where the url 'google.com/#link' would match '#link' as a hashtag.
+        matches = this.compactMatches(matches);
+        // And finally, remove matches for match types that have been turned
+        // off. We needed to have all match types turned on initially so that
+        // things like hashtags could be filtered out if they were really just
+        // part of a URL match (for instance, as a named anchor).
+        matches = this.removeUnwantedMatches(matches);
+        return matches;
+    };
+    /**
+     * After we have found all matches, we need to remove matches that overlap
+     * with a previous match. This can happen for instance with URLs, where the
+     * url 'google.com/#link' would match '#link' as a hashtag. Because the
+     * '#link' part is contained in a larger match that comes before the HashTag
+     * match, we'll remove the HashTag match.
+     *
+     * @private
+     * @param {Autolinker.match.Match[]} matches
+     * @return {Autolinker.match.Match[]}
+     */
+    Autolinker.prototype.compactMatches = function (matches) {
+        // First, the matches need to be sorted in order of offset
+        matches.sort(function (a, b) { return a.getOffset() - b.getOffset(); });
+        for (var i = 0; i < matches.length - 1; i++) {
+            var match = matches[i], offset = match.getOffset(), matchedTextLength = match.getMatchedText().length, endIdx = offset + matchedTextLength;
+            if (i + 1 < matches.length) {
+                // Remove subsequent matches that equal offset with current match
+                if (matches[i + 1].getOffset() === offset) {
+                    var removeIdx = matches[i + 1].getMatchedText().length > matchedTextLength ? i : i + 1;
+                    matches.splice(removeIdx, 1);
+                    continue;
+                }
+                // Remove subsequent matches that overlap with the current match
+                if (matches[i + 1].getOffset() < endIdx) {
+                    matches.splice(i + 1, 1);
+                }
+            }
+        }
+        return matches;
+    };
+    /**
+     * Removes matches for matchers that were turned off in the options. For
+     * example, if {@link #hashtag hashtags} were not to be matched, we'll
+     * remove them from the `matches` array here.
+     *
+     * Note: we *must* use all Matchers on the input string, and then filter
+     * them out later. For example, if the options were `{ url: false, hashtag: true }`,
+     * we wouldn't want to match the text '#link' as a HashTag inside of the text
+     * 'google.com/#link'. The way the algorithm works is that we match the full
+     * URL first (which prevents the accidental HashTag match), and then we'll
+     * simply throw away the URL match.
+     *
+     * @private
+     * @param {Autolinker.match.Match[]} matches The array of matches to remove
+     *   the unwanted matches from. Note: this array is mutated for the
+     *   removals.
+     * @return {Autolinker.match.Match[]} The mutated input `matches` array.
+     */
+    Autolinker.prototype.removeUnwantedMatches = function (matches) {
+        if (!this.hashtag)
+            utils_1.remove(matches, function (match) { return match.getType() === 'hashtag'; });
+        if (!this.email)
+            utils_1.remove(matches, function (match) { return match.getType() === 'email'; });
+        if (!this.phone)
+            utils_1.remove(matches, function (match) { return match.getType() === 'phone'; });
+        if (!this.mention)
+            utils_1.remove(matches, function (match) { return match.getType() === 'mention'; });
+        if (!this.urls.schemeMatches) {
+            utils_1.remove(matches, function (m) { return m.getType() === 'url' && m.getUrlMatchType() === 'scheme'; });
+        }
+        if (!this.urls.wwwMatches) {
+            utils_1.remove(matches, function (m) { return m.getType() === 'url' && m.getUrlMatchType() === 'www'; });
+        }
+        if (!this.urls.tldMatches) {
+            utils_1.remove(matches, function (m) { return m.getType() === 'url' && m.getUrlMatchType() === 'tld'; });
+        }
+        return matches;
+    };
+    /**
+     * Parses the input `text` looking for URLs, email addresses, phone
+     * numbers, username handles, and hashtags (depending on the configuration
+     * of the Autolinker instance), and returns an array of {@link Autolinker.match.Match}
+     * objects describing those matches.
+     *
+     * This method processes a **non-HTML string**, and is used to parse and
+     * match within the text nodes of an HTML string. This method is used
+     * internally by {@link #parse}.
+     *
+     * @private
+     * @param {String} text The text to find matches within (depending on if the
+     *   {@link #urls}, {@link #email}, {@link #phone},
+     *   {@link #hashtag}, and {@link #mention} options are enabled). This must be a non-HTML string.
+     * @param {Number} [offset=0] The offset of the text node within the
+     *   original string. This is used when parsing with the {@link #parse}
+     *   method to generate correct offsets within the {@link Autolinker.match.Match}
+     *   instances, but may be omitted if calling this method publicly.
+     * @return {Autolinker.match.Match[]} The array of Matches found in the
+     *   given input `text`.
+     */
+    Autolinker.prototype.parseText = function (text, offset) {
+        if (offset === void 0) { offset = 0; }
+        offset = offset || 0;
+        var matchers = this.getMatchers(), matches = [];
+        for (var i = 0, numMatchers = matchers.length; i < numMatchers; i++) {
+            var textMatches = matchers[i].parseMatches(text);
+            // Correct the offset of each of the matches. They are originally
+            // the offset of the match within the provided text node, but we
+            // need to correct them to be relative to the original HTML input
+            // string (i.e. the one provided to #parse).
+            for (var j = 0, numTextMatches = textMatches.length; j < numTextMatches; j++) {
+                textMatches[j].setOffset(offset + textMatches[j].getOffset());
+            }
+            matches.push.apply(matches, textMatches);
+        }
+        return matches;
+    };
+    /**
+     * Automatically links URLs, Email addresses, Phone numbers, Hashtags,
+     * and Mentions (Twitter, Instagram, Soundcloud) found in the given chunk of HTML. Does not link
+     * URLs found within HTML tags.
+     *
+     * For instance, if given the text: `You should go to http://www.yahoo.com`,
+     * then the result will be `You should go to
+     * &lt;a href="http://www.yahoo.com"&gt;http://www.yahoo.com&lt;/a&gt;`
+     *
+     * This method finds the text around any HTML elements in the input
+     * `textOrHtml`, which will be the text that is processed. Any original HTML
+     * elements will be left as-is, as well as the text that is already wrapped
+     * in anchor (&lt;a&gt;) tags.
+     *
+     * @param {String} textOrHtml The HTML or text to autolink matches within
+     *   (depending on if the {@link #urls}, {@link #email}, {@link #phone}, {@link #hashtag}, and {@link #mention} options are enabled).
+     * @return {String} The HTML, with matches automatically linked.
+     */
+    Autolinker.prototype.link = function (textOrHtml) {
+        if (!textOrHtml) {
+            return "";
+        } // handle `null` and `undefined` (for JavaScript users that don't have TypeScript support)
+        /* We would want to sanitize the start and end characters of a tag
+         * before processing the string in order to avoid an XSS scenario.
+         * This behaviour can be changed by toggling the sanitizeHtml option.
+         */
+        if (this.sanitizeHtml) {
+            textOrHtml = textOrHtml
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+        var matches = this.parse(textOrHtml), newHtml = [], lastIndex = 0;
+        for (var i = 0, len = matches.length; i < len; i++) {
+            var match = matches[i];
+            newHtml.push(textOrHtml.substring(lastIndex, match.getOffset()));
+            newHtml.push(this.createMatchReturnVal(match));
+            lastIndex = match.getOffset() + match.getMatchedText().length;
+        }
+        newHtml.push(textOrHtml.substring(lastIndex)); // handle the text after the last match
+        return newHtml.join('');
+    };
+    /**
+     * Creates the return string value for a given match in the input string.
+     *
+     * This method handles the {@link #replaceFn}, if one was provided.
+     *
+     * @private
+     * @param {Autolinker.match.Match} match The Match object that represents
+     *   the match.
+     * @return {String} The string that the `match` should be replaced with.
+     *   This is usually the anchor tag string, but may be the `matchStr` itself
+     *   if the match is not to be replaced.
+     */
+    Autolinker.prototype.createMatchReturnVal = function (match) {
+        // Handle a custom `replaceFn` being provided
+        var replaceFnResult;
+        if (this.replaceFn) {
+            replaceFnResult = this.replaceFn.call(this.context, match); // Autolinker instance is the context
+        }
+        if (typeof replaceFnResult === 'string') {
+            return replaceFnResult; // `replaceFn` returned a string, use that
+        }
+        else if (replaceFnResult === false) {
+            return match.getMatchedText(); // no replacement for the match
+        }
+        else if (replaceFnResult instanceof html_tag_1.HtmlTag) {
+            return replaceFnResult.toAnchorString();
+        }
+        else { // replaceFnResult === true, or no/unknown return value from function
+            // Perform Autolinker's default anchor tag generation
+            var anchorTag = match.buildTag(); // returns an Autolinker.HtmlTag instance
+            return anchorTag.toAnchorString();
+        }
+    };
+    /**
+     * Lazily instantiates and returns the {@link Autolinker.matcher.Matcher}
+     * instances for this Autolinker instance.
+     *
+     * @private
+     * @return {Autolinker.matcher.Matcher[]}
+     */
+    Autolinker.prototype.getMatchers = function () {
+        if (!this.matchers) {
+            var tagBuilder = this.getTagBuilder();
+            var matchers = [
+                new hashtag_matcher_1.HashtagMatcher({ tagBuilder: tagBuilder, serviceName: this.hashtag }),
+                new email_matcher_1.EmailMatcher({ tagBuilder: tagBuilder }),
+                new phone_matcher_1.PhoneMatcher({ tagBuilder: tagBuilder }),
+                new mention_matcher_1.MentionMatcher({ tagBuilder: tagBuilder, serviceName: this.mention }),
+                new url_matcher_1.UrlMatcher({ tagBuilder: tagBuilder, stripPrefix: this.stripPrefix, stripTrailingSlash: this.stripTrailingSlash, decodePercentEncoding: this.decodePercentEncoding })
+            ];
+            return (this.matchers = matchers);
+        }
+        else {
+            return this.matchers;
+        }
+    };
+    /**
+     * Returns the {@link #tagBuilder} instance for this Autolinker instance,
+     * lazily instantiating it if it does not yet exist.
+     *
+     * @private
+     * @return {Autolinker.AnchorTagBuilder}
+     */
+    Autolinker.prototype.getTagBuilder = function () {
+        var tagBuilder = this.tagBuilder;
+        if (!tagBuilder) {
+            tagBuilder = this.tagBuilder = new anchor_tag_builder_1.AnchorTagBuilder({
+                newWindow: this.newWindow,
+                truncate: this.truncate,
+                className: this.className
+            });
+        }
+        return tagBuilder;
+    };
+    /**
+     * @static
+     * @property {String} version
+     *
+     * The Autolinker version number in the form major.minor.patch
+     *
+     * Ex: 0.25.1
+     */
+    Autolinker.version = '3.14.1';
+    /**
+     * For backwards compatibility with Autolinker 1.x, the AnchorTagBuilder
+     * class is provided as a static on the Autolinker class.
+     */
+    Autolinker.AnchorTagBuilder = anchor_tag_builder_1.AnchorTagBuilder;
+    /**
+     * For backwards compatibility with Autolinker 1.x, the HtmlTag class is
+     * provided as a static on the Autolinker class.
+     */
+    Autolinker.HtmlTag = html_tag_1.HtmlTag;
+    /**
+     * For backwards compatibility with Autolinker 1.x, the Matcher classes are
+     * provided as statics on the Autolinker class.
+     */
+    Autolinker.matcher = {
+        Email: email_matcher_1.EmailMatcher,
+        Hashtag: hashtag_matcher_1.HashtagMatcher,
+        Matcher: matcher_1.Matcher,
+        Mention: mention_matcher_1.MentionMatcher,
+        Phone: phone_matcher_1.PhoneMatcher,
+        Url: url_matcher_1.UrlMatcher
+    };
+    /**
+     * For backwards compatibility with Autolinker 1.x, the Match classes are
+     * provided as statics on the Autolinker class.
+     */
+    Autolinker.match = {
+        Email: email_match_1.EmailMatch,
+        Hashtag: hashtag_match_1.HashtagMatch,
+        Match: match_1.Match,
+        Mention: mention_match_1.MentionMatch,
+        Phone: phone_match_1.PhoneMatch,
+        Url: url_match_1.UrlMatch
+    };
+    return Autolinker;
+}());
+exports.default = Autolinker;
+
+
+
+},{"./anchor-tag-builder":70,"./html-tag":72,"./htmlParser/parse-html":73,"./match/email-match":75,"./match/hashtag-match":76,"./match/match":78,"./match/mention-match":79,"./match/phone-match":80,"./match/url-match":81,"./matcher/email-matcher":82,"./matcher/hashtag-matcher":83,"./matcher/matcher":85,"./matcher/mention-matcher":86,"./matcher/phone-matcher":87,"./matcher/url-matcher":90,"./utils":95}],72:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = require("./utils");
+/**
+ * @class Autolinker.HtmlTag
+ * @extends Object
+ *
+ * Represents an HTML tag, which can be used to easily build/modify HTML tags programmatically.
+ *
+ * Autolinker uses this abstraction to create HTML tags, and then write them out as strings. You may also use
+ * this class in your code, especially within a {@link Autolinker#replaceFn replaceFn}.
+ *
+ * ## Examples
+ *
+ * Example instantiation:
+ *
+ *     var tag = new Autolinker.HtmlTag( {
+ *         tagName : 'a',
+ *         attrs   : { 'href': 'http://google.com', 'class': 'external-link' },
+ *         innerHtml : 'Google'
+ *     } );
+ *
+ *     tag.toAnchorString();  // <a href="http://google.com" class="external-link">Google</a>
+ *
+ *     // Individual accessor methods
+ *     tag.getTagName();                 // 'a'
+ *     tag.getAttr( 'href' );            // 'http://google.com'
+ *     tag.hasClass( 'external-link' );  // true
+ *
+ *
+ * Using mutator methods (which may be used in combination with instantiation config properties):
+ *
+ *     var tag = new Autolinker.HtmlTag();
+ *     tag.setTagName( 'a' );
+ *     tag.setAttr( 'href', 'http://google.com' );
+ *     tag.addClass( 'external-link' );
+ *     tag.setInnerHtml( 'Google' );
+ *
+ *     tag.getTagName();                 // 'a'
+ *     tag.getAttr( 'href' );            // 'http://google.com'
+ *     tag.hasClass( 'external-link' );  // true
+ *
+ *     tag.toAnchorString();  // <a href="http://google.com" class="external-link">Google</a>
+ *
+ *
+ * ## Example use within a {@link Autolinker#replaceFn replaceFn}
+ *
+ *     var html = Autolinker.link( "Test google.com", {
+ *         replaceFn : function( match ) {
+ *             var tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance, configured with the Match's href and anchor text
+ *             tag.setAttr( 'rel', 'nofollow' );
+ *
+ *             return tag;
+ *         }
+ *     } );
+ *
+ *     // generated html:
+ *     //   Test <a href="http://google.com" target="_blank" rel="nofollow">google.com</a>
+ *
+ *
+ * ## Example use with a new tag for the replacement
+ *
+ *     var html = Autolinker.link( "Test google.com", {
+ *         replaceFn : function( match ) {
+ *             var tag = new Autolinker.HtmlTag( {
+ *                 tagName : 'button',
+ *                 attrs   : { 'title': 'Load URL: ' + match.getAnchorHref() },
+ *                 innerHtml : 'Load URL: ' + match.getAnchorText()
+ *             } );
+ *
+ *             return tag;
+ *         }
+ *     } );
+ *
+ *     // generated html:
+ *     //   Test <button title="Load URL: http://google.com">Load URL: google.com</button>
+ */
+var HtmlTag = /** @class */ (function () {
+    /**
+     * @method constructor
+     * @param {Object} [cfg] The configuration properties for this class, in an Object (map)
+     */
+    function HtmlTag(cfg) {
+        if (cfg === void 0) { cfg = {}; }
+        /**
+         * @cfg {String} tagName
+         *
+         * The tag name. Ex: 'a', 'button', etc.
+         *
+         * Not required at instantiation time, but should be set using {@link #setTagName} before {@link #toAnchorString}
+         * is executed.
+         */
+        this.tagName = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Object.<String, String>} attrs
+         *
+         * An key/value Object (map) of attributes to create the tag with. The keys are the attribute names, and the
+         * values are the attribute values.
+         */
+        this.attrs = {}; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {String} innerHTML
+         *
+         * The inner HTML for the tag.
+         */
+        this.innerHTML = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @protected
+         * @property {RegExp} whitespaceRegex
+         *
+         * Regular expression used to match whitespace in a string of CSS classes.
+         */
+        this.whitespaceRegex = /\s+/; // default value just to get the above doc comment in the ES5 output and documentation generator
+        this.tagName = cfg.tagName || '';
+        this.attrs = cfg.attrs || {};
+        this.innerHTML = cfg.innerHtml || cfg.innerHTML || ''; // accept either the camelCased form or the fully capitalized acronym as in the DOM
+    }
+    /**
+     * Sets the tag name that will be used to generate the tag with.
+     *
+     * @param {String} tagName
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.setTagName = function (tagName) {
+        this.tagName = tagName;
+        return this;
+    };
+    /**
+     * Retrieves the tag name.
+     *
+     * @return {String}
+     */
+    HtmlTag.prototype.getTagName = function () {
+        return this.tagName || '';
+    };
+    /**
+     * Sets an attribute on the HtmlTag.
+     *
+     * @param {String} attrName The attribute name to set.
+     * @param {String} attrValue The attribute value to set.
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.setAttr = function (attrName, attrValue) {
+        var tagAttrs = this.getAttrs();
+        tagAttrs[attrName] = attrValue;
+        return this;
+    };
+    /**
+     * Retrieves an attribute from the HtmlTag. If the attribute does not exist, returns `undefined`.
+     *
+     * @param {String} attrName The attribute name to retrieve.
+     * @return {String} The attribute's value, or `undefined` if it does not exist on the HtmlTag.
+     */
+    HtmlTag.prototype.getAttr = function (attrName) {
+        return this.getAttrs()[attrName];
+    };
+    /**
+     * Sets one or more attributes on the HtmlTag.
+     *
+     * @param {Object.<String, String>} attrs A key/value Object (map) of the attributes to set.
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.setAttrs = function (attrs) {
+        Object.assign(this.getAttrs(), attrs);
+        return this;
+    };
+    /**
+     * Retrieves the attributes Object (map) for the HtmlTag.
+     *
+     * @return {Object.<String, String>} A key/value object of the attributes for the HtmlTag.
+     */
+    HtmlTag.prototype.getAttrs = function () {
+        return this.attrs || (this.attrs = {});
+    };
+    /**
+     * Sets the provided `cssClass`, overwriting any current CSS classes on the HtmlTag.
+     *
+     * @param {String} cssClass One or more space-separated CSS classes to set (overwrite).
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.setClass = function (cssClass) {
+        return this.setAttr('class', cssClass);
+    };
+    /**
+     * Convenience method to add one or more CSS classes to the HtmlTag. Will not add duplicate CSS classes.
+     *
+     * @param {String} cssClass One or more space-separated CSS classes to add.
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.addClass = function (cssClass) {
+        var classAttr = this.getClass(), whitespaceRegex = this.whitespaceRegex, classes = (!classAttr) ? [] : classAttr.split(whitespaceRegex), newClasses = cssClass.split(whitespaceRegex), newClass;
+        while (newClass = newClasses.shift()) {
+            if (utils_1.indexOf(classes, newClass) === -1) {
+                classes.push(newClass);
+            }
+        }
+        this.getAttrs()['class'] = classes.join(" ");
+        return this;
+    };
+    /**
+     * Convenience method to remove one or more CSS classes from the HtmlTag.
+     *
+     * @param {String} cssClass One or more space-separated CSS classes to remove.
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.removeClass = function (cssClass) {
+        var classAttr = this.getClass(), whitespaceRegex = this.whitespaceRegex, classes = (!classAttr) ? [] : classAttr.split(whitespaceRegex), removeClasses = cssClass.split(whitespaceRegex), removeClass;
+        while (classes.length && (removeClass = removeClasses.shift())) {
+            var idx = utils_1.indexOf(classes, removeClass);
+            if (idx !== -1) {
+                classes.splice(idx, 1);
+            }
+        }
+        this.getAttrs()['class'] = classes.join(" ");
+        return this;
+    };
+    /**
+     * Convenience method to retrieve the CSS class(es) for the HtmlTag, which will each be separated by spaces when
+     * there are multiple.
+     *
+     * @return {String}
+     */
+    HtmlTag.prototype.getClass = function () {
+        return this.getAttrs()['class'] || "";
+    };
+    /**
+     * Convenience method to check if the tag has a CSS class or not.
+     *
+     * @param {String} cssClass The CSS class to check for.
+     * @return {Boolean} `true` if the HtmlTag has the CSS class, `false` otherwise.
+     */
+    HtmlTag.prototype.hasClass = function (cssClass) {
+        return (' ' + this.getClass() + ' ').indexOf(' ' + cssClass + ' ') !== -1;
+    };
+    /**
+     * Sets the inner HTML for the tag.
+     *
+     * @param {String} html The inner HTML to set.
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.setInnerHTML = function (html) {
+        this.innerHTML = html;
+        return this;
+    };
+    /**
+     * Backwards compatibility method name.
+     *
+     * @param {String} html The inner HTML to set.
+     * @return {Autolinker.HtmlTag} This HtmlTag instance, so that method calls may be chained.
+     */
+    HtmlTag.prototype.setInnerHtml = function (html) {
+        return this.setInnerHTML(html);
+    };
+    /**
+     * Retrieves the inner HTML for the tag.
+     *
+     * @return {String}
+     */
+    HtmlTag.prototype.getInnerHTML = function () {
+        return this.innerHTML || "";
+    };
+    /**
+     * Backward compatibility method name.
+     *
+     * @return {String}
+     */
+    HtmlTag.prototype.getInnerHtml = function () {
+        return this.getInnerHTML();
+    };
+    /**
+     * Override of superclass method used to generate the HTML string for the tag.
+     *
+     * @return {String}
+     */
+    HtmlTag.prototype.toAnchorString = function () {
+        var tagName = this.getTagName(), attrsStr = this.buildAttrsStr();
+        attrsStr = (attrsStr) ? ' ' + attrsStr : ''; // prepend a space if there are actually attributes
+        return ['<', tagName, attrsStr, '>', this.getInnerHtml(), '</', tagName, '>'].join("");
+    };
+    /**
+     * Support method for {@link #toAnchorString}, returns the string space-separated key="value" pairs, used to populate
+     * the stringified HtmlTag.
+     *
+     * @protected
+     * @return {String} Example return: `attr1="value1" attr2="value2"`
+     */
+    HtmlTag.prototype.buildAttrsStr = function () {
+        if (!this.attrs)
+            return ""; // no `attrs` Object (map) has been set, return empty string
+        var attrs = this.getAttrs(), attrsArr = [];
+        for (var prop in attrs) {
+            if (attrs.hasOwnProperty(prop)) {
+                attrsArr.push(prop + '="' + attrs[prop] + '"');
+            }
+        }
+        return attrsArr.join(" ");
+    };
+    return HtmlTag;
+}());
+exports.HtmlTag = HtmlTag;
+
+
+
+},{"./utils":95}],73:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var regex_lib_1 = require("../regex-lib");
+var utils_1 = require("../utils");
+// For debugging: search for other "For debugging" lines
+// import CliTable from 'cli-table';
+/**
+ * Parses an HTML string, calling the callbacks to notify of tags and text.
+ *
+ * ## History
+ *
+ * This file previously used a regular expression to find html tags in the input
+ * text. Unfortunately, we ran into a bunch of catastrophic backtracking issues
+ * with certain input text, causing Autolinker to either hang or just take a
+ * really long time to parse the string.
+ *
+ * The current code is intended to be a O(n) algorithm that walks through
+ * the string in one pass, and tries to be as cheap as possible. We don't need
+ * to implement the full HTML spec, but rather simply determine where the string
+ * looks like an HTML tag, and where it looks like text (so that we can autolink
+ * that).
+ *
+ * This state machine parser is intended just to be a simple but performant
+ * parser of HTML for the subset of requirements we have. We simply need to:
+ *
+ * 1. Determine where HTML tags are
+ * 2. Determine the tag name (Autolinker specifically only cares about <a>,
+ *    <script>, and <style> tags, so as not to link any text within them)
+ *
+ * We don't need to:
+ *
+ * 1. Create a parse tree
+ * 2. Auto-close tags with invalid markup
+ * 3. etc.
+ *
+ * The other intention behind this is that we didn't want to add external
+ * dependencies on the Autolinker utility which would increase its size. For
+ * instance, adding htmlparser2 adds 125kb to the minified output file,
+ * increasing its final size from 47kb to 172kb (at the time of writing). It
+ * also doesn't work exactly correctly, treating the string "<3 blah blah blah"
+ * as an HTML tag.
+ *
+ * Reference for HTML spec:
+ *
+ *     https://www.w3.org/TR/html51/syntax.html#sec-tokenization
+ *
+ * @param {String} html The HTML to parse
+ * @param {Object} callbacks
+ * @param {Function} callbacks.onOpenTag Callback function to call when an open
+ *   tag is parsed. Called with the tagName as its argument.
+ * @param {Function} callbacks.onCloseTag Callback function to call when a close
+ *   tag is parsed. Called with the tagName as its argument. If a self-closing
+ *   tag is found, `onCloseTag` is called immediately after `onOpenTag`.
+ * @param {Function} callbacks.onText Callback function to call when text (i.e
+ *   not an HTML tag) is parsed. Called with the text (string) as its first
+ *   argument, and offset (number) into the string as its second.
+ */
+function parseHtml(html, _a) {
+    var onOpenTag = _a.onOpenTag, onCloseTag = _a.onCloseTag, onText = _a.onText, onComment = _a.onComment, onDoctype = _a.onDoctype;
+    var noCurrentTag = new CurrentTag();
+    var charIdx = 0, len = html.length, state = 0 /* Data */, currentDataIdx = 0, // where the current data start index is
+    currentTag = noCurrentTag; // describes the current tag that is being read
+    // For debugging: search for other "For debugging" lines
+    // const table = new CliTable( {
+    // 	head: [ 'charIdx', 'char', 'state', 'currentDataIdx', 'currentOpenTagIdx', 'tag.type' ]
+    // } );
+    while (charIdx < len) {
+        var char = html.charAt(charIdx);
+        // For debugging: search for other "For debugging" lines
+        // ALSO: Temporarily remove the 'const' keyword on the State enum
+        // table.push( 
+        // 	[ charIdx, char, State[ state ], currentDataIdx, currentTag.idx, currentTag.idx === -1 ? '' : currentTag.type ] 
+        // );
+        switch (state) {
+            case 0 /* Data */:
+                stateData(char);
+                break;
+            case 1 /* TagOpen */:
+                stateTagOpen(char);
+                break;
+            case 2 /* EndTagOpen */:
+                stateEndTagOpen(char);
+                break;
+            case 3 /* TagName */:
+                stateTagName(char);
+                break;
+            case 4 /* BeforeAttributeName */:
+                stateBeforeAttributeName(char);
+                break;
+            case 5 /* AttributeName */:
+                stateAttributeName(char);
+                break;
+            case 6 /* AfterAttributeName */:
+                stateAfterAttributeName(char);
+                break;
+            case 7 /* BeforeAttributeValue */:
+                stateBeforeAttributeValue(char);
+                break;
+            case 8 /* AttributeValueDoubleQuoted */:
+                stateAttributeValueDoubleQuoted(char);
+                break;
+            case 9 /* AttributeValueSingleQuoted */:
+                stateAttributeValueSingleQuoted(char);
+                break;
+            case 10 /* AttributeValueUnquoted */:
+                stateAttributeValueUnquoted(char);
+                break;
+            case 11 /* AfterAttributeValueQuoted */:
+                stateAfterAttributeValueQuoted(char);
+                break;
+            case 12 /* SelfClosingStartTag */:
+                stateSelfClosingStartTag(char);
+                break;
+            case 13 /* MarkupDeclarationOpenState */:
+                stateMarkupDeclarationOpen(char);
+                break;
+            case 14 /* CommentStart */:
+                stateCommentStart(char);
+                break;
+            case 15 /* CommentStartDash */:
+                stateCommentStartDash(char);
+                break;
+            case 16 /* Comment */:
+                stateComment(char);
+                break;
+            case 17 /* CommentEndDash */:
+                stateCommentEndDash(char);
+                break;
+            case 18 /* CommentEnd */:
+                stateCommentEnd(char);
+                break;
+            case 19 /* CommentEndBang */:
+                stateCommentEndBang(char);
+                break;
+            case 20 /* Doctype */:
+                stateDoctype(char);
+                break;
+            default:
+                utils_1.throwUnhandledCaseError(state);
+        }
+        // For debugging: search for other "For debugging" lines
+        // ALSO: Temporarily remove the 'const' keyword on the State enum
+        // table.push( 
+        // 	[ charIdx, char, State[ state ], currentDataIdx, currentTag.idx, currentTag.idx === -1 ? '' : currentTag.type ] 
+        // );
+        charIdx++;
+    }
+    if (currentDataIdx < charIdx) {
+        emitText();
+    }
+    // For debugging: search for other "For debugging" lines
+    // console.log( '\n' + table.toString() );
+    // Called when non-tags are being read (i.e. the text around HTML †ags)
+    // https://www.w3.org/TR/html51/syntax.html#data-state
+    function stateData(char) {
+        if (char === '<') {
+            startNewTag();
+        }
+    }
+    // Called after a '<' is read from the Data state
+    // https://www.w3.org/TR/html51/syntax.html#tag-open-state
+    function stateTagOpen(char) {
+        if (char === '!') {
+            state = 13 /* MarkupDeclarationOpenState */;
+        }
+        else if (char === '/') {
+            state = 2 /* EndTagOpen */;
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { isClosing: true }));
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else if (regex_lib_1.letterRe.test(char)) {
+            // tag name start (and no '/' read)
+            state = 3 /* TagName */;
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { isOpening: true }));
+        }
+        else {
+            // Any other 
+            state = 0 /* Data */;
+            currentTag = noCurrentTag;
+        }
+    }
+    // After a '<x', '</x' sequence is read (where 'x' is a letter character), 
+    // this is to continue reading the tag name
+    // https://www.w3.org/TR/html51/syntax.html#tag-name-state
+    function stateTagName(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { name: captureTagName() }));
+            state = 4 /* BeforeAttributeName */;
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else if (char === '/') {
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { name: captureTagName() }));
+            state = 12 /* SelfClosingStartTag */;
+        }
+        else if (char === '>') {
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { name: captureTagName() }));
+            emitTagAndPreviousTextNode(); // resets to Data state as well
+        }
+        else if (!regex_lib_1.letterRe.test(char) && !regex_lib_1.digitRe.test(char) && char !== ':') {
+            // Anything else that does not form an html tag. Note: the colon 
+            // character is accepted for XML namespaced tags
+            resetToDataState();
+        }
+        else {
+            // continue reading tag name
+        }
+    }
+    // Called after the '/' is read from a '</' sequence
+    // https://www.w3.org/TR/html51/syntax.html#end-tag-open-state
+    function stateEndTagOpen(char) {
+        if (char === '>') { // parse error. Encountered "</>". Skip it without treating as a tag
+            resetToDataState();
+        }
+        else if (regex_lib_1.letterRe.test(char)) {
+            state = 3 /* TagName */;
+        }
+        else {
+            // some other non-tag-like character, don't treat this as a tag
+            resetToDataState();
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#before-attribute-name-state
+    function stateBeforeAttributeName(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            // stay in BeforeAttributeName state - continue reading chars
+        }
+        else if (char === '/') {
+            state = 12 /* SelfClosingStartTag */;
+        }
+        else if (char === '>') {
+            emitTagAndPreviousTextNode(); // resets to Data state as well
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else if (char === "=" || regex_lib_1.quoteRe.test(char) || regex_lib_1.controlCharsRe.test(char)) {
+            // "Parse error" characters that, according to the spec, should be
+            // appended to the attribute name, but we'll treat these characters
+            // as not forming a real HTML tag
+            resetToDataState();
+        }
+        else {
+            // Any other char, start of a new attribute name
+            state = 5 /* AttributeName */;
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#attribute-name-state
+    function stateAttributeName(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            state = 6 /* AfterAttributeName */;
+        }
+        else if (char === '/') {
+            state = 12 /* SelfClosingStartTag */;
+        }
+        else if (char === '=') {
+            state = 7 /* BeforeAttributeValue */;
+        }
+        else if (char === '>') {
+            emitTagAndPreviousTextNode(); // resets to Data state as well
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else if (regex_lib_1.quoteRe.test(char)) {
+            // "Parse error" characters that, according to the spec, should be
+            // appended to the attribute name, but we'll treat these characters
+            // as not forming a real HTML tag
+            resetToDataState();
+        }
+        else {
+            // anything else: continue reading attribute name
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#after-attribute-name-state
+    function stateAfterAttributeName(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            // ignore the character - continue reading
+        }
+        else if (char === '/') {
+            state = 12 /* SelfClosingStartTag */;
+        }
+        else if (char === '=') {
+            state = 7 /* BeforeAttributeValue */;
+        }
+        else if (char === '>') {
+            emitTagAndPreviousTextNode();
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else if (regex_lib_1.quoteRe.test(char)) {
+            // "Parse error" characters that, according to the spec, should be
+            // appended to the attribute name, but we'll treat these characters
+            // as not forming a real HTML tag
+            resetToDataState();
+        }
+        else {
+            // Any other character, start a new attribute in the current tag
+            state = 5 /* AttributeName */;
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#before-attribute-value-state
+    function stateBeforeAttributeValue(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            // ignore the character - continue reading
+        }
+        else if (char === "\"") {
+            state = 8 /* AttributeValueDoubleQuoted */;
+        }
+        else if (char === "'") {
+            state = 9 /* AttributeValueSingleQuoted */;
+        }
+        else if (/[>=`]/.test(char)) {
+            // Invalid chars after an '=' for an attribute value, don't count 
+            // the current tag as an HTML tag
+            resetToDataState();
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else {
+            // Any other character, consider it an unquoted attribute value
+            state = 10 /* AttributeValueUnquoted */;
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#attribute-value-double-quoted-state
+    function stateAttributeValueDoubleQuoted(char) {
+        if (char === "\"") { // end the current double-quoted attribute
+            state = 11 /* AfterAttributeValueQuoted */;
+        }
+        else {
+            // consume the character as part of the double-quoted attribute value
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#attribute-value-single-quoted-state
+    function stateAttributeValueSingleQuoted(char) {
+        if (char === "'") { // end the current single-quoted attribute
+            state = 11 /* AfterAttributeValueQuoted */;
+        }
+        else {
+            // consume the character as part of the double-quoted attribute value
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#attribute-value-unquoted-state
+    function stateAttributeValueUnquoted(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            state = 4 /* BeforeAttributeName */;
+        }
+        else if (char === '>') {
+            emitTagAndPreviousTextNode();
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else {
+            // Any other character, treat it as part of the attribute value
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#after-attribute-value-quoted-state
+    function stateAfterAttributeValueQuoted(char) {
+        if (regex_lib_1.whitespaceRe.test(char)) {
+            state = 4 /* BeforeAttributeName */;
+        }
+        else if (char === '/') {
+            state = 12 /* SelfClosingStartTag */;
+        }
+        else if (char === '>') {
+            emitTagAndPreviousTextNode();
+        }
+        else if (char === '<') {
+            // start of another tag (ignore the previous, incomplete one)
+            startNewTag();
+        }
+        else {
+            // Any other character, "parse error". Spec says to switch to the
+            // BeforeAttributeState and re-consume the character, as it may be
+            // the start of a new attribute name
+            state = 4 /* BeforeAttributeName */;
+            reconsumeCurrentCharacter();
+        }
+    }
+    // A '/' has just been read in the current tag (presumably for '/>'), and 
+    // this handles the next character
+    // https://www.w3.org/TR/html51/syntax.html#self-closing-start-tag-state
+    function stateSelfClosingStartTag(char) {
+        if (char === '>') {
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { isClosing: true }));
+            emitTagAndPreviousTextNode(); // resets to Data state as well
+        }
+        else {
+            state = 4 /* BeforeAttributeName */;
+        }
+    }
+    // https://www.w3.org/TR/html51/syntax.html#markup-declaration-open-state
+    // (HTML Comments or !DOCTYPE)
+    function stateMarkupDeclarationOpen(char) {
+        if (html.substr(charIdx, 2) === '--') { // html comment
+            charIdx += 2; // "consume" characters
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { type: 'comment' }));
+            state = 14 /* CommentStart */;
+        }
+        else if (html.substr(charIdx, 7).toUpperCase() === 'DOCTYPE') {
+            charIdx += 7; // "consume" characters
+            currentTag = new CurrentTag(tslib_1.__assign({}, currentTag, { type: 'doctype' }));
+            state = 20 /* Doctype */;
+        }
+        else {
+            // At this point, the spec specifies that the state machine should
+            // enter the "bogus comment" state, in which case any character(s) 
+            // after the '<!' that were read should become an HTML comment up
+            // until the first '>' that is read (or EOF). Instead, we'll assume
+            // that a user just typed '<!' as part of text data
+            resetToDataState();
+        }
+    }
+    // Handles after the sequence '<!--' has been read
+    // https://www.w3.org/TR/html51/syntax.html#comment-start-state
+    function stateCommentStart(char) {
+        if (char === '-') {
+            // We've read the sequence '<!---' at this point (3 dashes)
+            state = 15 /* CommentStartDash */;
+        }
+        else if (char === '>') {
+            // At this point, we'll assume the comment wasn't a real comment
+            // so we'll just emit it as data. We basically read the sequence 
+            // '<!-->'
+            resetToDataState();
+        }
+        else {
+            // Any other char, take it as part of the comment
+            state = 16 /* Comment */;
+        }
+    }
+    // We've read the sequence '<!---' at this point (3 dashes)
+    // https://www.w3.org/TR/html51/syntax.html#comment-start-dash-state
+    function stateCommentStartDash(char) {
+        if (char === '-') {
+            // We've read '<!----' (4 dashes) at this point
+            state = 18 /* CommentEnd */;
+        }
+        else if (char === '>') {
+            // At this point, we'll assume the comment wasn't a real comment
+            // so we'll just emit it as data. We basically read the sequence 
+            // '<!--->'
+            resetToDataState();
+        }
+        else {
+            // Anything else, take it as a valid comment
+            state = 16 /* Comment */;
+        }
+    }
+    // Currently reading the comment's text (data)
+    // https://www.w3.org/TR/html51/syntax.html#comment-state
+    function stateComment(char) {
+        if (char === '-') {
+            state = 17 /* CommentEndDash */;
+        }
+        else {
+            // Any other character, stay in the Comment state
+        }
+    }
+    // When we we've read the first dash inside a comment, it may signal the
+    // end of the comment if we read another dash
+    // https://www.w3.org/TR/html51/syntax.html#comment-end-dash-state
+    function stateCommentEndDash(char) {
+        if (char === '-') {
+            state = 18 /* CommentEnd */;
+        }
+        else {
+            // Wasn't a dash, must still be part of the comment
+            state = 16 /* Comment */;
+        }
+    }
+    // After we've read two dashes inside a comment, it may signal the end of 
+    // the comment if we then read a '>' char
+    // https://www.w3.org/TR/html51/syntax.html#comment-end-state
+    function stateCommentEnd(char) {
+        if (char === '>') {
+            emitTagAndPreviousTextNode();
+        }
+        else if (char === '!') {
+            state = 19 /* CommentEndBang */;
+        }
+        else if (char === '-') {
+            // A 3rd '-' has been read: stay in the CommentEnd state
+        }
+        else {
+            // Anything else, switch back to the comment state since we didn't
+            // read the full "end comment" sequence (i.e. '-->')
+            state = 16 /* Comment */;
+        }
+    }
+    // We've read the sequence '--!' inside of a comment
+    // https://www.w3.org/TR/html51/syntax.html#comment-end-bang-state
+    function stateCommentEndBang(char) {
+        if (char === '-') {
+            // We read the sequence '--!-' inside of a comment. The last dash
+            // could signify that the comment is going to close
+            state = 17 /* CommentEndDash */;
+        }
+        else if (char === '>') {
+            // End of comment with the sequence '--!>'
+            emitTagAndPreviousTextNode();
+        }
+        else {
+            // The '--!' was not followed by a '>', continue reading the 
+            // comment's text
+            state = 16 /* Comment */;
+        }
+    }
+    /**
+     * For DOCTYPES in particular, we don't care about the attributes. Just
+     * advance to the '>' character and emit the tag, unless we find a '<'
+     * character in which case we'll start a new tag.
+     *
+     * Example doctype tag:
+     *    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+     *
+     * Actual spec: https://www.w3.org/TR/html51/syntax.html#doctype-state
+     */
+    function stateDoctype(char) {
+        if (char === '>') {
+            emitTagAndPreviousTextNode();
+        }
+        else if (char === '<') {
+            startNewTag();
+        }
+        else {
+            // stay in the Doctype state
+        }
+    }
+    /**
+     * Resets the state back to the Data state, and removes the current tag.
+     *
+     * We'll generally run this function whenever a "parse error" is
+     * encountered, where the current tag that is being read no longer looks
+     * like a real HTML tag.
+     */
+    function resetToDataState() {
+        state = 0 /* Data */;
+        currentTag = noCurrentTag;
+    }
+    /**
+     * Starts a new HTML tag at the current index, ignoring any previous HTML
+     * tag that was being read.
+     *
+     * We'll generally run this function whenever we read a new '<' character,
+     * including when we read a '<' character inside of an HTML tag that we were
+     * previously reading.
+     */
+    function startNewTag() {
+        state = 1 /* TagOpen */;
+        currentTag = new CurrentTag({ idx: charIdx });
+    }
+    /**
+     * Once we've decided to emit an open tag, that means we can also emit the
+     * text node before it.
+     */
+    function emitTagAndPreviousTextNode() {
+        var textBeforeTag = html.slice(currentDataIdx, currentTag.idx);
+        if (textBeforeTag) {
+            // the html tag was the first element in the html string, or two 
+            // tags next to each other, in which case we should not emit a text 
+            // node
+            onText(textBeforeTag, currentDataIdx);
+        }
+        if (currentTag.type === 'comment') {
+            onComment(currentTag.idx);
+        }
+        else if (currentTag.type === 'doctype') {
+            onDoctype(currentTag.idx);
+        }
+        else {
+            if (currentTag.isOpening) {
+                onOpenTag(currentTag.name, currentTag.idx);
+            }
+            if (currentTag.isClosing) { // note: self-closing tags will emit both opening and closing
+                onCloseTag(currentTag.name, currentTag.idx);
+            }
+        }
+        // Since we just emitted a tag, reset to the data state for the next char
+        resetToDataState();
+        currentDataIdx = charIdx + 1;
+    }
+    function emitText() {
+        var text = html.slice(currentDataIdx, charIdx);
+        onText(text, currentDataIdx);
+        currentDataIdx = charIdx + 1;
+    }
+    /**
+     * Captures the tag name from the start of the tag to the current character
+     * index, and converts it to lower case
+     */
+    function captureTagName() {
+        var startIdx = currentTag.idx + (currentTag.isClosing ? 2 : 1);
+        return html.slice(startIdx, charIdx).toLowerCase();
+    }
+    /**
+     * Causes the main loop to re-consume the current character, such as after
+     * encountering a "parse error" that changed state and needs to reconsume
+     * the same character in that new state.
+     */
+    function reconsumeCurrentCharacter() {
+        charIdx--;
+    }
+}
+exports.parseHtml = parseHtml;
+var CurrentTag = /** @class */ (function () {
+    function CurrentTag(cfg) {
+        if (cfg === void 0) { cfg = {}; }
+        this.idx = cfg.idx !== undefined ? cfg.idx : -1;
+        this.type = cfg.type || 'tag';
+        this.name = cfg.name || '';
+        this.isOpening = !!cfg.isOpening;
+        this.isClosing = !!cfg.isClosing;
+    }
+    return CurrentTag;
+}());
+
+
+
+},{"../regex-lib":91,"../utils":95,"tslib":422}],74:[function(require,module,exports){
+"use strict";
+// WARNING: This file is modified a bit when it is compiled into index.js in 
+// order to support nodejs interoperability with require('autolinker') directly. 
+// This is done by the buildSrcFixCommonJsIndexTask() function in the gulpfile. 
+// See that function for more details.
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var autolinker_1 = require("./autolinker");
+
+// Note: the following two lines are added by gulpfile.js's buildSrcFixCommonJsIndexTask() to allow require('autolinker') to work correctly
+exports = module.exports = autolinker_1.default;                  // redefine 'exports' object as the Autolinker class itself
+Object.defineProperty( exports, "__esModule", { value: true } );  // redeclare '__esModule' on new 'exports' object
+
+exports.default = autolinker_1.default;
+var autolinker_2 = require("./autolinker");
+exports.Autolinker = autolinker_2.default;
+tslib_1.__exportStar(require("./autolinker"), exports);
+tslib_1.__exportStar(require("./anchor-tag-builder"), exports);
+tslib_1.__exportStar(require("./html-tag"), exports);
+tslib_1.__exportStar(require("./match/index"), exports);
+tslib_1.__exportStar(require("./matcher/index"), exports);
+
+
+
+},{"./anchor-tag-builder":70,"./autolinker":71,"./html-tag":72,"./match/index":77,"./matcher/index":84,"tslib":422}],75:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var match_1 = require("./match");
+/**
+ * @class Autolinker.match.Email
+ * @extends Autolinker.match.Match
+ *
+ * Represents a Email match found in an input string which should be Autolinked.
+ *
+ * See this class's superclass ({@link Autolinker.match.Match}) for more details.
+ */
+var EmailMatch = /** @class */ (function (_super) {
+    tslib_1.__extends(EmailMatch, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match
+     *   instance, specified in an Object (map).
+     */
+    function EmailMatch(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {String} email (required)
+         *
+         * The email address that was matched.
+         */
+        _this.email = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        _this.email = cfg.email;
+        return _this;
+    }
+    /**
+     * Returns a string name for the type of match that this class represents.
+     * For the case of EmailMatch, returns 'email'.
+     *
+     * @return {String}
+     */
+    EmailMatch.prototype.getType = function () {
+        return 'email';
+    };
+    /**
+     * Returns the email address that was matched.
+     *
+     * @return {String}
+     */
+    EmailMatch.prototype.getEmail = function () {
+        return this.email;
+    };
+    /**
+     * Returns the anchor href that should be generated for the match.
+     *
+     * @return {String}
+     */
+    EmailMatch.prototype.getAnchorHref = function () {
+        return 'mailto:' + this.email;
+    };
+    /**
+     * Returns the anchor text that should be generated for the match.
+     *
+     * @return {String}
+     */
+    EmailMatch.prototype.getAnchorText = function () {
+        return this.email;
+    };
+    return EmailMatch;
+}(match_1.Match));
+exports.EmailMatch = EmailMatch;
+
+
+
+},{"./match":78,"tslib":422}],76:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var match_1 = require("./match");
+/**
+ * @class Autolinker.match.Hashtag
+ * @extends Autolinker.match.Match
+ *
+ * Represents a Hashtag match found in an input string which should be
+ * Autolinked.
+ *
+ * See this class's superclass ({@link Autolinker.match.Match}) for more
+ * details.
+ */
+var HashtagMatch = /** @class */ (function (_super) {
+    tslib_1.__extends(HashtagMatch, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match
+     *   instance, specified in an Object (map).
+     */
+    function HashtagMatch(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {String} serviceName
+         *
+         * The service to point hashtag matches to. See {@link Autolinker#hashtag}
+         * for available values.
+         */
+        _this.serviceName = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {String} hashtag (required)
+         *
+         * The HashtagMatch that was matched, without the '#'.
+         */
+        _this.hashtag = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        _this.serviceName = cfg.serviceName;
+        _this.hashtag = cfg.hashtag;
+        return _this;
+    }
+    /**
+     * Returns a string name for the type of match that this class represents.
+     * For the case of HashtagMatch, returns 'hashtag'.
+     *
+     * @return {String}
+     */
+    HashtagMatch.prototype.getType = function () {
+        return 'hashtag';
+    };
+    /**
+     * Returns the configured {@link #serviceName} to point the HashtagMatch to.
+     * Ex: 'facebook', 'twitter'.
+     *
+     * @return {String}
+     */
+    HashtagMatch.prototype.getServiceName = function () {
+        return this.serviceName;
+    };
+    /**
+     * Returns the matched hashtag, without the '#' character.
+     *
+     * @return {String}
+     */
+    HashtagMatch.prototype.getHashtag = function () {
+        return this.hashtag;
+    };
+    /**
+     * Returns the anchor href that should be generated for the match.
+     *
+     * @return {String}
+     */
+    HashtagMatch.prototype.getAnchorHref = function () {
+        var serviceName = this.serviceName, hashtag = this.hashtag;
+        switch (serviceName) {
+            case 'twitter':
+                return 'https://twitter.com/hashtag/' + hashtag;
+            case 'facebook':
+                return 'https://www.facebook.com/hashtag/' + hashtag;
+            case 'instagram':
+                return 'https://instagram.com/explore/tags/' + hashtag;
+            default: // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
+                throw new Error('Unknown service name to point hashtag to: ' + serviceName);
+        }
+    };
+    /**
+     * Returns the anchor text that should be generated for the match.
+     *
+     * @return {String}
+     */
+    HashtagMatch.prototype.getAnchorText = function () {
+        return '#' + this.hashtag;
+    };
+    return HashtagMatch;
+}(match_1.Match));
+exports.HashtagMatch = HashtagMatch;
+
+
+
+},{"./match":78,"tslib":422}],77:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+tslib_1.__exportStar(require("./email-match"), exports);
+tslib_1.__exportStar(require("./hashtag-match"), exports);
+tslib_1.__exportStar(require("./match"), exports);
+tslib_1.__exportStar(require("./mention-match"), exports);
+tslib_1.__exportStar(require("./phone-match"), exports);
+tslib_1.__exportStar(require("./url-match"), exports);
+
+
+
+},{"./email-match":75,"./hashtag-match":76,"./match":78,"./mention-match":79,"./phone-match":80,"./url-match":81,"tslib":422}],78:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @abstract
+ * @class Autolinker.match.Match
+ *
+ * Represents a match found in an input string which should be Autolinked. A Match object is what is provided in a
+ * {@link Autolinker#replaceFn replaceFn}, and may be used to query for details about the match.
+ *
+ * For example:
+ *
+ *     var input = "...";  // string with URLs, Email Addresses, and Mentions (Twitter, Instagram, Soundcloud)
+ *
+ *     var linkedText = Autolinker.link( input, {
+ *         replaceFn : function( match ) {
+ *             console.log( "href = ", match.getAnchorHref() );
+ *             console.log( "text = ", match.getAnchorText() );
+ *
+ *             switch( match.getType() ) {
+ *                 case 'url' :
+ *                     console.log( "url: ", match.getUrl() );
+ *
+ *                 case 'email' :
+ *                     console.log( "email: ", match.getEmail() );
+ *
+ *                 case 'mention' :
+ *                     console.log( "mention: ", match.getMention() );
+ *             }
+ *         }
+ *     } );
+ *
+ * See the {@link Autolinker} class for more details on using the {@link Autolinker#replaceFn replaceFn}.
+ */
+var Match = /** @class */ (function () {
+    /**
+     * @member Autolinker.match.Match
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match
+     *   instance, specified in an Object (map).
+     */
+    function Match(cfg) {
+        /**
+         * @cfg {Autolinker.AnchorTagBuilder} tagBuilder (required)
+         *
+         * Reference to the AnchorTagBuilder instance to use to generate an anchor
+         * tag for the Match.
+         */
+        this.__jsduckDummyDocProp = null; // property used just to get the above doc comment into the ES5 output and documentation generator
+        /**
+         * @cfg {String} matchedText (required)
+         *
+         * The original text that was matched by the {@link Autolinker.matcher.Matcher}.
+         */
+        this.matchedText = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Number} offset (required)
+         *
+         * The offset of where the match was made in the input string.
+         */
+        this.offset = 0; // default value just to get the above doc comment in the ES5 output and documentation generator
+        this.tagBuilder = cfg.tagBuilder;
+        this.matchedText = cfg.matchedText;
+        this.offset = cfg.offset;
+    }
+    /**
+     * Returns the original text that was matched.
+     *
+     * @return {String}
+     */
+    Match.prototype.getMatchedText = function () {
+        return this.matchedText;
+    };
+    /**
+     * Sets the {@link #offset} of where the match was made in the input string.
+     *
+     * A {@link Autolinker.matcher.Matcher} will be fed only HTML text nodes,
+     * and will therefore set an original offset that is relative to the HTML
+     * text node itself. However, we want this offset to be relative to the full
+     * HTML input string, and thus if using {@link Autolinker#parse} (rather
+     * than calling a {@link Autolinker.matcher.Matcher} directly), then this
+     * offset is corrected after the Matcher itself has done its job.
+     *
+     * @param {Number} offset
+     */
+    Match.prototype.setOffset = function (offset) {
+        this.offset = offset;
+    };
+    /**
+     * Returns the offset of where the match was made in the input string. This
+     * is the 0-based index of the match.
+     *
+     * @return {Number}
+     */
+    Match.prototype.getOffset = function () {
+        return this.offset;
+    };
+    /**
+     * Returns the CSS class suffix(es) for this match.
+     *
+     * A CSS class suffix is appended to the {@link Autolinker#className} in
+     * the {@link Autolinker.AnchorTagBuilder} when a match is translated into
+     * an anchor tag.
+     *
+     * For example, if {@link Autolinker#className} was configured as 'myLink',
+     * and this method returns `[ 'url' ]`, the final class name of the element
+     * will become: 'myLink myLink-url'.
+     *
+     * The match may provide multiple CSS class suffixes to be appended to the
+     * {@link Autolinker#className} in order to facilitate better styling
+     * options for different match criteria. See {@link Autolinker.match.Mention}
+     * for an example.
+     *
+     * By default, this method returns a single array with the match's
+     * {@link #getType type} name, but may be overridden by subclasses.
+     *
+     * @return {String[]}
+     */
+    Match.prototype.getCssClassSuffixes = function () {
+        return [this.getType()];
+    };
+    /**
+     * Builds and returns an {@link Autolinker.HtmlTag} instance based on the
+     * Match.
+     *
+     * This can be used to easily generate anchor tags from matches, and either
+     * return their HTML string, or modify them before doing so.
+     *
+     * Example Usage:
+     *
+     *     var tag = match.buildTag();
+     *     tag.addClass( 'cordova-link' );
+     *     tag.setAttr( 'target', '_system' );
+     *
+     *     tag.toAnchorString();  // <a href="http://google.com" class="cordova-link" target="_system">Google</a>
+     *
+     * Example Usage in {@link Autolinker#replaceFn}:
+     *
+     *     var html = Autolinker.link( "Test google.com", {
+     *         replaceFn : function( match ) {
+     *             var tag = match.buildTag();  // returns an {@link Autolinker.HtmlTag} instance
+     *             tag.setAttr( 'rel', 'nofollow' );
+     *
+     *             return tag;
+     *         }
+     *     } );
+     *
+     *     // generated html:
+     *     //   Test <a href="http://google.com" target="_blank" rel="nofollow">google.com</a>
+     */
+    Match.prototype.buildTag = function () {
+        return this.tagBuilder.build(this);
+    };
+    return Match;
+}());
+exports.Match = Match;
+
+
+
+},{}],79:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var match_1 = require("./match");
+/**
+ * @class Autolinker.match.Mention
+ * @extends Autolinker.match.Match
+ *
+ * Represents a Mention match found in an input string which should be Autolinked.
+ *
+ * See this class's superclass ({@link Autolinker.match.Match}) for more details.
+ */
+var MentionMatch = /** @class */ (function (_super) {
+    tslib_1.__extends(MentionMatch, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match
+     *   instance, specified in an Object (map).
+     */
+    function MentionMatch(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {String} serviceName
+         *
+         * The service to point mention matches to. See {@link Autolinker#mention}
+         * for available values.
+         */
+        _this.serviceName = 'twitter'; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {String} mention (required)
+         *
+         * The Mention that was matched, without the '@' character.
+         */
+        _this.mention = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        _this.mention = cfg.mention;
+        _this.serviceName = cfg.serviceName;
+        return _this;
+    }
+    /**
+     * Returns a string name for the type of match that this class represents.
+     * For the case of MentionMatch, returns 'mention'.
+     *
+     * @return {String}
+     */
+    MentionMatch.prototype.getType = function () {
+        return 'mention';
+    };
+    /**
+     * Returns the mention, without the '@' character.
+     *
+     * @return {String}
+     */
+    MentionMatch.prototype.getMention = function () {
+        return this.mention;
+    };
+    /**
+     * Returns the configured {@link #serviceName} to point the mention to.
+     * Ex: 'instagram', 'twitter', 'soundcloud'.
+     *
+     * @return {String}
+     */
+    MentionMatch.prototype.getServiceName = function () {
+        return this.serviceName;
+    };
+    /**
+     * Returns the anchor href that should be generated for the match.
+     *
+     * @return {String}
+     */
+    MentionMatch.prototype.getAnchorHref = function () {
+        switch (this.serviceName) {
+            case 'twitter':
+                return 'https://twitter.com/' + this.mention;
+            case 'instagram':
+                return 'https://instagram.com/' + this.mention;
+            case 'soundcloud':
+                return 'https://soundcloud.com/' + this.mention;
+            default: // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
+                throw new Error('Unknown service name to point mention to: ' + this.serviceName);
+        }
+    };
+    /**
+     * Returns the anchor text that should be generated for the match.
+     *
+     * @return {String}
+     */
+    MentionMatch.prototype.getAnchorText = function () {
+        return '@' + this.mention;
+    };
+    /**
+     * Returns the CSS class suffixes that should be used on a tag built with
+     * the match. See {@link Autolinker.match.Match#getCssClassSuffixes} for
+     * details.
+     *
+     * @return {String[]}
+     */
+    MentionMatch.prototype.getCssClassSuffixes = function () {
+        var cssClassSuffixes = _super.prototype.getCssClassSuffixes.call(this), serviceName = this.getServiceName();
+        if (serviceName) {
+            cssClassSuffixes.push(serviceName);
+        }
+        return cssClassSuffixes;
+    };
+    return MentionMatch;
+}(match_1.Match));
+exports.MentionMatch = MentionMatch;
+
+
+
+},{"./match":78,"tslib":422}],80:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var match_1 = require("./match");
+/**
+ * @class Autolinker.match.Phone
+ * @extends Autolinker.match.Match
+ *
+ * Represents a Phone number match found in an input string which should be
+ * Autolinked.
+ *
+ * See this class's superclass ({@link Autolinker.match.Match}) for more
+ * details.
+ */
+var PhoneMatch = /** @class */ (function (_super) {
+    tslib_1.__extends(PhoneMatch, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match
+     *   instance, specified in an Object (map).
+     */
+    function PhoneMatch(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @protected
+         * @property {String} number (required)
+         *
+         * The phone number that was matched, without any delimiter characters.
+         *
+         * Note: This is a string to allow for prefixed 0's.
+         */
+        _this.number = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @protected
+         * @property  {Boolean} plusSign (required)
+         *
+         * `true` if the matched phone number started with a '+' sign. We'll include
+         * it in the `tel:` URL if so, as this is needed for international numbers.
+         *
+         * Ex: '+1 (123) 456 7879'
+         */
+        _this.plusSign = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        _this.number = cfg.number;
+        _this.plusSign = cfg.plusSign;
+        return _this;
+    }
+    /**
+     * Returns a string name for the type of match that this class represents.
+     * For the case of PhoneMatch, returns 'phone'.
+     *
+     * @return {String}
+     */
+    PhoneMatch.prototype.getType = function () {
+        return 'phone';
+    };
+    /**
+     * Returns the phone number that was matched as a string, without any
+     * delimiter characters.
+     *
+     * Note: This is a string to allow for prefixed 0's.
+     *
+     * @return {String}
+     */
+    PhoneMatch.prototype.getPhoneNumber = function () {
+        return this.number;
+    };
+    /**
+     * Alias of {@link #getPhoneNumber}, returns the phone number that was
+     * matched as a string, without any delimiter characters.
+     *
+     * Note: This is a string to allow for prefixed 0's.
+     *
+     * @return {String}
+     */
+    PhoneMatch.prototype.getNumber = function () {
+        return this.getPhoneNumber();
+    };
+    /**
+     * Returns the anchor href that should be generated for the match.
+     *
+     * @return {String}
+     */
+    PhoneMatch.prototype.getAnchorHref = function () {
+        return 'tel:' + (this.plusSign ? '+' : '') + this.number;
+    };
+    /**
+     * Returns the anchor text that should be generated for the match.
+     *
+     * @return {String}
+     */
+    PhoneMatch.prototype.getAnchorText = function () {
+        return this.matchedText;
+    };
+    return PhoneMatch;
+}(match_1.Match));
+exports.PhoneMatch = PhoneMatch;
+
+
+
+},{"./match":78,"tslib":422}],81:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var match_1 = require("./match");
+/**
+ * @class Autolinker.match.Url
+ * @extends Autolinker.match.Match
+ *
+ * Represents a Url match found in an input string which should be Autolinked.
+ *
+ * See this class's superclass ({@link Autolinker.match.Match}) for more details.
+ */
+var UrlMatch = /** @class */ (function (_super) {
+    tslib_1.__extends(UrlMatch, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match
+     *   instance, specified in an Object (map).
+     */
+    function UrlMatch(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {String} url (required)
+         *
+         * The url that was matched.
+         */
+        _this.url = ''; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {"scheme"/"www"/"tld"} urlMatchType (required)
+         *
+         * The type of URL match that this class represents. This helps to determine
+         * if the match was made in the original text with a prefixed scheme (ex:
+         * 'http://www.google.com'), a prefixed 'www' (ex: 'www.google.com'), or
+         * was matched by a known top-level domain (ex: 'google.com').
+         */
+        _this.urlMatchType = 'scheme'; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} protocolUrlMatch (required)
+         *
+         * `true` if the URL is a match which already has a protocol (i.e.
+         * 'http://'), `false` if the match was from a 'www' or known TLD match.
+         */
+        _this.protocolUrlMatch = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} protocolRelativeMatch (required)
+         *
+         * `true` if the URL is a protocol-relative match. A protocol-relative match
+         * is a URL that starts with '//', and will be either http:// or https://
+         * based on the protocol that the site is loaded under.
+         */
+        _this.protocolRelativeMatch = false; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Object} stripPrefix (required)
+         *
+         * The Object form of {@link Autolinker#cfg-stripPrefix}.
+         */
+        _this.stripPrefix = { scheme: true, www: true }; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} stripTrailingSlash (required)
+         * @inheritdoc Autolinker#cfg-stripTrailingSlash
+         */
+        _this.stripTrailingSlash = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} decodePercentEncoding (required)
+         * @inheritdoc Autolinker#cfg-decodePercentEncoding
+         */
+        _this.decodePercentEncoding = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @private
+         * @property {RegExp} schemePrefixRegex
+         *
+         * A regular expression used to remove the 'http://' or 'https://' from
+         * URLs.
+         */
+        _this.schemePrefixRegex = /^(https?:\/\/)?/i;
+        /**
+         * @private
+         * @property {RegExp} wwwPrefixRegex
+         *
+         * A regular expression used to remove the 'www.' from URLs.
+         */
+        _this.wwwPrefixRegex = /^(https?:\/\/)?(www\.)?/i;
+        /**
+         * @private
+         * @property {RegExp} protocolRelativeRegex
+         *
+         * The regular expression used to remove the protocol-relative '//' from the {@link #url} string, for purposes
+         * of {@link #getAnchorText}. A protocol-relative URL is, for example, "//yahoo.com"
+         */
+        _this.protocolRelativeRegex = /^\/\//;
+        /**
+         * @private
+         * @property {Boolean} protocolPrepended
+         *
+         * Will be set to `true` if the 'http://' protocol has been prepended to the {@link #url} (because the
+         * {@link #url} did not have a protocol)
+         */
+        _this.protocolPrepended = false;
+        _this.urlMatchType = cfg.urlMatchType;
+        _this.url = cfg.url;
+        _this.protocolUrlMatch = cfg.protocolUrlMatch;
+        _this.protocolRelativeMatch = cfg.protocolRelativeMatch;
+        _this.stripPrefix = cfg.stripPrefix;
+        _this.stripTrailingSlash = cfg.stripTrailingSlash;
+        _this.decodePercentEncoding = cfg.decodePercentEncoding;
+        return _this;
+    }
+    /**
+     * Returns a string name for the type of match that this class represents.
+     * For the case of UrlMatch, returns 'url'.
+     *
+     * @return {String}
+     */
+    UrlMatch.prototype.getType = function () {
+        return 'url';
+    };
+    /**
+     * Returns a string name for the type of URL match that this class
+     * represents.
+     *
+     * This helps to determine if the match was made in the original text with a
+     * prefixed scheme (ex: 'http://www.google.com'), a prefixed 'www' (ex:
+     * 'www.google.com'), or was matched by a known top-level domain (ex:
+     * 'google.com').
+     *
+     * @return {"scheme"/"www"/"tld"}
+     */
+    UrlMatch.prototype.getUrlMatchType = function () {
+        return this.urlMatchType;
+    };
+    /**
+     * Returns the url that was matched, assuming the protocol to be 'http://' if the original
+     * match was missing a protocol.
+     *
+     * @return {String}
+     */
+    UrlMatch.prototype.getUrl = function () {
+        var url = this.url;
+        // if the url string doesn't begin with a protocol, assume 'http://'
+        if (!this.protocolRelativeMatch && !this.protocolUrlMatch && !this.protocolPrepended) {
+            url = this.url = 'http://' + url;
+            this.protocolPrepended = true;
+        }
+        return url;
+    };
+    /**
+     * Returns the anchor href that should be generated for the match.
+     *
+     * @return {String}
+     */
+    UrlMatch.prototype.getAnchorHref = function () {
+        var url = this.getUrl();
+        return url.replace(/&amp;/g, '&'); // any &amp;'s in the URL should be converted back to '&' if they were displayed as &amp; in the source html
+    };
+    /**
+     * Returns the anchor text that should be generated for the match.
+     *
+     * @return {String}
+     */
+    UrlMatch.prototype.getAnchorText = function () {
+        var anchorText = this.getMatchedText();
+        if (this.protocolRelativeMatch) {
+            // Strip off any protocol-relative '//' from the anchor text
+            anchorText = this.stripProtocolRelativePrefix(anchorText);
+        }
+        if (this.stripPrefix.scheme) {
+            anchorText = this.stripSchemePrefix(anchorText);
+        }
+        if (this.stripPrefix.www) {
+            anchorText = this.stripWwwPrefix(anchorText);
+        }
+        if (this.stripTrailingSlash) {
+            anchorText = this.removeTrailingSlash(anchorText); // remove trailing slash, if there is one
+        }
+        if (this.decodePercentEncoding) {
+            anchorText = this.removePercentEncoding(anchorText);
+        }
+        return anchorText;
+    };
+    // ---------------------------------------
+    // Utility Functionality
+    /**
+     * Strips the scheme prefix (such as "http://" or "https://") from the given
+     * `url`.
+     *
+     * @private
+     * @param {String} url The text of the anchor that is being generated, for
+     *   which to strip off the url scheme.
+     * @return {String} The `url`, with the scheme stripped.
+     */
+    UrlMatch.prototype.stripSchemePrefix = function (url) {
+        return url.replace(this.schemePrefixRegex, '');
+    };
+    /**
+     * Strips the 'www' prefix from the given `url`.
+     *
+     * @private
+     * @param {String} url The text of the anchor that is being generated, for
+     *   which to strip off the 'www' if it exists.
+     * @return {String} The `url`, with the 'www' stripped.
+     */
+    UrlMatch.prototype.stripWwwPrefix = function (url) {
+        return url.replace(this.wwwPrefixRegex, '$1'); // leave any scheme ($1), it one exists
+    };
+    /**
+     * Strips any protocol-relative '//' from the anchor text.
+     *
+     * @private
+     * @param {String} text The text of the anchor that is being generated, for which to strip off the
+     *   protocol-relative prefix (such as stripping off "//")
+     * @return {String} The `anchorText`, with the protocol-relative prefix stripped.
+     */
+    UrlMatch.prototype.stripProtocolRelativePrefix = function (text) {
+        return text.replace(this.protocolRelativeRegex, '');
+    };
+    /**
+     * Removes any trailing slash from the given `anchorText`, in preparation for the text to be displayed.
+     *
+     * @private
+     * @param {String} anchorText The text of the anchor that is being generated, for which to remove any trailing
+     *   slash ('/') that may exist.
+     * @return {String} The `anchorText`, with the trailing slash removed.
+     */
+    UrlMatch.prototype.removeTrailingSlash = function (anchorText) {
+        if (anchorText.charAt(anchorText.length - 1) === '/') {
+            anchorText = anchorText.slice(0, -1);
+        }
+        return anchorText;
+    };
+    /**
+     * Decodes percent-encoded characters from the given `anchorText`, in
+     * preparation for the text to be displayed.
+     *
+     * @private
+     * @param {String} anchorText The text of the anchor that is being
+     *   generated, for which to decode any percent-encoded characters.
+     * @return {String} The `anchorText`, with the percent-encoded characters
+     *   decoded.
+     */
+    UrlMatch.prototype.removePercentEncoding = function (anchorText) {
+        // First, convert a few of the known % encodings to the corresponding
+        // HTML entities that could accidentally be interpretted as special
+        // HTML characters
+        var preProcessedEntityAnchorText = anchorText
+            .replace(/%22/gi, '&quot;') // " char
+            .replace(/%26/gi, '&amp;') // & char
+            .replace(/%27/gi, '&#39;') // ' char
+            .replace(/%3C/gi, '&lt;') // < char
+            .replace(/%3E/gi, '&gt;'); // > char
+        try {
+            // Now attempt to decode the rest of the anchor text
+            return decodeURIComponent(preProcessedEntityAnchorText);
+        }
+        catch (e) { // Invalid % escape sequence in the anchor text
+            return preProcessedEntityAnchorText;
+        }
+    };
+    return UrlMatch;
+}(match_1.Match));
+exports.UrlMatch = UrlMatch;
+
+
+
+},{"./match":78,"tslib":422}],82:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var matcher_1 = require("./matcher");
+var regex_lib_1 = require("../regex-lib");
+var email_match_1 = require("../match/email-match");
+var utils_1 = require("../utils");
+var tld_regex_1 = require("./tld-regex");
+// For debugging: search for other "For debugging" lines
+// import CliTable from 'cli-table';
+// RegExp objects which are shared by all instances of EmailMatcher. These are
+// here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
+// called multiple times, thus instantiating EmailMatcher and its RegExp 
+// objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+// See descriptions of the properties where they are used for details about them
+var localPartCharRegex = new RegExp("[" + regex_lib_1.alphaNumericAndMarksCharsStr + "!#$%&'*+/=?^_`{|}~-]");
+var strictTldRegex = new RegExp("^" + tld_regex_1.tldRegex.source + "$");
+/**
+ * @class Autolinker.matcher.Email
+ * @extends Autolinker.matcher.Matcher
+ *
+ * Matcher to find email matches in an input string.
+ *
+ * See this class's superclass ({@link Autolinker.matcher.Matcher}) for more details.
+ */
+var EmailMatcher = /** @class */ (function (_super) {
+    tslib_1.__extends(EmailMatcher, _super);
+    function EmailMatcher() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        /**
+         * Valid characters that can be used in the "local" part of an email address,
+         * i.e. the "name" part of "name@site.com"
+         */
+        _this.localPartCharRegex = localPartCharRegex;
+        /**
+         * Stricter TLD regex which adds a beginning and end check to ensure
+         * the string is a valid TLD
+         */
+        _this.strictTldRegex = strictTldRegex;
+        return _this;
+    }
+    /**
+     * @inheritdoc
+     */
+    EmailMatcher.prototype.parseMatches = function (text) {
+        var tagBuilder = this.tagBuilder, localPartCharRegex = this.localPartCharRegex, strictTldRegex = this.strictTldRegex, matches = [], len = text.length, noCurrentEmailMatch = new CurrentEmailMatch();
+        // for matching a 'mailto:' prefix
+        var mailtoTransitions = {
+            'm': 'a',
+            'a': 'i',
+            'i': 'l',
+            'l': 't',
+            't': 'o',
+            'o': ':',
+        };
+        var charIdx = 0, state = 0 /* NonEmailMatch */, currentEmailMatch = noCurrentEmailMatch;
+        // For debugging: search for other "For debugging" lines
+        // const table = new CliTable( {
+        // 	head: [ 'charIdx', 'char', 'state', 'charIdx', 'currentEmailAddress.idx', 'hasDomainDot' ]
+        // } );
+        while (charIdx < len) {
+            var char = text.charAt(charIdx);
+            // For debugging: search for other "For debugging" lines
+            // table.push( 
+            // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ] 
+            // );
+            switch (state) {
+                case 0 /* NonEmailMatch */:
+                    stateNonEmailAddress(char);
+                    break;
+                case 1 /* Mailto */:
+                    stateMailTo(text.charAt(charIdx - 1), char);
+                    break;
+                case 2 /* LocalPart */:
+                    stateLocalPart(char);
+                    break;
+                case 3 /* LocalPartDot */:
+                    stateLocalPartDot(char);
+                    break;
+                case 4 /* AtSign */:
+                    stateAtSign(char);
+                    break;
+                case 5 /* DomainChar */:
+                    stateDomainChar(char);
+                    break;
+                case 6 /* DomainHyphen */:
+                    stateDomainHyphen(char);
+                    break;
+                case 7 /* DomainDot */:
+                    stateDomainDot(char);
+                    break;
+                default:
+                    utils_1.throwUnhandledCaseError(state);
+            }
+            // For debugging: search for other "For debugging" lines
+            // table.push( 
+            // 	[ charIdx, char, State[ state ], charIdx, currentEmailAddress.idx, currentEmailAddress.hasDomainDot ] 
+            // );
+            charIdx++;
+        }
+        // Capture any valid match at the end of the string
+        captureMatchIfValidAndReset();
+        // For debugging: search for other "For debugging" lines
+        //console.log( '\n' + table.toString() );
+        return matches;
+        // Handles the state when we're not in an email address
+        function stateNonEmailAddress(char) {
+            if (char === 'm') {
+                beginEmailMatch(1 /* Mailto */);
+            }
+            else if (localPartCharRegex.test(char)) {
+                beginEmailMatch();
+            }
+            else {
+                // not an email address character, continue
+            }
+        }
+        // Handles if we're reading a 'mailto:' prefix on the string
+        function stateMailTo(prevChar, char) {
+            if (prevChar === ':') {
+                // We've reached the end of the 'mailto:' prefix
+                if (localPartCharRegex.test(char)) {
+                    state = 2 /* LocalPart */;
+                    currentEmailMatch = new CurrentEmailMatch(tslib_1.__assign({}, currentEmailMatch, { hasMailtoPrefix: true }));
+                }
+                else {
+                    // we've matched 'mailto:' but didn't get anything meaningful
+                    // immediately afterwards (for example, we encountered a 
+                    // space character, or an '@' character which formed 'mailto:@'
+                    resetToNonEmailMatchState();
+                }
+            }
+            else if (mailtoTransitions[prevChar] === char) {
+                // We're currently reading the 'mailto:' prefix, stay in
+                // Mailto state
+            }
+            else if (localPartCharRegex.test(char)) {
+                // We we're reading a prefix of 'mailto:', but encountered a
+                // different character that didn't continue the prefix
+                state = 2 /* LocalPart */;
+            }
+            else if (char === '.') {
+                // We we're reading a prefix of 'mailto:', but encountered a
+                // dot character
+                state = 3 /* LocalPartDot */;
+            }
+            else if (char === '@') {
+                // We we're reading a prefix of 'mailto:', but encountered a
+                // an @ character
+                state = 4 /* AtSign */;
+            }
+            else {
+                // not an email address character, return to "NonEmailAddress" state
+                resetToNonEmailMatchState();
+            }
+        }
+        // Handles the state when we're currently in the "local part" of an 
+        // email address (as opposed to the "domain part")
+        function stateLocalPart(char) {
+            if (char === '.') {
+                state = 3 /* LocalPartDot */;
+            }
+            else if (char === '@') {
+                state = 4 /* AtSign */;
+            }
+            else if (localPartCharRegex.test(char)) {
+                // stay in the "local part" of the email address
+            }
+            else {
+                // not an email address character, return to "NonEmailAddress" state
+                resetToNonEmailMatchState();
+            }
+        }
+        // Handles the state where we've read 
+        function stateLocalPartDot(char) {
+            if (char === '.') {
+                // We read a second '.' in a row, not a valid email address 
+                // local part
+                resetToNonEmailMatchState();
+            }
+            else if (char === '@') {
+                // We read the '@' character immediately after a dot ('.'), not 
+                // an email address
+                resetToNonEmailMatchState();
+            }
+            else if (localPartCharRegex.test(char)) {
+                state = 2 /* LocalPart */;
+            }
+            else {
+                // Anything else, not an email address
+                resetToNonEmailMatchState();
+            }
+        }
+        function stateAtSign(char) {
+            if (regex_lib_1.domainNameCharRegex.test(char)) {
+                state = 5 /* DomainChar */;
+            }
+            else {
+                // Anything else, not an email address
+                resetToNonEmailMatchState();
+            }
+        }
+        function stateDomainChar(char) {
+            if (char === '.') {
+                state = 7 /* DomainDot */;
+            }
+            else if (char === '-') {
+                state = 6 /* DomainHyphen */;
+            }
+            else if (regex_lib_1.domainNameCharRegex.test(char)) {
+                // Stay in the DomainChar state
+            }
+            else {
+                // Anything else, we potentially matched if the criteria has
+                // been met
+                captureMatchIfValidAndReset();
+            }
+        }
+        function stateDomainHyphen(char) {
+            if (char === '-' || char === '.') {
+                // Not valid to have two hyphens ("--") or hypen+dot ("-.")
+                captureMatchIfValidAndReset();
+            }
+            else if (regex_lib_1.domainNameCharRegex.test(char)) {
+                state = 5 /* DomainChar */;
+            }
+            else {
+                // Anything else
+                captureMatchIfValidAndReset();
+            }
+        }
+        function stateDomainDot(char) {
+            if (char === '.' || char === '-') {
+                // not valid to have two dots ("..") or dot+hypen (".-")
+                captureMatchIfValidAndReset();
+            }
+            else if (regex_lib_1.domainNameCharRegex.test(char)) {
+                state = 5 /* DomainChar */;
+                // After having read a '.' and then a valid domain character,
+                // we now know that the domain part of the email is valid, and
+                // we have found at least a partial EmailMatch (however, the
+                // email address may have additional characters from this point)
+                currentEmailMatch = new CurrentEmailMatch(tslib_1.__assign({}, currentEmailMatch, { hasDomainDot: true }));
+            }
+            else {
+                // Anything else
+                captureMatchIfValidAndReset();
+            }
+        }
+        function beginEmailMatch(newState) {
+            if (newState === void 0) { newState = 2 /* LocalPart */; }
+            state = newState;
+            currentEmailMatch = new CurrentEmailMatch({ idx: charIdx });
+        }
+        function resetToNonEmailMatchState() {
+            state = 0 /* NonEmailMatch */;
+            currentEmailMatch = noCurrentEmailMatch;
+        }
+        /*
+         * Captures the current email address as an EmailMatch if it's valid,
+         * and resets the state to read another email address.
+         */
+        function captureMatchIfValidAndReset() {
+            if (currentEmailMatch.hasDomainDot) { // we need at least one dot in the domain to be considered a valid email address
+                var matchedText = text.slice(currentEmailMatch.idx, charIdx);
+                // If we read a '.' or '-' char that ended the email address
+                // (valid domain name characters, but only valid email address
+                // characters if they are followed by something else), strip 
+                // it off now
+                if (/[-.]$/.test(matchedText)) {
+                    matchedText = matchedText.slice(0, -1);
+                }
+                var emailAddress = currentEmailMatch.hasMailtoPrefix
+                    ? matchedText.slice('mailto:'.length)
+                    : matchedText;
+                // if the email address has a valid TLD, add it to the list of matches
+                if (doesEmailHaveValidTld(emailAddress)) {
+                    matches.push(new email_match_1.EmailMatch({
+                        tagBuilder: tagBuilder,
+                        matchedText: matchedText,
+                        offset: currentEmailMatch.idx,
+                        email: emailAddress
+                    }));
+                }
+            }
+            resetToNonEmailMatchState();
+            /**
+             * Determines if the given email address has a valid TLD or not
+             * @param {string} emailAddress - email address
+             * @return {Boolean} - true is email have valid TLD, false otherwise
+             */
+            function doesEmailHaveValidTld(emailAddress) {
+                var emailAddressTld = emailAddress.split('.').pop() || '';
+                var emailAddressNormalized = emailAddressTld.toLowerCase();
+                var isValidTld = strictTldRegex.test(emailAddressNormalized);
+                return isValidTld;
+            }
+        }
+    };
+    return EmailMatcher;
+}(matcher_1.Matcher));
+exports.EmailMatcher = EmailMatcher;
+var CurrentEmailMatch = /** @class */ (function () {
+    function CurrentEmailMatch(cfg) {
+        if (cfg === void 0) { cfg = {}; }
+        this.idx = cfg.idx !== undefined ? cfg.idx : -1;
+        this.hasMailtoPrefix = !!cfg.hasMailtoPrefix;
+        this.hasDomainDot = !!cfg.hasDomainDot;
+    }
+    return CurrentEmailMatch;
+}());
+
+
+
+},{"../match/email-match":75,"../regex-lib":91,"../utils":95,"./matcher":85,"./tld-regex":88,"tslib":422}],83:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var matcher_1 = require("./matcher");
+var regex_lib_1 = require("../regex-lib");
+var hashtag_match_1 = require("../match/hashtag-match");
+// RegExp objects which are shared by all instances of HashtagMatcher. These are
+// here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
+// called multiple times, thus instantiating HashtagMatcher and its RegExp 
+// objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+// See descriptions of the properties where they are used for details about them
+var matcherRegex = new RegExp("#[_" + regex_lib_1.alphaNumericAndMarksCharsStr + "]{1,139}(?![_" + regex_lib_1.alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 139 characters
+var nonWordCharRegex = new RegExp('[^' + regex_lib_1.alphaNumericAndMarksCharsStr + ']');
+/**
+ * @class Autolinker.matcher.Hashtag
+ * @extends Autolinker.matcher.Matcher
+ *
+ * Matcher to find HashtagMatch matches in an input string.
+ */
+var HashtagMatcher = /** @class */ (function (_super) {
+    tslib_1.__extends(HashtagMatcher, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match instance,
+     *   specified in an Object (map).
+     */
+    function HashtagMatcher(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {String} serviceName
+         *
+         * The service to point hashtag matches to. See {@link Autolinker#hashtag}
+         * for available values.
+         */
+        _this.serviceName = 'twitter'; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * The regular expression to match Hashtags. Example match:
+         *
+         *     #asdf
+         *
+         * @protected
+         * @property {RegExp} matcherRegex
+         */
+        _this.matcherRegex = matcherRegex;
+        /**
+         * The regular expression to use to check the character before a username match to
+         * make sure we didn't accidentally match an email address.
+         *
+         * For example, the string "asdf@asdf.com" should not match "@asdf" as a username.
+         *
+         * @protected
+         * @property {RegExp} nonWordCharRegex
+         */
+        _this.nonWordCharRegex = nonWordCharRegex;
+        _this.serviceName = cfg.serviceName;
+        return _this;
+    }
+    /**
+     * @inheritdoc
+     */
+    HashtagMatcher.prototype.parseMatches = function (text) {
+        var matcherRegex = this.matcherRegex, nonWordCharRegex = this.nonWordCharRegex, serviceName = this.serviceName, tagBuilder = this.tagBuilder, matches = [], match;
+        while ((match = matcherRegex.exec(text)) !== null) {
+            var offset = match.index, prevChar = text.charAt(offset - 1);
+            // If we found the match at the beginning of the string, or we found the match
+            // and there is a whitespace char in front of it (meaning it is not a '#' char
+            // in the middle of a word), then it is a hashtag match.
+            if (offset === 0 || nonWordCharRegex.test(prevChar)) {
+                var matchedText = match[0], hashtag = match[0].slice(1); // strip off the '#' character at the beginning
+                matches.push(new hashtag_match_1.HashtagMatch({
+                    tagBuilder: tagBuilder,
+                    matchedText: matchedText,
+                    offset: offset,
+                    serviceName: serviceName,
+                    hashtag: hashtag
+                }));
+            }
+        }
+        return matches;
+    };
+    return HashtagMatcher;
+}(matcher_1.Matcher));
+exports.HashtagMatcher = HashtagMatcher;
+
+
+
+},{"../match/hashtag-match":76,"../regex-lib":91,"./matcher":85,"tslib":422}],84:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+tslib_1.__exportStar(require("./email-matcher"), exports);
+tslib_1.__exportStar(require("./hashtag-matcher"), exports);
+tslib_1.__exportStar(require("./matcher"), exports);
+tslib_1.__exportStar(require("./mention-matcher"), exports);
+tslib_1.__exportStar(require("./phone-matcher"), exports);
+tslib_1.__exportStar(require("./url-matcher"), exports);
+
+
+
+},{"./email-matcher":82,"./hashtag-matcher":83,"./matcher":85,"./mention-matcher":86,"./phone-matcher":87,"./url-matcher":90,"tslib":422}],85:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @abstract
+ * @class Autolinker.matcher.Matcher
+ *
+ * An abstract class and interface for individual matchers to find matches in
+ * an input string with linkified versions of them.
+ *
+ * Note that Matchers do not take HTML into account - they must be fed the text
+ * nodes of any HTML string, which is handled by {@link Autolinker#parse}.
+ */
+var Matcher = /** @class */ (function () {
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Matcher
+     *   instance, specified in an Object (map).
+     */
+    function Matcher(cfg) {
+        /**
+         * @cfg {Autolinker.AnchorTagBuilder} tagBuilder (required)
+         *
+         * Reference to the AnchorTagBuilder instance to use to generate HTML tags
+         * for {@link Autolinker.match.Match Matches}.
+         */
+        this.__jsduckDummyDocProp = null; // property used just to get the above doc comment into the ES5 output and documentation generator
+        this.tagBuilder = cfg.tagBuilder;
+    }
+    return Matcher;
+}());
+exports.Matcher = Matcher;
+
+
+
+},{}],86:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var matcher_1 = require("./matcher");
+var regex_lib_1 = require("../regex-lib");
+var mention_match_1 = require("../match/mention-match");
+// RegExp objects which are shared by all instances of MentionMatcher. These are
+// here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
+// called multiple times, thus instantiating MentionMatcher and its RegExp 
+// objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+// See descriptions of the properties where they are used for details about them
+var twitterRegex = new RegExp("@[_" + regex_lib_1.alphaNumericAndMarksCharsStr + "]{1,50}(?![_" + regex_lib_1.alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
+var instagramRegex = new RegExp("@[_." + regex_lib_1.alphaNumericAndMarksCharsStr + "]{1,30}(?![_" + regex_lib_1.alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 30 characters
+var soundcloudRegex = new RegExp("@[-_." + regex_lib_1.alphaNumericAndMarksCharsStr + "]{1,50}(?![-_" + regex_lib_1.alphaNumericAndMarksCharsStr + "])", 'g'); // lookahead used to make sure we don't match something above 50 characters
+var nonWordCharRegex = new RegExp('[^' + regex_lib_1.alphaNumericAndMarksCharsStr + ']');
+/**
+ * @class Autolinker.matcher.Mention
+ * @extends Autolinker.matcher.Matcher
+ *
+ * Matcher to find/replace username matches in an input string.
+ */
+var MentionMatcher = /** @class */ (function (_super) {
+    tslib_1.__extends(MentionMatcher, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match instance,
+     *   specified in an Object (map).
+     */
+    function MentionMatcher(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {'twitter'/'instagram'/'soundcloud'} protected
+         *
+         * The name of service to link @mentions to.
+         *
+         * Valid values are: 'twitter', 'instagram', or 'soundcloud'
+         */
+        _this.serviceName = 'twitter'; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * Hash of regular expression to match username handles. Example match:
+         *
+         *     @asdf
+         *
+         * @private
+         * @property {Object} matcherRegexes
+         */
+        _this.matcherRegexes = {
+            'twitter': twitterRegex,
+            'instagram': instagramRegex,
+            'soundcloud': soundcloudRegex
+        };
+        /**
+         * The regular expression to use to check the character before a username match to
+         * make sure we didn't accidentally match an email address.
+         *
+         * For example, the string "asdf@asdf.com" should not match "@asdf" as a username.
+         *
+         * @private
+         * @property {RegExp} nonWordCharRegex
+         */
+        _this.nonWordCharRegex = nonWordCharRegex;
+        _this.serviceName = cfg.serviceName;
+        return _this;
+    }
+    /**
+     * @inheritdoc
+     */
+    MentionMatcher.prototype.parseMatches = function (text) {
+        var serviceName = this.serviceName, matcherRegex = this.matcherRegexes[this.serviceName], nonWordCharRegex = this.nonWordCharRegex, tagBuilder = this.tagBuilder, matches = [], match;
+        if (!matcherRegex) {
+            return matches;
+        }
+        while ((match = matcherRegex.exec(text)) !== null) {
+            var offset = match.index, prevChar = text.charAt(offset - 1);
+            // If we found the match at the beginning of the string, or we found the match
+            // and there is a whitespace char in front of it (meaning it is not an email
+            // address), then it is a username match.
+            if (offset === 0 || nonWordCharRegex.test(prevChar)) {
+                var matchedText = match[0].replace(/\.+$/g, ''), // strip off trailing .
+                mention = matchedText.slice(1); // strip off the '@' character at the beginning
+                matches.push(new mention_match_1.MentionMatch({
+                    tagBuilder: tagBuilder,
+                    matchedText: matchedText,
+                    offset: offset,
+                    serviceName: serviceName,
+                    mention: mention
+                }));
+            }
+        }
+        return matches;
+    };
+    return MentionMatcher;
+}(matcher_1.Matcher));
+exports.MentionMatcher = MentionMatcher;
+
+
+
+},{"../match/mention-match":79,"../regex-lib":91,"./matcher":85,"tslib":422}],87:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var matcher_1 = require("./matcher");
+var phone_match_1 = require("../match/phone-match");
+var regex_lib_1 = require("../regex-lib");
+// RegExp objects which are shared by all instances of PhoneMatcher. These are
+// here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
+// called multiple times, thus instantiating PhoneMatcher and its RegExp 
+// objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+// See descriptions of the properties where they are used for details about them
+var phoneMatcherRegex = /(?:(?:(?:(\+)?\d{1,3}[-\040.]?)?\(?\d{3}\)?[-\040.]?\d{3}[-\040.]?\d{4})|(?:(\+)(?:9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)[-\040.]?(?:\d[-\040.]?){6,12}\d+))([,;]+[0-9]+#?)*/g;
+/**
+ * @class Autolinker.matcher.Phone
+ * @extends Autolinker.matcher.Matcher
+ *
+ * Matcher to find Phone number matches in an input string.
+ *
+ * See this class's superclass ({@link Autolinker.matcher.Matcher}) for more
+ * details.
+ */
+var PhoneMatcher = /** @class */ (function (_super) {
+    tslib_1.__extends(PhoneMatcher, _super);
+    function PhoneMatcher() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        /**
+         * The regular expression to match Phone numbers. Example matches:
+         *
+         *     (123) 456-7890
+         *     123 456 7890
+         *     123-456-7890
+         *     +18004441234,,;,10226420346#
+         *     +1 (800) 444 1234
+         *     10226420346#
+         *     1-800-444-1234,1022,64,20346#
+         *
+         * This regular expression has the following capturing groups:
+         *
+         * 1 or 2. The prefixed '+' sign, if there is one.
+         *
+         * @protected
+         * @property {RegExp} matcherRegex
+         */
+        _this.matcherRegex = phoneMatcherRegex;
+        return _this;
+    }
+    /**
+     * @inheritdoc
+     */
+    PhoneMatcher.prototype.parseMatches = function (text) {
+        var matcherRegex = this.matcherRegex, tagBuilder = this.tagBuilder, matches = [], match;
+        while ((match = matcherRegex.exec(text)) !== null) {
+            // Remove non-numeric values from phone number string
+            var matchedText = match[0], cleanNumber = matchedText.replace(/[^0-9,;#]/g, ''), // strip out non-digit characters exclude comma semicolon and #
+            plusSign = !!(match[1] || match[2]), // match[ 1 ] or match[ 2 ] is the prefixed plus sign, if there is one
+            before = match.index == 0 ? '' : text.substr(match.index - 1, 1), after = text.substr(match.index + matchedText.length, 1), contextClear = !before.match(/\d/) && !after.match(/\d/);
+            if (this.testMatch(match[3]) && this.testMatch(matchedText) && contextClear) {
+                matches.push(new phone_match_1.PhoneMatch({
+                    tagBuilder: tagBuilder,
+                    matchedText: matchedText,
+                    offset: match.index,
+                    number: cleanNumber,
+                    plusSign: plusSign
+                }));
+            }
+        }
+        return matches;
+    };
+    PhoneMatcher.prototype.testMatch = function (text) {
+        return regex_lib_1.nonDigitRe.test(text);
+    };
+    return PhoneMatcher;
+}(matcher_1.Matcher));
+exports.PhoneMatcher = PhoneMatcher;
+
+
+
+},{"../match/phone-match":80,"../regex-lib":91,"./matcher":85,"tslib":422}],88:[function(require,module,exports){
+"use strict";
+// NOTE: THIS IS A GENERATED FILE
+// To update with the latest TLD list, run `npm run update-tld-regex` or `yarn update-tld-regex` (depending on which you have installed)
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tldRegex = /(?:xn--vermgensberatung-pwb|xn--vermgensberater-ctb|xn--clchc0ea0b2g2a9gcd|xn--w4r85el8fhu5dnra|northwesternmutual|travelersinsurance|vermögensberatung|xn--3oq18vl8pn36a|xn--5su34j936bgsg|xn--bck1b9a5dre4c|xn--mgbai9azgqp6j|xn--mgberp4a5d4ar|xn--xkc2dl3a5ee0h|vermögensberater|xn--fzys8d69uvgm|xn--mgba7c0bbn0a|xn--xkc2al3hye2a|americanexpress|kerryproperties|sandvikcoromant|xn--i1b6b1a6a2e|xn--kcrx77d1x4a|xn--lgbbat1ad8j|xn--mgba3a4f16a|xn--mgbaakc7dvf|xn--mgbc0a9azcg|xn--nqv7fs00ema|afamilycompany|americanfamily|bananarepublic|cancerresearch|cookingchannel|kerrylogistics|weatherchannel|xn--54b7fta0cc|xn--6qq986b3xl|xn--80aqecdr1a|xn--b4w605ferd|xn--fiq228c5hs|xn--h2breg3eve|xn--jlq61u9w7b|xn--mgba3a3ejt|xn--mgbaam7a8h|xn--mgbayh7gpa|xn--mgbb9fbpob|xn--mgbbh1a71e|xn--mgbca7dzdo|xn--mgbi4ecexp|xn--mgbx4cd0ab|xn--rvc1e0am3e|international|lifeinsurance|spreadbetting|travelchannel|wolterskluwer|xn--eckvdtc9d|xn--fpcrj9c3d|xn--fzc2c9e2c|xn--h2brj9c8c|xn--tiq49xqyj|xn--yfro4i67o|xn--ygbi2ammx|construction|lplfinancial|scholarships|versicherung|xn--3e0b707e|xn--45br5cyl|xn--80adxhks|xn--80asehdb|xn--8y0a063a|xn--gckr3f0f|xn--mgb9awbf|xn--mgbab2bd|xn--mgbgu82a|xn--mgbpl2fh|xn--mgbt3dhd|xn--mk1bu44c|xn--ngbc5azd|xn--ngbe9e0a|xn--ogbpf8fl|xn--qcka1pmc|accountants|barclaycard|blackfriday|blockbuster|bridgestone|calvinklein|contractors|creditunion|engineering|enterprises|foodnetwork|investments|kerryhotels|lamborghini|motorcycles|olayangroup|photography|playstation|productions|progressive|redumbrella|rightathome|williamhill|xn--11b4c3d|xn--1ck2e1b|xn--1qqw23a|xn--2scrj9c|xn--3bst00m|xn--3ds443g|xn--3hcrj9c|xn--42c2d9a|xn--45brj9c|xn--55qw42g|xn--6frz82g|xn--80ao21a|xn--9krt00a|xn--cck2b3b|xn--czr694b|xn--d1acj3b|xn--efvy88h|xn--estv75g|xn--fct429k|xn--fjq720a|xn--flw351e|xn--g2xx48c|xn--gecrj9c|xn--gk3at1e|xn--h2brj9c|xn--hxt814e|xn--imr513n|xn--j6w193g|xn--jvr189m|xn--kprw13d|xn--kpry57d|xn--kpu716f|xn--mgbbh1a|xn--mgbtx2b|xn--mix891f|xn--nyqy26a|xn--otu796d|xn--pbt977c|xn--pgbs0dh|xn--q9jyb4c|xn--rhqv96g|xn--rovu88b|xn--s9brj9c|xn--ses554g|xn--t60b56a|xn--vuq861b|xn--w4rs40l|xn--xhq521b|xn--zfr164b|சிங்கப்பூர்|accountant|apartments|associates|basketball|bnpparibas|boehringer|capitalone|consulting|creditcard|cuisinella|eurovision|extraspace|foundation|healthcare|immobilien|industries|management|mitsubishi|nationwide|newholland|nextdirect|onyourside|properties|protection|prudential|realestate|republican|restaurant|schaeffler|swiftcover|tatamotors|technology|telefonica|university|vistaprint|vlaanderen|volkswagen|xn--30rr7y|xn--3pxu8k|xn--45q11c|xn--4gbrim|xn--55qx5d|xn--5tzm5g|xn--80aswg|xn--90a3ac|xn--9dbq2a|xn--9et52u|xn--c2br7g|xn--cg4bki|xn--czrs0t|xn--czru2d|xn--fiq64b|xn--fiqs8s|xn--fiqz9s|xn--io0a7i|xn--kput3i|xn--mxtq1m|xn--o3cw4h|xn--pssy2u|xn--unup4y|xn--wgbh1c|xn--wgbl6a|xn--y9a3aq|accenture|alfaromeo|allfinanz|amsterdam|analytics|aquarelle|barcelona|bloomberg|christmas|community|directory|education|equipment|fairwinds|financial|firestone|fresenius|frontdoor|fujixerox|furniture|goldpoint|hisamitsu|homedepot|homegoods|homesense|honeywell|institute|insurance|kuokgroup|ladbrokes|lancaster|landrover|lifestyle|marketing|marshalls|melbourne|microsoft|panasonic|passagens|pramerica|richardli|scjohnson|shangrila|solutions|statebank|statefarm|stockholm|travelers|vacations|xn--90ais|xn--c1avg|xn--d1alf|xn--e1a4c|xn--fhbei|xn--j1aef|xn--j1amh|xn--l1acc|xn--ngbrx|xn--nqv7f|xn--p1acf|xn--tckwe|xn--vhquv|yodobashi|abudhabi|airforce|allstate|attorney|barclays|barefoot|bargains|baseball|boutique|bradesco|broadway|brussels|budapest|builders|business|capetown|catering|catholic|chrysler|cipriani|cityeats|cleaning|clinique|clothing|commbank|computer|delivery|deloitte|democrat|diamonds|discount|discover|download|engineer|ericsson|esurance|etisalat|everbank|exchange|feedback|fidelity|firmdale|football|frontier|goodyear|grainger|graphics|guardian|hdfcbank|helsinki|holdings|hospital|infiniti|ipiranga|istanbul|jpmorgan|lighting|lundbeck|marriott|maserati|mckinsey|memorial|merckmsd|mortgage|movistar|observer|partners|pharmacy|pictures|plumbing|property|redstone|reliance|saarland|samsclub|security|services|shopping|showtime|softbank|software|stcgroup|supplies|symantec|training|uconnect|vanguard|ventures|verisign|woodside|xn--90ae|xn--node|xn--p1ai|xn--qxam|yokohama|السعودية|abogado|academy|agakhan|alibaba|android|athleta|auction|audible|auspost|avianca|banamex|bauhaus|bentley|bestbuy|booking|brother|bugatti|capital|caravan|careers|cartier|channel|charity|chintai|citadel|clubmed|college|cologne|comcast|company|compare|contact|cooking|corsica|country|coupons|courses|cricket|cruises|dentist|digital|domains|exposed|express|farmers|fashion|ferrari|ferrero|finance|fishing|fitness|flights|florist|flowers|forsale|frogans|fujitsu|gallery|genting|godaddy|grocery|guitars|hamburg|hangout|hitachi|holiday|hosting|hoteles|hotmail|hyundai|iselect|ismaili|jewelry|juniper|kitchen|komatsu|lacaixa|lancome|lanxess|lasalle|latrobe|leclerc|liaison|limited|lincoln|markets|metlife|monster|netbank|netflix|network|neustar|okinawa|oldnavy|organic|origins|philips|pioneer|politie|realtor|recipes|rentals|reviews|rexroth|samsung|sandvik|schmidt|schwarz|science|shiksha|shriram|singles|staples|starhub|storage|support|surgery|systems|temasek|theater|theatre|tickets|tiffany|toshiba|trading|walmart|wanggou|watches|weather|website|wedding|whoswho|windows|winners|xfinity|yamaxun|youtube|zuerich|католик|اتصالات|الجزائر|العليان|پاکستان|كاثوليك|موبايلي|இந்தியா|abarth|abbott|abbvie|active|africa|agency|airbus|airtel|alipay|alsace|alstom|anquan|aramco|author|bayern|beauty|berlin|bharti|blanco|bostik|boston|broker|camera|career|caseih|casino|center|chanel|chrome|church|circle|claims|clinic|coffee|comsec|condos|coupon|credit|cruise|dating|datsun|dealer|degree|dental|design|direct|doctor|dunlop|dupont|durban|emerck|energy|estate|events|expert|family|flickr|futbol|gallup|garden|george|giving|global|google|gratis|health|hermes|hiphop|hockey|hotels|hughes|imamat|insure|intuit|jaguar|joburg|juegos|kaufen|kinder|kindle|kosher|lancia|latino|lawyer|lefrak|living|locker|london|luxury|madrid|maison|makeup|market|mattel|mobile|mobily|monash|mormon|moscow|museum|mutual|nagoya|natura|nissan|nissay|norton|nowruz|office|olayan|online|oracle|orange|otsuka|pfizer|photos|physio|piaget|pictet|quebec|racing|realty|reisen|repair|report|review|rocher|rogers|ryukyu|safety|sakura|sanofi|school|schule|search|secure|select|shouji|soccer|social|stream|studio|supply|suzuki|swatch|sydney|taipei|taobao|target|tattoo|tennis|tienda|tjmaxx|tkmaxx|toyota|travel|unicom|viajes|viking|villas|virgin|vision|voting|voyage|vuelos|walter|warman|webcam|xihuan|yachts|yandex|zappos|москва|онлайн|ابوظبي|ارامكو|الاردن|المغرب|امارات|فلسطين|مليسيا|भारतम्|இலங்கை|ファッション|actor|adult|aetna|amfam|amica|apple|archi|audio|autos|azure|baidu|beats|bible|bingo|black|boats|bosch|build|canon|cards|chase|cheap|cisco|citic|click|cloud|coach|codes|crown|cymru|dabur|dance|deals|delta|dodge|drive|dubai|earth|edeka|email|epost|epson|faith|fedex|final|forex|forum|gallo|games|gifts|gives|glade|glass|globo|gmail|green|gripe|group|gucci|guide|homes|honda|horse|house|hyatt|ikano|intel|irish|iveco|jetzt|koeln|kyoto|lamer|lease|legal|lexus|lilly|linde|lipsy|lixil|loans|locus|lotte|lotto|lupin|macys|mango|media|miami|money|mopar|movie|nadex|nexus|nikon|ninja|nokia|nowtv|omega|osaka|paris|parts|party|phone|photo|pizza|place|poker|praxi|press|prime|promo|quest|radio|rehab|reise|ricoh|rocks|rodeo|rugby|salon|sener|seven|sharp|shell|shoes|skype|sling|smart|smile|solar|space|sport|stada|store|study|style|sucks|swiss|tatar|tires|tirol|tmall|today|tokyo|tools|toray|total|tours|trade|trust|tunes|tushu|ubank|vegas|video|vodka|volvo|wales|watch|weber|weibo|works|world|xerox|yahoo|zippo|ایران|بازار|بھارت|سودان|سورية|همراه|भारोत|संगठन|বাংলা|భారత్|ഭാരതം|嘉里大酒店|aarp|able|adac|aero|aigo|akdn|ally|amex|arab|army|arpa|arte|asda|asia|audi|auto|baby|band|bank|bbva|beer|best|bike|bing|blog|blue|bofa|bond|book|buzz|cafe|call|camp|care|cars|casa|case|cash|cbre|cern|chat|citi|city|club|cool|coop|cyou|data|date|dclk|deal|dell|desi|diet|dish|docs|doha|duck|duns|dvag|erni|fage|fail|fans|farm|fast|fiat|fido|film|fire|fish|flir|food|ford|free|fund|game|gbiz|gent|ggee|gift|gmbh|gold|golf|goog|guge|guru|hair|haus|hdfc|help|here|hgtv|host|hsbc|icbc|ieee|imdb|immo|info|itau|java|jeep|jobs|jprs|kddi|kiwi|kpmg|kred|land|lego|lgbt|lidl|life|like|limo|link|live|loan|loft|love|ltda|luxe|maif|meet|meme|menu|mini|mint|mobi|moda|moto|name|navy|news|next|nico|nike|ollo|open|page|pars|pccw|pics|ping|pink|play|plus|pohl|porn|post|prod|prof|qpon|raid|read|reit|rent|rest|rich|rmit|room|rsvp|ruhr|safe|sale|sarl|save|saxo|scor|scot|seat|seek|sexy|shaw|shia|shop|show|silk|sina|site|skin|sncf|sohu|song|sony|spot|star|surf|talk|taxi|team|tech|teva|tiaa|tips|town|toys|tube|vana|visa|viva|vivo|vote|voto|wang|weir|wien|wiki|wine|work|xbox|yoga|zara|zero|zone|дети|сайт|بارت|بيتك|ڀارت|تونس|شبكة|عراق|عمان|موقع|भारत|ভারত|ভাৰত|ਭਾਰਤ|ભારત|ଭାରତ|ಭಾರತ|ලංකා|グーグル|クラウド|ポイント|大众汽车|组织机构|電訊盈科|香格里拉|aaa|abb|abc|aco|ads|aeg|afl|aig|anz|aol|app|art|aws|axa|bar|bbc|bbt|bcg|bcn|bet|bid|bio|biz|bms|bmw|bnl|bom|boo|bot|box|buy|bzh|cab|cal|cam|car|cat|cba|cbn|cbs|ceb|ceo|cfa|cfd|com|crs|csc|dad|day|dds|dev|dhl|diy|dnp|dog|dot|dtv|dvr|eat|eco|edu|esq|eus|fan|fit|fly|foo|fox|frl|ftr|fun|fyi|gal|gap|gdn|gea|gle|gmo|gmx|goo|gop|got|gov|hbo|hiv|hkt|hot|how|ibm|ice|icu|ifm|inc|ing|ink|int|ist|itv|jcb|jcp|jio|jll|jmp|jnj|jot|joy|kfh|kia|kim|kpn|krd|lat|law|lds|llc|lol|lpl|ltd|man|map|mba|med|men|mil|mit|mlb|mls|mma|moe|moi|mom|mov|msd|mtn|mtr|nab|nba|nec|net|new|nfl|ngo|nhk|now|nra|nrw|ntt|nyc|obi|off|one|ong|onl|ooo|org|ott|ovh|pay|pet|phd|pid|pin|pnc|pro|pru|pub|pwc|qvc|red|ren|ril|rio|rip|run|rwe|sap|sas|sbi|sbs|sca|scb|ses|sew|sex|sfr|ski|sky|soy|srl|srt|stc|tab|tax|tci|tdk|tel|thd|tjx|top|trv|tui|tvs|ubs|uno|uol|ups|vet|vig|vin|vip|wed|win|wme|wow|wtc|wtf|xin|xxx|xyz|you|yun|zip|бел|ком|қаз|мкд|мон|орг|рус|срб|укр|հայ|קום|عرب|قطر|كوم|مصر|कॉम|नेट|คอม|ไทย|ストア|セール|みんな|中文网|天主教|我爱你|新加坡|淡马锡|诺基亚|飞利浦|ac|ad|ae|af|ag|ai|al|am|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cw|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|za|zm|zw|ελ|бг|ею|рф|გე|닷넷|닷컴|삼성|한국|コム|世界|中信|中国|中國|企业|佛山|信息|健康|八卦|公司|公益|台湾|台灣|商城|商店|商标|嘉里|在线|大拿|娱乐|家電|工行|广东|微博|慈善|手机|手表|招聘|政务|政府|新闻|时尚|書籍|机构|游戏|澳門|点看|珠宝|移动|网址|网店|网站|网络|联通|谷歌|购物|通販|集团|食品|餐厅|香港)/;
+
+
+
+},{}],89:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var regex_lib_1 = require("../regex-lib");
+/**
+ * @private
+ * @class Autolinker.matcher.UrlMatchValidator
+ * @singleton
+ *
+ * Used by Autolinker to filter out false URL positives from the
+ * {@link Autolinker.matcher.Url UrlMatcher}.
+ *
+ * Due to the limitations of regular expressions (including the missing feature
+ * of look-behinds in JS regular expressions), we cannot always determine the
+ * validity of a given match. This class applies a bit of additional logic to
+ * filter out any false positives that have been matched by the
+ * {@link Autolinker.matcher.Url UrlMatcher}.
+ */
+var UrlMatchValidator = /** @class */ (function () {
+    function UrlMatchValidator() {
+    }
+    /**
+     * Determines if a given URL match found by the {@link Autolinker.matcher.Url UrlMatcher}
+     * is valid. Will return `false` for:
+     *
+     * 1) URL matches which do not have at least have one period ('.') in the
+     *    domain name (effectively skipping over matches like "abc:def").
+     *    However, URL matches with a protocol will be allowed (ex: 'http://localhost')
+     * 2) URL matches which do not have at least one word character in the
+     *    domain name (effectively skipping over matches like "git:1.0").
+     *    However, URL matches with a protocol will be allowed (ex: 'intra-net://271219.76')
+     * 3) A protocol-relative url match (a URL beginning with '//') whose
+     *    previous character is a word character (effectively skipping over
+     *    strings like "abc//google.com")
+     *
+     * Otherwise, returns `true`.
+     *
+     * @param {String} urlMatch The matched URL, if there was one. Will be an
+     *   empty string if the match is not a URL match.
+     * @param {String} protocolUrlMatch The match URL string for a protocol
+     *   match. Ex: 'http://yahoo.com'. This is used to match something like
+     *   'http://localhost', where we won't double check that the domain name
+     *   has at least one '.' in it.
+     * @return {Boolean} `true` if the match given is valid and should be
+     *   processed, or `false` if the match is invalid and/or should just not be
+     *   processed.
+     */
+    UrlMatchValidator.isValid = function (urlMatch, protocolUrlMatch) {
+        if ((protocolUrlMatch && !this.isValidUriScheme(protocolUrlMatch)) ||
+            this.urlMatchDoesNotHaveProtocolOrDot(urlMatch, protocolUrlMatch) || // At least one period ('.') must exist in the URL match for us to consider it an actual URL, *unless* it was a full protocol match (like 'http://localhost')
+            (this.urlMatchDoesNotHaveAtLeastOneWordChar(urlMatch, protocolUrlMatch) && // At least one letter character must exist in the domain name after a protocol match. Ex: skip over something like "git:1.0"
+                !this.isValidIpAddress(urlMatch)) || // Except if it's an IP address
+            this.containsMultipleDots(urlMatch)) {
+            return false;
+        }
+        return true;
+    };
+    UrlMatchValidator.isValidIpAddress = function (uriSchemeMatch) {
+        var newRegex = new RegExp(this.hasFullProtocolRegex.source + this.ipRegex.source);
+        var uriScheme = uriSchemeMatch.match(newRegex);
+        return uriScheme !== null;
+    };
+    UrlMatchValidator.containsMultipleDots = function (urlMatch) {
+        var stringBeforeSlash = urlMatch;
+        if (this.hasFullProtocolRegex.test(urlMatch)) {
+            stringBeforeSlash = urlMatch.split('://')[1];
+        }
+        return stringBeforeSlash.split('/')[0].indexOf("..") > -1;
+    };
+    /**
+     * Determines if the URI scheme is a valid scheme to be autolinked. Returns
+     * `false` if the scheme is 'javascript:' or 'vbscript:'
+     *
+     * @private
+     * @param {String} uriSchemeMatch The match URL string for a full URI scheme
+     *   match. Ex: 'http://yahoo.com' or 'mailto:a@a.com'.
+     * @return {Boolean} `true` if the scheme is a valid one, `false` otherwise.
+     */
+    UrlMatchValidator.isValidUriScheme = function (uriSchemeMatch) {
+        var uriSchemeMatchArr = uriSchemeMatch.match(this.uriSchemeRegex), uriScheme = uriSchemeMatchArr && uriSchemeMatchArr[0].toLowerCase();
+        return (uriScheme !== 'javascript:' && uriScheme !== 'vbscript:');
+    };
+    /**
+     * Determines if a URL match does not have either:
+     *
+     * a) a full protocol (i.e. 'http://'), or
+     * b) at least one dot ('.') in the domain name (for a non-full-protocol
+     *    match).
+     *
+     * Either situation is considered an invalid URL (ex: 'git:d' does not have
+     * either the '://' part, or at least one dot in the domain name. If the
+     * match was 'git:abc.com', we would consider this valid.)
+     *
+     * @private
+     * @param {String} urlMatch The matched URL, if there was one. Will be an
+     *   empty string if the match is not a URL match.
+     * @param {String} protocolUrlMatch The match URL string for a protocol
+     *   match. Ex: 'http://yahoo.com'. This is used to match something like
+     *   'http://localhost', where we won't double check that the domain name
+     *   has at least one '.' in it.
+     * @return {Boolean} `true` if the URL match does not have a full protocol,
+     *   or at least one dot ('.') in a non-full-protocol match.
+     */
+    UrlMatchValidator.urlMatchDoesNotHaveProtocolOrDot = function (urlMatch, protocolUrlMatch) {
+        return (!!urlMatch && (!protocolUrlMatch || !this.hasFullProtocolRegex.test(protocolUrlMatch)) && urlMatch.indexOf('.') === -1);
+    };
+    /**
+     * Determines if a URL match does not have either:
+     *
+     * a) a full protocol (i.e. 'http://'), or
+     * b) at least one word character after the protocol (i.e. in the domain name)
+     *
+     * At least one letter character must exist in the domain name after a
+     * protocol match. Ex: skip over something like "git:1.0"
+     *
+     * @private
+     * @param {String} urlMatch The matched URL, if there was one. Will be an
+     *   empty string if the match is not a URL match.
+     * @param {String} protocolUrlMatch The match URL string for a protocol
+     *   match. Ex: 'http://yahoo.com'. This is used to know whether or not we
+     *   have a protocol in the URL string, in order to check for a word
+     *   character after the protocol separator (':').
+     * @return {Boolean} `true` if the URL match does not have a full protocol, or
+     * at least one word character in it, `false` otherwise.
+     */
+    UrlMatchValidator.urlMatchDoesNotHaveAtLeastOneWordChar = function (urlMatch, protocolUrlMatch) {
+        if (urlMatch && protocolUrlMatch) {
+            return !this.hasFullProtocolRegex.test(protocolUrlMatch) && !this.hasWordCharAfterProtocolRegex.test(urlMatch);
+        }
+        else {
+            return false;
+        }
+    };
+    /**
+     * Regex to test for a full protocol, with the two trailing slashes. Ex: 'http://'
+     *
+     * @private
+     * @property {RegExp} hasFullProtocolRegex
+     */
+    UrlMatchValidator.hasFullProtocolRegex = /^[A-Za-z][-.+A-Za-z0-9]*:\/\//;
+    /**
+     * Regex to find the URI scheme, such as 'mailto:'.
+     *
+     * This is used to filter out 'javascript:' and 'vbscript:' schemes.
+     *
+     * @private
+     * @property {RegExp} uriSchemeRegex
+     */
+    UrlMatchValidator.uriSchemeRegex = /^[A-Za-z][-.+A-Za-z0-9]*:/;
+    /**
+     * Regex to determine if at least one word char exists after the protocol (i.e. after the ':')
+     *
+     * @private
+     * @property {RegExp} hasWordCharAfterProtocolRegex
+     */
+    UrlMatchValidator.hasWordCharAfterProtocolRegex = new RegExp(":[^\\s]*?[" + regex_lib_1.alphaCharsStr + "]");
+    /**
+     * Regex to determine if the string is a valid IP address
+     *
+     * @private
+     * @property {RegExp} ipRegex
+     */
+    UrlMatchValidator.ipRegex = /[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?(:[0-9]*)?\/?$/;
+    return UrlMatchValidator;
+}());
+exports.UrlMatchValidator = UrlMatchValidator;
+
+
+
+},{"../regex-lib":91}],90:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var matcher_1 = require("./matcher");
+var regex_lib_1 = require("../regex-lib");
+var tld_regex_1 = require("./tld-regex");
+var url_match_1 = require("../match/url-match");
+var url_match_validator_1 = require("./url-match-validator");
+// RegExp objects which are shared by all instances of UrlMatcher. These are
+// here to avoid re-instantiating the RegExp objects if `Autolinker.link()` is
+// called multiple times, thus instantiating UrlMatcher and its RegExp 
+// objects each time (which is very expensive - see https://github.com/gregjacobs/Autolinker.js/issues/314). 
+// See descriptions of the properties where they are used for details about them
+var matcherRegex = (function () {
+    var schemeRegex = /(?:[A-Za-z][-.+A-Za-z0-9]{0,63}:(?![A-Za-z][-.+A-Za-z0-9]{0,63}:\/\/)(?!\d+\/?)(?:\/\/)?)/, // match protocol, allow in format "http://" or "mailto:". However, do not match the first part of something like 'link:http://www.google.com' (i.e. don't match "link:"). Also, make sure we don't interpret 'google.com:8000' as if 'google.com' was a protocol here (i.e. ignore a trailing port number in this regex)
+    wwwRegex = /(?:www\.)/, // starting with 'www.'
+    // Allow optional path, query string, and hash anchor, not ending in the following characters: "?!:,.;"
+    // http://blog.codinghorror.com/the-problem-with-urls/
+    urlSuffixRegex = new RegExp('[/?#](?:[' + regex_lib_1.alphaNumericAndMarksCharsStr + '\\-+&@#/%=~_()|\'$*\\[\\]{}?!:,.;^\u2713]*[' + regex_lib_1.alphaNumericAndMarksCharsStr + '\\-+&@#/%=~_()|\'$*\\[\\]{}\u2713])?');
+    return new RegExp([
+        '(?:',
+        '(',
+        schemeRegex.source,
+        regex_lib_1.getDomainNameStr(2),
+        ')',
+        '|',
+        '(',
+        '(//)?',
+        wwwRegex.source,
+        regex_lib_1.getDomainNameStr(6),
+        ')',
+        '|',
+        '(',
+        '(//)?',
+        regex_lib_1.getDomainNameStr(10) + '\\.',
+        tld_regex_1.tldRegex.source,
+        '(?![-' + regex_lib_1.alphaNumericCharsStr + '])',
+        ')',
+        ')',
+        '(?::[0-9]+)?',
+        '(?:' + urlSuffixRegex.source + ')?' // match for path, query string, and/or hash anchor - optional
+    ].join(""), 'gi');
+})();
+var wordCharRegExp = new RegExp('[' + regex_lib_1.alphaNumericAndMarksCharsStr + ']');
+/**
+ * @class Autolinker.matcher.Url
+ * @extends Autolinker.matcher.Matcher
+ *
+ * Matcher to find URL matches in an input string.
+ *
+ * See this class's superclass ({@link Autolinker.matcher.Matcher}) for more details.
+ */
+var UrlMatcher = /** @class */ (function (_super) {
+    tslib_1.__extends(UrlMatcher, _super);
+    /**
+     * @method constructor
+     * @param {Object} cfg The configuration properties for the Match instance,
+     *   specified in an Object (map).
+     */
+    function UrlMatcher(cfg) {
+        var _this = _super.call(this, cfg) || this;
+        /**
+         * @cfg {Object} stripPrefix (required)
+         *
+         * The Object form of {@link Autolinker#cfg-stripPrefix}.
+         */
+        _this.stripPrefix = { scheme: true, www: true }; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} stripTrailingSlash (required)
+         * @inheritdoc Autolinker#stripTrailingSlash
+         */
+        _this.stripTrailingSlash = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @cfg {Boolean} decodePercentEncoding (required)
+         * @inheritdoc Autolinker#decodePercentEncoding
+         */
+        _this.decodePercentEncoding = true; // default value just to get the above doc comment in the ES5 output and documentation generator
+        /**
+         * @protected
+         * @property {RegExp} matcherRegex
+         *
+         * The regular expression to match URLs with an optional scheme, port
+         * number, path, query string, and hash anchor.
+         *
+         * Example matches:
+         *
+         *     http://google.com
+         *     www.google.com
+         *     google.com/path/to/file?q1=1&q2=2#myAnchor
+         *
+         *
+         * This regular expression will have the following capturing groups:
+         *
+         * 1.  Group that matches a scheme-prefixed URL (i.e. 'http://google.com').
+         *     This is used to match scheme URLs with just a single word, such as
+         *     'http://localhost', where we won't double check that the domain name
+         *     has at least one dot ('.') in it.
+         * 2.  Group that matches a 'www.' prefixed URL. This is only matched if the
+         *     'www.' text was not prefixed by a scheme (i.e.: not prefixed by
+         *     'http://', 'ftp:', etc.)
+         * 3.  A protocol-relative ('//') match for the case of a 'www.' prefixed
+         *     URL. Will be an empty string if it is not a protocol-relative match.
+         *     We need to know the character before the '//' in order to determine
+         *     if it is a valid match or the // was in a string we don't want to
+         *     auto-link.
+         * 4.  Group that matches a known TLD (top level domain), when a scheme
+         *     or 'www.'-prefixed domain is not matched.
+         * 5.  A protocol-relative ('//') match for the case of a known TLD prefixed
+         *     URL. Will be an empty string if it is not a protocol-relative match.
+         *     See #3 for more info.
+         */
+        _this.matcherRegex = matcherRegex;
+        /**
+         * A regular expression to use to check the character before a protocol-relative
+         * URL match. We don't want to match a protocol-relative URL if it is part
+         * of another word.
+         *
+         * For example, we want to match something like "Go to: //google.com",
+         * but we don't want to match something like "abc//google.com"
+         *
+         * This regular expression is used to test the character before the '//'.
+         *
+         * @protected
+         * @type {RegExp} wordCharRegExp
+         */
+        _this.wordCharRegExp = wordCharRegExp;
+        _this.stripPrefix = cfg.stripPrefix;
+        _this.stripTrailingSlash = cfg.stripTrailingSlash;
+        _this.decodePercentEncoding = cfg.decodePercentEncoding;
+        return _this;
+    }
+    /**
+     * @inheritdoc
+     */
+    UrlMatcher.prototype.parseMatches = function (text) {
+        var matcherRegex = this.matcherRegex, stripPrefix = this.stripPrefix, stripTrailingSlash = this.stripTrailingSlash, decodePercentEncoding = this.decodePercentEncoding, tagBuilder = this.tagBuilder, matches = [], match;
+        var _loop_1 = function () {
+            var matchStr = match[0], schemeUrlMatch = match[1], wwwUrlMatch = match[4], wwwProtocolRelativeMatch = match[5], 
+            //tldUrlMatch = match[ 8 ],  -- not needed at the moment
+            tldProtocolRelativeMatch = match[9], offset = match.index, protocolRelativeMatch = wwwProtocolRelativeMatch || tldProtocolRelativeMatch, prevChar = text.charAt(offset - 1);
+            if (!url_match_validator_1.UrlMatchValidator.isValid(matchStr, schemeUrlMatch)) {
+                return "continue";
+            }
+            // If the match is preceded by an '@' character, then it is either
+            // an email address or a username. Skip these types of matches.
+            if (offset > 0 && prevChar === '@') {
+                return "continue";
+            }
+            // If it's a protocol-relative '//' match, but the character before the '//'
+            // was a word character (i.e. a letter/number), then we found the '//' in the
+            // middle of another word (such as "asdf//asdf.com"). In this case, skip the
+            // match.
+            if (offset > 0 && protocolRelativeMatch && this_1.wordCharRegExp.test(prevChar)) {
+                return "continue";
+            }
+            // If the URL ends with a question mark, don't include the question
+            // mark as part of the URL. We'll assume the question mark was the
+            // end of a sentence, such as: "Going to google.com?"
+            if (/\?$/.test(matchStr)) {
+                matchStr = matchStr.substr(0, matchStr.length - 1);
+            }
+            // Handle a closing parenthesis or square bracket at the end of the 
+            // match, and exclude it if there is not a matching open parenthesis 
+            // or square bracket in the match itself.
+            if (this_1.matchHasUnbalancedClosingParen(matchStr)) {
+                matchStr = matchStr.substr(0, matchStr.length - 1); // remove the trailing ")"
+            }
+            else {
+                // Handle an invalid character after the TLD
+                var pos = this_1.matchHasInvalidCharAfterTld(matchStr, schemeUrlMatch);
+                if (pos > -1) {
+                    matchStr = matchStr.substr(0, pos); // remove the trailing invalid chars
+                }
+            }
+            // The autolinker accepts many characters in a url's scheme (like `fake://test.com`).
+            // However, in cases where a URL is missing whitespace before an obvious link,
+            // (for example: `nowhitespacehttp://www.test.com`), we only want the match to start
+            // at the http:// part. We will check if the match contains a common scheme and then 
+            // shift the match to start from there. 		
+            var foundCommonScheme = ['http://', 'https://'].find(function (commonScheme) { return !!schemeUrlMatch && schemeUrlMatch.indexOf(commonScheme) !== -1; });
+            if (foundCommonScheme) {
+                // If we found an overmatched URL, we want to find the index
+                // of where the match should start and shift the match to
+                // start from the beginning of the common scheme
+                var indexOfSchemeStart = matchStr.indexOf(foundCommonScheme);
+                matchStr = matchStr.substr(indexOfSchemeStart);
+                schemeUrlMatch = schemeUrlMatch.substr(indexOfSchemeStart);
+                offset = offset + indexOfSchemeStart;
+            }
+            var urlMatchType = schemeUrlMatch ? 'scheme' : (wwwUrlMatch ? 'www' : 'tld'), protocolUrlMatch = !!schemeUrlMatch;
+            matches.push(new url_match_1.UrlMatch({
+                tagBuilder: tagBuilder,
+                matchedText: matchStr,
+                offset: offset,
+                urlMatchType: urlMatchType,
+                url: matchStr,
+                protocolUrlMatch: protocolUrlMatch,
+                protocolRelativeMatch: !!protocolRelativeMatch,
+                stripPrefix: stripPrefix,
+                stripTrailingSlash: stripTrailingSlash,
+                decodePercentEncoding: decodePercentEncoding,
+            }));
+        };
+        var this_1 = this;
+        while ((match = matcherRegex.exec(text)) !== null) {
+            _loop_1();
+        }
+        return matches;
+    };
+    /**
+     * Determines if a match found has an unmatched closing parenthesis,
+     * square bracket or curly bracket. If so, the symbol will be removed
+     * from the match itself, and appended after the generated anchor tag.
+     *
+     * A match may have an extra closing parenthesis at the end of the match
+     * because the regular expression must include parenthesis for URLs such as
+     * "wikipedia.com/something_(disambiguation)", which should be auto-linked.
+     *
+     * However, an extra parenthesis *will* be included when the URL itself is
+     * wrapped in parenthesis, such as in the case of:
+     *     "(wikipedia.com/something_(disambiguation))"
+     * In this case, the last closing parenthesis should *not* be part of the
+     * URL itself, and this method will return `true`.
+     *
+     * For square brackets in URLs such as in PHP arrays, the same behavior as
+     * parenthesis discussed above should happen:
+     *     "[http://www.example.com/foo.php?bar[]=1&bar[]=2&bar[]=3]"
+     * The closing square bracket should not be part of the URL itself, and this
+     * method will return `true`.
+     *
+     * @protected
+     * @param {String} matchStr The full match string from the {@link #matcherRegex}.
+     * @return {Boolean} `true` if there is an unbalanced closing parenthesis or
+     *   square bracket at the end of the `matchStr`, `false` otherwise.
+     */
+    UrlMatcher.prototype.matchHasUnbalancedClosingParen = function (matchStr) {
+        var endChar = matchStr.charAt(matchStr.length - 1);
+        var startChar;
+        if (endChar === ')') {
+            startChar = '(';
+        }
+        else if (endChar === ']') {
+            startChar = '[';
+        }
+        else if (endChar === '}') {
+            startChar = '{';
+        }
+        else {
+            return false; // not a close parenthesis or square bracket
+        }
+        // Find if there are the same number of open braces as close braces in
+        // the URL string, minus the last character (which we have already 
+        // determined to be either ')', ']' or '}'
+        var numOpenBraces = 0;
+        for (var i = 0, len = matchStr.length - 1; i < len; i++) {
+            var char = matchStr.charAt(i);
+            if (char === startChar) {
+                numOpenBraces++;
+            }
+            else if (char === endChar) {
+                numOpenBraces = Math.max(numOpenBraces - 1, 0);
+            }
+        }
+        // If the number of open braces matches the number of close braces in
+        // the URL minus the last character, then the match has *unbalanced*
+        // braces because of the last character. Example of unbalanced braces
+        // from the regex match:
+        //     "http://example.com?a[]=1]"
+        if (numOpenBraces === 0) {
+            return true;
+        }
+        return false;
+    };
+    /**
+     * Determine if there's an invalid character after the TLD in a URL. Valid
+     * characters after TLD are ':/?#'. Exclude scheme matched URLs from this
+     * check.
+     *
+     * @protected
+     * @param {String} urlMatch The matched URL, if there was one. Will be an
+     *   empty string if the match is not a URL match.
+     * @param {String} schemeUrlMatch The match URL string for a scheme
+     *   match. Ex: 'http://yahoo.com'. This is used to match something like
+     *   'http://localhost', where we won't double check that the domain name
+     *   has at least one '.' in it.
+     * @return {Number} the position where the invalid character was found. If
+     *   no such character was found, returns -1
+     */
+    UrlMatcher.prototype.matchHasInvalidCharAfterTld = function (urlMatch, schemeUrlMatch) {
+        if (!urlMatch) {
+            return -1;
+        }
+        var offset = 0;
+        if (schemeUrlMatch) {
+            offset = urlMatch.indexOf(':');
+            urlMatch = urlMatch.slice(offset);
+        }
+        var re = new RegExp("^((.?\/\/)?[-." + regex_lib_1.alphaNumericAndMarksCharsStr + "]*[-" + regex_lib_1.alphaNumericAndMarksCharsStr + "]\\.[-" + regex_lib_1.alphaNumericAndMarksCharsStr + "]+)");
+        var res = re.exec(urlMatch);
+        if (res === null) {
+            return -1;
+        }
+        offset += res[1].length;
+        urlMatch = urlMatch.slice(res[1].length);
+        if (/^[^-.A-Za-z0-9:\/?#]/.test(urlMatch)) {
+            return offset;
+        }
+        return -1;
+    };
+    return UrlMatcher;
+}(matcher_1.Matcher));
+exports.UrlMatcher = UrlMatcher;
+
+
+
+},{"../match/url-match":81,"../regex-lib":91,"./matcher":85,"./tld-regex":88,"./url-match-validator":89,"tslib":422}],91:[function(require,module,exports){
+"use strict";
+/*
+ * This file builds and stores a library of the common regular expressions used
+ * by the Autolinker utility.
+ *
+ * Other regular expressions may exist ad-hoc, but these are generally the
+ * regular expressions that are shared between source files.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Regular expression to match upper and lowercase ASCII letters
+ */
+exports.letterRe = /[A-Za-z]/;
+/**
+ * Regular expression to match ASCII digits
+ */
+exports.digitRe = /[\d]/;
+/**
+ * Regular expression to match everything *except* ASCII digits
+ */
+exports.nonDigitRe = /[\D]/;
+/**
+ * Regular expression to match whitespace
+ */
+exports.whitespaceRe = /\s/;
+/**
+ * Regular expression to match quote characters
+ */
+exports.quoteRe = /['"]/;
+/**
+ * Regular expression to match the range of ASCII control characters (0-31), and
+ * the backspace char (127)
+ */
+exports.controlCharsRe = /[\x00-\x1F\x7F]/;
+/**
+ * The string form of a regular expression that would match all of the
+ * alphabetic ("letter") chars in the unicode character set when placed in a
+ * RegExp character class (`[]`). This includes all international alphabetic
+ * characters.
+ *
+ * These would be the characters matched by unicode regex engines `\p{L}`
+ * escape ("all letters").
+ *
+ * Taken from the XRegExp library: http://xregexp.com/ (thanks @https://github.com/slevithan)
+ * Specifically: http://xregexp.com/v/3.2.0/xregexp-all.js, the 'Letter'
+ *   regex's bmp
+ *
+ * VERY IMPORTANT: This set of characters is defined inside of a Regular
+ *   Expression literal rather than a string literal to prevent UglifyJS from
+ *   compressing the unicode escape sequences into their actual unicode
+ *   characters. If Uglify compresses these into the unicode characters
+ *   themselves, this results in the error "Range out of order in character
+ *   class" when these characters are used inside of a Regular Expression
+ *   character class (`[]`). See usages of this const. Alternatively, we can set
+ *   the UglifyJS option `ascii_only` to true for the build, but that doesn't
+ *   help others who are pulling in Autolinker into their own build and running
+ *   UglifyJS themselves.
+ */
+exports.alphaCharsStr = /A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B4\u08B6-\u08BD\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FD5\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC/
+    .source; // see note in above variable description
+/**
+ * The string form of a regular expression that would match all emoji characters
+ * Based on the emoji regex defined in this article: https://thekevinscott.com/emojis-in-javascript/
+ */
+exports.emojiStr = /\u2700-\u27bf\udde6-\uddff\ud800-\udbff\udc00-\udfff\ufe0e\ufe0f\u0300-\u036f\ufe20-\ufe23\u20d0-\u20f0\ud83c\udffb-\udfff\u200d\u3299\u3297\u303d\u3030\u24c2\ud83c\udd70-\udd71\udd7e-\udd7f\udd8e\udd91-\udd9a\udde6-\uddff\ude01-\ude02\ude1a\ude2f\ude32-\ude3a\ude50-\ude51\u203c\u2049\u25aa-\u25ab\u25b6\u25c0\u25fb-\u25fe\u00a9\u00ae\u2122\u2139\udc04\u2600-\u26FF\u2b05\u2b06\u2b07\u2b1b\u2b1c\u2b50\u2b55\u231a\u231b\u2328\u23cf\u23e9-\u23f3\u23f8-\u23fa\udccf\u2935\u2934\u2190-\u21ff/
+    .source;
+/**
+ * The string form of a regular expression that would match all of the
+ * combining mark characters in the unicode character set when placed in a
+ * RegExp character class (`[]`).
+ *
+ * These would be the characters matched by unicode regex engines `\p{M}`
+ * escape ("all marks").
+ *
+ * Taken from the XRegExp library: http://xregexp.com/ (thanks @https://github.com/slevithan)
+ * Specifically: http://xregexp.com/v/3.2.0/xregexp-all.js, the 'Mark'
+ *   regex's bmp
+ *
+ * VERY IMPORTANT: This set of characters is defined inside of a Regular
+ *   Expression literal rather than a string literal to prevent UglifyJS from
+ *   compressing the unicode escape sequences into their actual unicode
+ *   characters. If Uglify compresses these into the unicode characters
+ *   themselves, this results in the error "Range out of order in character
+ *   class" when these characters are used inside of a Regular Expression
+ *   character class (`[]`). See usages of this const. Alternatively, we can set
+ *   the UglifyJS option `ascii_only` to true for the build, but that doesn't
+ *   help others who are pulling in Autolinker into their own build and running
+ *   UglifyJS themselves.
+ */
+exports.marksStr = /\u0300-\u036F\u0483-\u0489\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED\u0711\u0730-\u074A\u07A6-\u07B0\u07EB-\u07F3\u0816-\u0819\u081B-\u0823\u0825-\u0827\u0829-\u082D\u0859-\u085B\u08D4-\u08E1\u08E3-\u0903\u093A-\u093C\u093E-\u094F\u0951-\u0957\u0962\u0963\u0981-\u0983\u09BC\u09BE-\u09C4\u09C7\u09C8\u09CB-\u09CD\u09D7\u09E2\u09E3\u0A01-\u0A03\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A70\u0A71\u0A75\u0A81-\u0A83\u0ABC\u0ABE-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AE2\u0AE3\u0B01-\u0B03\u0B3C\u0B3E-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B62\u0B63\u0B82\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD7\u0C00-\u0C03\u0C3E-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C62\u0C63\u0C81-\u0C83\u0CBC\u0CBE-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CE2\u0CE3\u0D01-\u0D03\u0D3E-\u0D44\u0D46-\u0D48\u0D4A-\u0D4D\u0D57\u0D62\u0D63\u0D82\u0D83\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DF2\u0DF3\u0E31\u0E34-\u0E3A\u0E47-\u0E4E\u0EB1\u0EB4-\u0EB9\u0EBB\u0EBC\u0EC8-\u0ECD\u0F18\u0F19\u0F35\u0F37\u0F39\u0F3E\u0F3F\u0F71-\u0F84\u0F86\u0F87\u0F8D-\u0F97\u0F99-\u0FBC\u0FC6\u102B-\u103E\u1056-\u1059\u105E-\u1060\u1062-\u1064\u1067-\u106D\u1071-\u1074\u1082-\u108D\u108F\u109A-\u109D\u135D-\u135F\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17B4-\u17D3\u17DD\u180B-\u180D\u1885\u1886\u18A9\u1920-\u192B\u1930-\u193B\u1A17-\u1A1B\u1A55-\u1A5E\u1A60-\u1A7C\u1A7F\u1AB0-\u1ABE\u1B00-\u1B04\u1B34-\u1B44\u1B6B-\u1B73\u1B80-\u1B82\u1BA1-\u1BAD\u1BE6-\u1BF3\u1C24-\u1C37\u1CD0-\u1CD2\u1CD4-\u1CE8\u1CED\u1CF2-\u1CF4\u1CF8\u1CF9\u1DC0-\u1DF5\u1DFB-\u1DFF\u20D0-\u20F0\u2CEF-\u2CF1\u2D7F\u2DE0-\u2DFF\u302A-\u302F\u3099\u309A\uA66F-\uA672\uA674-\uA67D\uA69E\uA69F\uA6F0\uA6F1\uA802\uA806\uA80B\uA823-\uA827\uA880\uA881\uA8B4-\uA8C5\uA8E0-\uA8F1\uA926-\uA92D\uA947-\uA953\uA980-\uA983\uA9B3-\uA9C0\uA9E5\uAA29-\uAA36\uAA43\uAA4C\uAA4D\uAA7B-\uAA7D\uAAB0\uAAB2-\uAAB4\uAAB7\uAAB8\uAABE\uAABF\uAAC1\uAAEB-\uAAEF\uAAF5\uAAF6\uABE3-\uABEA\uABEC\uABED\uFB1E\uFE00-\uFE0F\uFE20-\uFE2F/
+    .source; // see note in above variable description
+/**
+ * The string form of a regular expression that would match all of the
+ * alphabetic ("letter") chars, emoji, and combining marks in the unicode character set
+ * when placed in a RegExp character class (`[]`). This includes all
+ * international alphabetic characters.
+ *
+ * These would be the characters matched by unicode regex engines `\p{L}\p{M}`
+ * escapes and emoji characters.
+ */
+exports.alphaCharsAndMarksStr = exports.alphaCharsStr + exports.emojiStr + exports.marksStr;
+/**
+ * The string form of a regular expression that would match all of the
+ * decimal number chars in the unicode character set when placed in a RegExp
+ * character class (`[]`).
+ *
+ * These would be the characters matched by unicode regex engines `\p{Nd}`
+ * escape ("all decimal numbers")
+ *
+ * Taken from the XRegExp library: http://xregexp.com/ (thanks @https://github.com/slevithan)
+ * Specifically: http://xregexp.com/v/3.2.0/xregexp-all.js, the 'Decimal_Number'
+ *   regex's bmp
+ *
+ * VERY IMPORTANT: This set of characters is defined inside of a Regular
+ *   Expression literal rather than a string literal to prevent UglifyJS from
+ *   compressing the unicode escape sequences into their actual unicode
+ *   characters. If Uglify compresses these into the unicode characters
+ *   themselves, this results in the error "Range out of order in character
+ *   class" when these characters are used inside of a Regular Expression
+ *   character class (`[]`). See usages of this const. Alternatively, we can set
+ *   the UglifyJS option `ascii_only` to true for the build, but that doesn't
+ *   help others who are pulling in Autolinker into their own build and running
+ *   UglifyJS themselves.
+ */
+exports.decimalNumbersStr = /0-9\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0BE6-\u0BEF\u0C66-\u0C6F\u0CE6-\u0CEF\u0D66-\u0D6F\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F29\u1040-\u1049\u1090-\u1099\u17E0-\u17E9\u1810-\u1819\u1946-\u194F\u19D0-\u19D9\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\uA620-\uA629\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19/
+    .source; // see note in above variable description
+/**
+ * The string form of a regular expression that would match all of the
+ * letters and decimal number chars in the unicode character set when placed in
+ * a RegExp character class (`[]`).
+ *
+ * These would be the characters matched by unicode regex engines
+ * `[\p{L}\p{Nd}]` escape ("all letters and decimal numbers")
+ */
+exports.alphaNumericCharsStr = exports.alphaCharsAndMarksStr + exports.decimalNumbersStr;
+/**
+ * The string form of a regular expression that would match all of the
+ * letters, combining marks, and decimal number chars in the unicode character
+ * set when placed in a RegExp character class (`[]`).
+ *
+ * These would be the characters matched by unicode regex engines
+ * `[\p{L}\p{M}\p{Nd}]` escape ("all letters, combining marks, and decimal
+ * numbers")
+ */
+exports.alphaNumericAndMarksCharsStr = exports.alphaCharsAndMarksStr + exports.decimalNumbersStr;
+// Simplified IP regular expression
+var ipStr = '(?:[' + exports.decimalNumbersStr + ']{1,3}\\.){3}[' + exports.decimalNumbersStr + ']{1,3}';
+// Protected domain label which do not allow "-" character on the beginning and the end of a single label
+var domainLabelStr = '[' + exports.alphaNumericAndMarksCharsStr + '](?:[' + exports.alphaNumericAndMarksCharsStr + '\\-]{0,61}[' + exports.alphaNumericAndMarksCharsStr + '])?';
+var getDomainLabelStr = function (group) {
+    return '(?=(' + domainLabelStr + '))\\' + group;
+};
+/**
+ * A function to match domain names of a URL or email address.
+ * Ex: 'google', 'yahoo', 'some-other-company', etc.
+ */
+exports.getDomainNameStr = function (group) {
+    return '(?:' + getDomainLabelStr(group) + '(?:\\.' + getDomainLabelStr(group + 1) + '){0,126}|' + ipStr + ')';
+};
+/**
+ * A regular expression to match domain names of a URL or email address.
+ * Ex: 'google', 'yahoo', 'some-other-company', etc.
+ */
+exports.domainNameRegex = new RegExp('[' + exports.alphaNumericAndMarksCharsStr + '.\\-]*[' + exports.alphaNumericAndMarksCharsStr + '\\-]');
+/**
+ * A regular expression that is simply the character class of the characters
+ * that may be used in a domain name, minus the '-' or '.'
+ */
+exports.domainNameCharRegex = new RegExp("[" + exports.alphaNumericAndMarksCharsStr + "]");
+
+
+
+},{}],92:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var utils_1 = require("../utils");
+/**
+ * A truncation feature where the ellipsis will be placed at the end of the URL.
+ *
+ * @param {String} anchorText
+ * @param {Number} truncateLen The maximum length of the truncated output URL string.
+ * @param {String} ellipsisChars The characters to place within the url, e.g. "..".
+ * @return {String} The truncated URL.
+ */
+function truncateEnd(anchorText, truncateLen, ellipsisChars) {
+    return utils_1.ellipsis(anchorText, truncateLen, ellipsisChars);
+}
+exports.truncateEnd = truncateEnd;
+
+
+
+},{"../utils":95}],93:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Date: 2015-10-05
+ * Author: Kasper Søfren <soefritz@gmail.com> (https://github.com/kafoso)
+ *
+ * A truncation feature, where the ellipsis will be placed in the dead-center of the URL.
+ *
+ * @param {String} url             A URL.
+ * @param {Number} truncateLen     The maximum length of the truncated output URL string.
+ * @param {String} ellipsisChars   The characters to place within the url, e.g. "..".
+ * @return {String} The truncated URL.
+ */
+function truncateMiddle(url, truncateLen, ellipsisChars) {
+    if (url.length <= truncateLen) {
+        return url;
+    }
+    var ellipsisLengthBeforeParsing;
+    var ellipsisLength;
+    if (ellipsisChars == null) {
+        ellipsisChars = '&hellip;';
+        ellipsisLengthBeforeParsing = 8;
+        ellipsisLength = 3;
+    }
+    else {
+        ellipsisLengthBeforeParsing = ellipsisChars.length;
+        ellipsisLength = ellipsisChars.length;
+    }
+    var availableLength = truncateLen - ellipsisLength;
+    var end = "";
+    if (availableLength > 0) {
+        end = url.substr((-1) * Math.floor(availableLength / 2));
+    }
+    return (url.substr(0, Math.ceil(availableLength / 2)) + ellipsisChars + end).substr(0, availableLength + ellipsisLengthBeforeParsing);
+}
+exports.truncateMiddle = truncateMiddle;
+
+
+
+},{}],94:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Date: 2015-10-05
+ * Author: Kasper Søfren <soefritz@gmail.com> (https://github.com/kafoso)
+ *
+ * A truncation feature, where the ellipsis will be placed at a section within
+ * the URL making it still somewhat human readable.
+ *
+ * @param {String} url						 A URL.
+ * @param {Number} truncateLen		 The maximum length of the truncated output URL string.
+ * @param {String} ellipsisChars	 The characters to place within the url, e.g. "...".
+ * @return {String} The truncated URL.
+ */
+function truncateSmart(url, truncateLen, ellipsisChars) {
+    var ellipsisLengthBeforeParsing;
+    var ellipsisLength;
+    if (ellipsisChars == null) {
+        ellipsisChars = '&hellip;';
+        ellipsisLength = 3;
+        ellipsisLengthBeforeParsing = 8;
+    }
+    else {
+        ellipsisLength = ellipsisChars.length;
+        ellipsisLengthBeforeParsing = ellipsisChars.length;
+    }
+    var parse_url = function (url) {
+        var urlObj = {};
+        var urlSub = url;
+        var match = urlSub.match(/^([a-z]+):\/\//i);
+        if (match) {
+            urlObj.scheme = match[1];
+            urlSub = urlSub.substr(match[0].length);
+        }
+        match = urlSub.match(/^(.*?)(?=(\?|#|\/|$))/i);
+        if (match) {
+            urlObj.host = match[1];
+            urlSub = urlSub.substr(match[0].length);
+        }
+        match = urlSub.match(/^\/(.*?)(?=(\?|#|$))/i);
+        if (match) {
+            urlObj.path = match[1];
+            urlSub = urlSub.substr(match[0].length);
+        }
+        match = urlSub.match(/^\?(.*?)(?=(#|$))/i);
+        if (match) {
+            urlObj.query = match[1];
+            urlSub = urlSub.substr(match[0].length);
+        }
+        match = urlSub.match(/^#(.*?)$/i);
+        if (match) {
+            urlObj.fragment = match[1];
+            //urlSub = urlSub.substr(match[0].length);  -- not used. Uncomment if adding another block.
+        }
+        return urlObj;
+    };
+    var buildUrl = function (urlObj) {
+        var url = "";
+        if (urlObj.scheme && urlObj.host) {
+            url += urlObj.scheme + "://";
+        }
+        if (urlObj.host) {
+            url += urlObj.host;
+        }
+        if (urlObj.path) {
+            url += "/" + urlObj.path;
+        }
+        if (urlObj.query) {
+            url += "?" + urlObj.query;
+        }
+        if (urlObj.fragment) {
+            url += "#" + urlObj.fragment;
+        }
+        return url;
+    };
+    var buildSegment = function (segment, remainingAvailableLength) {
+        var remainingAvailableLengthHalf = remainingAvailableLength / 2, startOffset = Math.ceil(remainingAvailableLengthHalf), endOffset = (-1) * Math.floor(remainingAvailableLengthHalf), end = "";
+        if (endOffset < 0) {
+            end = segment.substr(endOffset);
+        }
+        return segment.substr(0, startOffset) + ellipsisChars + end;
+    };
+    if (url.length <= truncateLen) {
+        return url;
+    }
+    var availableLength = truncateLen - ellipsisLength;
+    var urlObj = parse_url(url);
+    // Clean up the URL
+    if (urlObj.query) {
+        var matchQuery = urlObj.query.match(/^(.*?)(?=(\?|\#))(.*?)$/i);
+        if (matchQuery) {
+            // Malformed URL; two or more "?". Removed any content behind the 2nd.
+            urlObj.query = urlObj.query.substr(0, matchQuery[1].length);
+            url = buildUrl(urlObj);
+        }
+    }
+    if (url.length <= truncateLen) {
+        return url;
+    }
+    if (urlObj.host) {
+        urlObj.host = urlObj.host.replace(/^www\./, "");
+        url = buildUrl(urlObj);
+    }
+    if (url.length <= truncateLen) {
+        return url;
+    }
+    // Process and build the URL
+    var str = "";
+    if (urlObj.host) {
+        str += urlObj.host;
+    }
+    if (str.length >= availableLength) {
+        if (urlObj.host.length == truncateLen) {
+            return (urlObj.host.substr(0, (truncateLen - ellipsisLength)) + ellipsisChars).substr(0, availableLength + ellipsisLengthBeforeParsing);
+        }
+        return buildSegment(str, availableLength).substr(0, availableLength + ellipsisLengthBeforeParsing);
+    }
+    var pathAndQuery = "";
+    if (urlObj.path) {
+        pathAndQuery += "/" + urlObj.path;
+    }
+    if (urlObj.query) {
+        pathAndQuery += "?" + urlObj.query;
+    }
+    if (pathAndQuery) {
+        if ((str + pathAndQuery).length >= availableLength) {
+            if ((str + pathAndQuery).length == truncateLen) {
+                return (str + pathAndQuery).substr(0, truncateLen);
+            }
+            var remainingAvailableLength = availableLength - str.length;
+            return (str + buildSegment(pathAndQuery, remainingAvailableLength)).substr(0, availableLength + ellipsisLengthBeforeParsing);
+        }
+        else {
+            str += pathAndQuery;
+        }
+    }
+    if (urlObj.fragment) {
+        var fragment = "#" + urlObj.fragment;
+        if ((str + fragment).length >= availableLength) {
+            if ((str + fragment).length == truncateLen) {
+                return (str + fragment).substr(0, truncateLen);
+            }
+            var remainingAvailableLength2 = availableLength - str.length;
+            return (str + buildSegment(fragment, remainingAvailableLength2)).substr(0, availableLength + ellipsisLengthBeforeParsing);
+        }
+        else {
+            str += fragment;
+        }
+    }
+    if (urlObj.scheme && urlObj.host) {
+        var scheme = urlObj.scheme + "://";
+        if ((str + scheme).length < availableLength) {
+            return (scheme + str).substr(0, truncateLen);
+        }
+    }
+    if (str.length <= truncateLen) {
+        return str;
+    }
+    var end = "";
+    if (availableLength > 0) {
+        end = str.substr((-1) * Math.floor(availableLength / 2));
+    }
+    return (str.substr(0, Math.ceil(availableLength / 2)) + ellipsisChars + end).substr(0, availableLength + ellipsisLengthBeforeParsing);
+}
+exports.truncateSmart = truncateSmart;
+
+
+
+},{}],95:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Assigns (shallow copies) the properties of `src` onto `dest`, if the
+ * corresponding property on `dest` === `undefined`.
+ *
+ * @param {Object} dest The destination object.
+ * @param {Object} src The source object.
+ * @return {Object} The destination object (`dest`)
+ */
+function defaults(dest, src) {
+    for (var prop in src) {
+        if (src.hasOwnProperty(prop) && dest[prop] === undefined) {
+            dest[prop] = src[prop];
+        }
+    }
+    return dest;
+}
+exports.defaults = defaults;
+/**
+ * Truncates the `str` at `len - ellipsisChars.length`, and adds the `ellipsisChars` to the
+ * end of the string (by default, two periods: '..'). If the `str` length does not exceed
+ * `len`, the string will be returned unchanged.
+ *
+ * @param {String} str The string to truncate and add an ellipsis to.
+ * @param {Number} truncateLen The length to truncate the string at.
+ * @param {String} [ellipsisChars=...] The ellipsis character(s) to add to the end of `str`
+ *   when truncated. Defaults to '...'
+ */
+function ellipsis(str, truncateLen, ellipsisChars) {
+    var ellipsisLength;
+    if (str.length > truncateLen) {
+        if (ellipsisChars == null) {
+            ellipsisChars = '&hellip;';
+            ellipsisLength = 3;
+        }
+        else {
+            ellipsisLength = ellipsisChars.length;
+        }
+        str = str.substring(0, truncateLen - ellipsisLength) + ellipsisChars;
+    }
+    return str;
+}
+exports.ellipsis = ellipsis;
+/**
+ * Supports `Array.prototype.indexOf()` functionality for old IE (IE8 and below).
+ *
+ * @param {Array} arr The array to find an element of.
+ * @param {*} element The element to find in the array, and return the index of.
+ * @return {Number} The index of the `element`, or -1 if it was not found.
+ */
+function indexOf(arr, element) {
+    if (Array.prototype.indexOf) {
+        return arr.indexOf(element);
+    }
+    else {
+        for (var i = 0, len = arr.length; i < len; i++) {
+            if (arr[i] === element)
+                return i;
+        }
+        return -1;
+    }
+}
+exports.indexOf = indexOf;
+/**
+ * Removes array elements based on a filtering function. Mutates the input
+ * array.
+ *
+ * Using this instead of the ES5 Array.prototype.filter() function, to allow
+ * Autolinker compatibility with IE8, and also to prevent creating many new
+ * arrays in memory for filtering.
+ *
+ * @param {Array} arr The array to remove elements from. This array is
+ *   mutated.
+ * @param {Function} fn A function which should return `true` to
+ *   remove an element.
+ * @return {Array} The mutated input `arr`.
+ */
+function remove(arr, fn) {
+    for (var i = arr.length - 1; i >= 0; i--) {
+        if (fn(arr[i]) === true) {
+            arr.splice(i, 1);
+        }
+    }
+}
+exports.remove = remove;
+/**
+ * Performs the functionality of what modern browsers do when `String.prototype.split()` is called
+ * with a regular expression that contains capturing parenthesis.
+ *
+ * For example:
+ *
+ *     // Modern browsers:
+ *     "a,b,c".split( /(,)/ );  // --> [ 'a', ',', 'b', ',', 'c' ]
+ *
+ *     // Old IE (including IE8):
+ *     "a,b,c".split( /(,)/ );  // --> [ 'a', 'b', 'c' ]
+ *
+ * This method emulates the functionality of modern browsers for the old IE case.
+ *
+ * @param {String} str The string to split.
+ * @param {RegExp} splitRegex The regular expression to split the input `str` on. The splitting
+ *   character(s) will be spliced into the array, as in the "modern browsers" example in the
+ *   description of this method.
+ *   Note #1: the supplied regular expression **must** have the 'g' flag specified.
+ *   Note #2: for simplicity's sake, the regular expression does not need
+ *   to contain capturing parenthesis - it will be assumed that any match has them.
+ * @return {String[]} The split array of strings, with the splitting character(s) included.
+ */
+function splitAndCapture(str, splitRegex) {
+    if (!splitRegex.global)
+        throw new Error("`splitRegex` must have the 'g' flag set");
+    var result = [], lastIdx = 0, match;
+    while (match = splitRegex.exec(str)) {
+        result.push(str.substring(lastIdx, match.index));
+        result.push(match[0]); // push the splitting char(s)
+        lastIdx = match.index + match[0].length;
+    }
+    result.push(str.substring(lastIdx));
+    return result;
+}
+exports.splitAndCapture = splitAndCapture;
+/**
+ * Function that should never be called but is used to check that every
+ * enum value is handled using TypeScript's 'never' type.
+ */
+function throwUnhandledCaseError(theValue) {
+    throw new Error("Unhandled case for value: '" + theValue + "'");
+}
+exports.throwUnhandledCaseError = throwUnhandledCaseError;
+
+
+
+},{}],96:[function(require,module,exports){
 
 /*!
  *  Copyright 2010 LearnBoost <dev@learnboost.com>
@@ -13284,7 +17666,7 @@ function canonicalizeResource (resource) {
 }
 module.exports.canonicalizeResource = canonicalizeResource
 
-},{"crypto":140,"url":407}],72:[function(require,module,exports){
+},{"crypto":165,"url":433}],97:[function(require,module,exports){
 (function (process,Buffer){
 var aws4 = exports,
     url = require('url'),
@@ -13321,7 +17703,7 @@ function RequestSigner(request, credentials) {
   if (typeof request === 'string') request = url.parse(request)
 
   var headers = request.headers = (request.headers || {}),
-      hostParts = this.matchHost(request.hostname || request.host || headers.Host || headers.host)
+      hostParts = (!this.service || !this.region) && this.matchHost(request.hostname || request.host || headers.Host || headers.host)
 
   this.request = request
   this.credentials = credentials || this.defaultCredentials()
@@ -13358,6 +17740,19 @@ RequestSigner.prototype.matchHost = function(host) {
   if (hostParts[1] === 'es')
     hostParts = hostParts.reverse()
 
+  if (hostParts[1] == 's3') {
+    hostParts[0] = 's3'
+    hostParts[1] = 'us-east-1'
+  } else {
+    for (var i = 0; i < 2; i++) {
+      if (/^s3-/.test(hostParts[i])) {
+        hostParts[1] = hostParts[i].slice(3)
+        hostParts[0] = 's3'
+        break
+      }
+    }
+  }
+
   return hostParts
 }
 
@@ -13371,10 +17766,9 @@ RequestSigner.prototype.isSingleRegion = function() {
 }
 
 RequestSigner.prototype.createHost = function() {
-  var region = this.isSingleRegion() ? '' :
-        (this.service === 's3' && this.region !== 'us-east-1' ? '-' : '.') + this.region,
-      service = this.service === 'ses' ? 'email' : this.service
-  return service + region + '.amazonaws.com'
+  var region = this.isSingleRegion() ? '' : '.' + this.region,
+      subdomain = this.service === 'ses' ? 'email' : this.service
+  return subdomain + region + '.amazonaws.com'
 }
 
 RequestSigner.prototype.prepareRequest = function() {
@@ -13633,7 +18027,7 @@ aws4.sign = function(request, credentials) {
 }
 
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"./lru":73,"_process":284,"buffer":128,"crypto":140,"querystring":301,"url":407}],73:[function(require,module,exports){
+},{"./lru":98,"_process":309,"buffer":153,"crypto":165,"querystring":326,"url":433}],98:[function(require,module,exports){
 module.exports = function(size) {
   return new LruCache(size)
 }
@@ -13731,7 +18125,7 @@ function DoublyLinkedNode(key, val) {
   this.next = null
 }
 
-},{}],74:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -13885,7 +18279,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],75:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 'use strict';
 
 var crypto_hash_sha512 = require('tweetnacl').lowlevel.crypto_hash;
@@ -14443,7 +18837,7 @@ module.exports = {
       pbkdf: bcrypt_pbkdf
 };
 
-},{"tweetnacl":398}],76:[function(require,module,exports){
+},{"tweetnacl":424}],101:[function(require,module,exports){
 (function (process,global,setImmediate){
 /* @preserve
  * The MIT License (MIT)
@@ -20224,7 +24618,7 @@ module.exports = ret;
 },{"./es5":13,"async_hooks":undefined}]},{},[4])(4)
 });                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"_process":284,"timers":389}],77:[function(require,module,exports){
+},{"_process":309,"timers":414}],102:[function(require,module,exports){
 (function (module, exports) {
   'use strict';
 
@@ -23300,7 +27694,13 @@ module.exports = ret;
     } else if (cmp > 0) {
       r.isub(this.p);
     } else {
-      r._strip();
+      if (r.strip !== undefined) {
+        // r is a BN v4 instance
+        r.strip();
+      } else {
+        // r is a BN v5 instance
+        r._strip();
+      }
     }
 
     return r;
@@ -23756,7 +28156,7 @@ module.exports = ret;
   };
 })(typeof module === 'undefined' || module, this);
 
-},{"buffer":79}],78:[function(require,module,exports){
+},{"buffer":104}],103:[function(require,module,exports){
 var r;
 
 module.exports = function rand(len) {
@@ -23823,9 +28223,9 @@ if (typeof self === 'object') {
   }
 }
 
-},{"crypto":79}],79:[function(require,module,exports){
+},{"crypto":104}],104:[function(require,module,exports){
 
-},{}],80:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 // based on the aes implimentation in triple sec
 // https://github.com/keybase/triplesec
 // which is in turn based on the one from crypto-js
@@ -24055,7 +28455,7 @@ AES.prototype.scrub = function () {
 
 module.exports.AES = AES
 
-},{"safe-buffer":333}],81:[function(require,module,exports){
+},{"safe-buffer":358}],106:[function(require,module,exports){
 var aes = require('./aes')
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('cipher-base')
@@ -24174,7 +28574,7 @@ StreamCipher.prototype.setAAD = function setAAD (buf) {
 
 module.exports = StreamCipher
 
-},{"./aes":80,"./ghash":85,"./incr32":86,"buffer-xor":127,"cipher-base":131,"inherits":238,"safe-buffer":333}],82:[function(require,module,exports){
+},{"./aes":105,"./ghash":110,"./incr32":111,"buffer-xor":152,"cipher-base":156,"inherits":263,"safe-buffer":358}],107:[function(require,module,exports){
 var ciphers = require('./encrypter')
 var deciphers = require('./decrypter')
 var modes = require('./modes/list.json')
@@ -24189,7 +28589,7 @@ exports.createDecipher = exports.Decipher = deciphers.createDecipher
 exports.createDecipheriv = exports.Decipheriv = deciphers.createDecipheriv
 exports.listCiphers = exports.getCiphers = getCiphers
 
-},{"./decrypter":83,"./encrypter":84,"./modes/list.json":94}],83:[function(require,module,exports){
+},{"./decrypter":108,"./encrypter":109,"./modes/list.json":119}],108:[function(require,module,exports){
 var AuthCipher = require('./authCipher')
 var Buffer = require('safe-buffer').Buffer
 var MODES = require('./modes')
@@ -24315,7 +28715,7 @@ function createDecipher (suite, password) {
 exports.createDecipher = createDecipher
 exports.createDecipheriv = createDecipheriv
 
-},{"./aes":80,"./authCipher":81,"./modes":93,"./streamCipher":96,"cipher-base":131,"evp_bytestokey":174,"inherits":238,"safe-buffer":333}],84:[function(require,module,exports){
+},{"./aes":105,"./authCipher":106,"./modes":118,"./streamCipher":121,"cipher-base":156,"evp_bytestokey":199,"inherits":263,"safe-buffer":358}],109:[function(require,module,exports){
 var MODES = require('./modes')
 var AuthCipher = require('./authCipher')
 var Buffer = require('safe-buffer').Buffer
@@ -24431,7 +28831,7 @@ function createCipher (suite, password) {
 exports.createCipheriv = createCipheriv
 exports.createCipher = createCipher
 
-},{"./aes":80,"./authCipher":81,"./modes":93,"./streamCipher":96,"cipher-base":131,"evp_bytestokey":174,"inherits":238,"safe-buffer":333}],85:[function(require,module,exports){
+},{"./aes":105,"./authCipher":106,"./modes":118,"./streamCipher":121,"cipher-base":156,"evp_bytestokey":199,"inherits":263,"safe-buffer":358}],110:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var ZEROES = Buffer.alloc(16, 0)
 
@@ -24522,7 +28922,7 @@ GHASH.prototype.final = function (abl, bl) {
 
 module.exports = GHASH
 
-},{"safe-buffer":333}],86:[function(require,module,exports){
+},{"safe-buffer":358}],111:[function(require,module,exports){
 function incr32 (iv) {
   var len = iv.length
   var item
@@ -24539,7 +28939,7 @@ function incr32 (iv) {
 }
 module.exports = incr32
 
-},{}],87:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 var xor = require('buffer-xor')
 
 exports.encrypt = function (self, block) {
@@ -24558,7 +28958,7 @@ exports.decrypt = function (self, block) {
   return xor(out, pad)
 }
 
-},{"buffer-xor":127}],88:[function(require,module,exports){
+},{"buffer-xor":152}],113:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var xor = require('buffer-xor')
 
@@ -24593,7 +28993,7 @@ exports.encrypt = function (self, data, decrypt) {
   return out
 }
 
-},{"buffer-xor":127,"safe-buffer":333}],89:[function(require,module,exports){
+},{"buffer-xor":152,"safe-buffer":358}],114:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 function encryptByte (self, byteParam, decrypt) {
@@ -24637,7 +29037,7 @@ exports.encrypt = function (self, chunk, decrypt) {
   return out
 }
 
-},{"safe-buffer":333}],90:[function(require,module,exports){
+},{"safe-buffer":358}],115:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 function encryptByte (self, byteParam, decrypt) {
@@ -24664,7 +29064,7 @@ exports.encrypt = function (self, chunk, decrypt) {
   return out
 }
 
-},{"safe-buffer":333}],91:[function(require,module,exports){
+},{"safe-buffer":358}],116:[function(require,module,exports){
 var xor = require('buffer-xor')
 var Buffer = require('safe-buffer').Buffer
 var incr32 = require('../incr32')
@@ -24696,7 +29096,7 @@ exports.encrypt = function (self, chunk) {
   return xor(chunk, pad)
 }
 
-},{"../incr32":86,"buffer-xor":127,"safe-buffer":333}],92:[function(require,module,exports){
+},{"../incr32":111,"buffer-xor":152,"safe-buffer":358}],117:[function(require,module,exports){
 exports.encrypt = function (self, block) {
   return self._cipher.encryptBlock(block)
 }
@@ -24705,7 +29105,7 @@ exports.decrypt = function (self, block) {
   return self._cipher.decryptBlock(block)
 }
 
-},{}],93:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 var modeModules = {
   ECB: require('./ecb'),
   CBC: require('./cbc'),
@@ -24725,7 +29125,7 @@ for (var key in modes) {
 
 module.exports = modes
 
-},{"./cbc":87,"./cfb":88,"./cfb1":89,"./cfb8":90,"./ctr":91,"./ecb":92,"./list.json":94,"./ofb":95}],94:[function(require,module,exports){
+},{"./cbc":112,"./cfb":113,"./cfb1":114,"./cfb8":115,"./ctr":116,"./ecb":117,"./list.json":119,"./ofb":120}],119:[function(require,module,exports){
 module.exports={
   "aes-128-ecb": {
     "cipher": "AES",
@@ -24918,7 +29318,7 @@ module.exports={
   }
 }
 
-},{}],95:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 (function (Buffer){
 var xor = require('buffer-xor')
 
@@ -24938,7 +29338,7 @@ exports.encrypt = function (self, chunk) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":128,"buffer-xor":127}],96:[function(require,module,exports){
+},{"buffer":153,"buffer-xor":152}],121:[function(require,module,exports){
 var aes = require('./aes')
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('cipher-base')
@@ -24967,7 +29367,7 @@ StreamCipher.prototype._final = function () {
 
 module.exports = StreamCipher
 
-},{"./aes":80,"cipher-base":131,"inherits":238,"safe-buffer":333}],97:[function(require,module,exports){
+},{"./aes":105,"cipher-base":156,"inherits":263,"safe-buffer":358}],122:[function(require,module,exports){
 var DES = require('browserify-des')
 var aes = require('browserify-aes/browser')
 var aesModes = require('browserify-aes/modes')
@@ -25036,7 +29436,7 @@ exports.createDecipher = exports.Decipher = createDecipher
 exports.createDecipheriv = exports.Decipheriv = createDecipheriv
 exports.listCiphers = exports.getCiphers = getCiphers
 
-},{"browserify-aes/browser":82,"browserify-aes/modes":93,"browserify-des":98,"browserify-des/modes":99,"evp_bytestokey":174}],98:[function(require,module,exports){
+},{"browserify-aes/browser":107,"browserify-aes/modes":118,"browserify-des":123,"browserify-des/modes":124,"evp_bytestokey":199}],123:[function(require,module,exports){
 var CipherBase = require('cipher-base')
 var des = require('des.js')
 var inherits = require('inherits')
@@ -25088,7 +29488,7 @@ DES.prototype._final = function () {
   return Buffer.from(this._des.final())
 }
 
-},{"cipher-base":131,"des.js":142,"inherits":238,"safe-buffer":333}],99:[function(require,module,exports){
+},{"cipher-base":156,"des.js":167,"inherits":263,"safe-buffer":358}],124:[function(require,module,exports){
 exports['des-ecb'] = {
   key: 8,
   iv: 0
@@ -25114,7 +29514,7 @@ exports['des-ede'] = {
   iv: 0
 }
 
-},{}],100:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 (function (Buffer){
 var bn = require('bn.js');
 var randomBytes = require('randombytes');
@@ -25158,12 +29558,12 @@ function getr(priv) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"bn.js":101,"buffer":128,"randombytes":302}],101:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"buffer":79,"dup":59}],102:[function(require,module,exports){
+},{"bn.js":126,"buffer":153,"randombytes":327}],126:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"buffer":104,"dup":58}],127:[function(require,module,exports){
 module.exports = require('./browser/algorithms.json')
 
-},{"./browser/algorithms.json":103}],103:[function(require,module,exports){
+},{"./browser/algorithms.json":128}],128:[function(require,module,exports){
 module.exports={
   "sha224WithRSAEncryption": {
     "sign": "rsa",
@@ -25317,7 +29717,7 @@ module.exports={
   }
 }
 
-},{}],104:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 module.exports={
   "1.3.132.0.10": "secp256k1",
   "1.3.132.0.33": "p224",
@@ -25327,7 +29727,7 @@ module.exports={
   "1.3.132.0.35": "p521"
 }
 
-},{}],105:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var createHash = require('create-hash')
 var stream = require('readable-stream')
@@ -25421,7 +29821,7 @@ module.exports = {
   createVerify: createVerify
 }
 
-},{"./algorithms.json":103,"./sign":106,"./verify":107,"create-hash":136,"inherits":238,"readable-stream":122,"safe-buffer":333}],106:[function(require,module,exports){
+},{"./algorithms.json":128,"./sign":131,"./verify":132,"create-hash":161,"inherits":263,"readable-stream":147,"safe-buffer":358}],131:[function(require,module,exports){
 // much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var Buffer = require('safe-buffer').Buffer
 var createHmac = require('create-hmac')
@@ -25566,7 +29966,7 @@ module.exports = sign
 module.exports.getKey = getKey
 module.exports.makeKey = makeKey
 
-},{"./curves.json":104,"bn.js":77,"browserify-rsa":100,"create-hmac":138,"elliptic":156,"parse-asn1":275,"safe-buffer":333}],107:[function(require,module,exports){
+},{"./curves.json":129,"bn.js":102,"browserify-rsa":125,"create-hmac":163,"elliptic":181,"parse-asn1":300,"safe-buffer":358}],132:[function(require,module,exports){
 // much of this based on https://github.com/indutny/self-signed/blob/gh-pages/lib/rsa.js
 var Buffer = require('safe-buffer').Buffer
 var BN = require('bn.js')
@@ -25652,7 +30052,7 @@ function checkValue (b, q) {
 
 module.exports = verify
 
-},{"./curves.json":104,"bn.js":77,"elliptic":156,"parse-asn1":275,"safe-buffer":333}],108:[function(require,module,exports){
+},{"./curves.json":129,"bn.js":102,"elliptic":181,"parse-asn1":300,"safe-buffer":358}],133:[function(require,module,exports){
 'use strict';
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -25781,7 +30181,7 @@ createErrorType('ERR_UNKNOWN_ENCODING', function (arg) {
 createErrorType('ERR_STREAM_UNSHIFT_AFTER_END_EVENT', 'stream.unshift() after end event');
 module.exports.codes = codes;
 
-},{}],109:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -25923,7 +30323,7 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   }
 });
 }).call(this,require('_process'))
-},{"./_stream_readable":111,"./_stream_writable":113,"_process":284,"inherits":238}],110:[function(require,module,exports){
+},{"./_stream_readable":136,"./_stream_writable":138,"_process":309,"inherits":263}],135:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -25963,7 +30363,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":112,"inherits":238}],111:[function(require,module,exports){
+},{"./_stream_transform":137,"inherits":263}],136:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -27090,7 +31490,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":108,"./_stream_duplex":109,"./internal/streams/async_iterator":114,"./internal/streams/buffer_list":115,"./internal/streams/destroy":116,"./internal/streams/from":118,"./internal/streams/state":120,"./internal/streams/stream":121,"_process":284,"buffer":128,"events":173,"inherits":238,"string_decoder/":388,"util":79}],112:[function(require,module,exports){
+},{"../errors":133,"./_stream_duplex":134,"./internal/streams/async_iterator":139,"./internal/streams/buffer_list":140,"./internal/streams/destroy":141,"./internal/streams/from":143,"./internal/streams/state":145,"./internal/streams/stream":146,"_process":309,"buffer":153,"events":198,"inherits":263,"string_decoder/":413,"util":104}],137:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -27292,7 +31692,7 @@ function done(stream, er, data) {
   if (stream._transformState.transforming) throw new ERR_TRANSFORM_ALREADY_TRANSFORMING();
   return stream.push(null);
 }
-},{"../errors":108,"./_stream_duplex":109,"inherits":238}],113:[function(require,module,exports){
+},{"../errors":133,"./_stream_duplex":134,"inherits":263}],138:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -27992,7 +32392,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":108,"./_stream_duplex":109,"./internal/streams/destroy":116,"./internal/streams/state":120,"./internal/streams/stream":121,"_process":284,"buffer":128,"inherits":238,"util-deprecate":409}],114:[function(require,module,exports){
+},{"../errors":133,"./_stream_duplex":134,"./internal/streams/destroy":141,"./internal/streams/state":145,"./internal/streams/stream":146,"_process":309,"buffer":153,"inherits":263,"util-deprecate":435}],139:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -28202,7 +32602,7 @@ var createReadableStreamAsyncIterator = function createReadableStreamAsyncIterat
 
 module.exports = createReadableStreamAsyncIterator;
 }).call(this,require('_process'))
-},{"./end-of-stream":117,"_process":284}],115:[function(require,module,exports){
+},{"./end-of-stream":142,"_process":309}],140:[function(require,module,exports){
 'use strict';
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -28413,7 +32813,7 @@ function () {
 
   return BufferList;
 }();
-},{"buffer":128,"util":79}],116:[function(require,module,exports){
+},{"buffer":153,"util":104}],141:[function(require,module,exports){
 (function (process){
 'use strict'; // undocumented cb() API, needed for core, not for public API
 
@@ -28521,7 +32921,7 @@ module.exports = {
   errorOrDestroy: errorOrDestroy
 };
 }).call(this,require('_process'))
-},{"_process":284}],117:[function(require,module,exports){
+},{"_process":309}],142:[function(require,module,exports){
 // Ported from https://github.com/mafintosh/end-of-stream with
 // permission from the author, Mathias Buus (@mafintosh).
 'use strict';
@@ -28626,12 +33026,12 @@ function eos(stream, opts, callback) {
 }
 
 module.exports = eos;
-},{"../../../errors":108}],118:[function(require,module,exports){
+},{"../../../errors":133}],143:[function(require,module,exports){
 module.exports = function () {
   throw new Error('Readable.from is not available in the browser')
 };
 
-},{}],119:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 // Ported from https://github.com/mafintosh/pump with
 // permission from the author, Mathias Buus (@mafintosh).
 'use strict';
@@ -28729,7 +33129,7 @@ function pipeline() {
 }
 
 module.exports = pipeline;
-},{"../../../errors":108,"./end-of-stream":117}],120:[function(require,module,exports){
+},{"../../../errors":133,"./end-of-stream":142}],145:[function(require,module,exports){
 'use strict';
 
 var ERR_INVALID_OPT_VALUE = require('../../../errors').codes.ERR_INVALID_OPT_VALUE;
@@ -28757,10 +33157,10 @@ function getHighWaterMark(state, options, duplexKey, isDuplex) {
 module.exports = {
   getHighWaterMark: getHighWaterMark
 };
-},{"../../../errors":108}],121:[function(require,module,exports){
+},{"../../../errors":133}],146:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":173}],122:[function(require,module,exports){
+},{"events":198}],147:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -28771,7 +33171,7 @@ exports.PassThrough = require('./lib/_stream_passthrough.js');
 exports.finished = require('./lib/internal/streams/end-of-stream.js');
 exports.pipeline = require('./lib/internal/streams/pipeline.js');
 
-},{"./lib/_stream_duplex.js":109,"./lib/_stream_passthrough.js":110,"./lib/_stream_readable.js":111,"./lib/_stream_transform.js":112,"./lib/_stream_writable.js":113,"./lib/internal/streams/end-of-stream.js":117,"./lib/internal/streams/pipeline.js":119}],123:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":134,"./lib/_stream_passthrough.js":135,"./lib/_stream_readable.js":136,"./lib/_stream_transform.js":137,"./lib/_stream_writable.js":138,"./lib/internal/streams/end-of-stream.js":142,"./lib/internal/streams/pipeline.js":144}],148:[function(require,module,exports){
 (function (process,Buffer){
 'use strict';
 /* eslint camelcase: "off" */
@@ -29183,7 +33583,7 @@ Zlib.prototype._reset = function () {
 
 exports.Zlib = Zlib;
 }).call(this,require('_process'),require("buffer").Buffer)
-},{"_process":284,"assert":67,"buffer":128,"pako/lib/zlib/constants":262,"pako/lib/zlib/deflate.js":264,"pako/lib/zlib/inflate.js":266,"pako/lib/zlib/zstream":270}],124:[function(require,module,exports){
+},{"_process":309,"assert":66,"buffer":153,"pako/lib/zlib/constants":287,"pako/lib/zlib/deflate.js":289,"pako/lib/zlib/inflate.js":291,"pako/lib/zlib/zstream":295}],149:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -29795,9 +34195,9 @@ util.inherits(DeflateRaw, Zlib);
 util.inherits(InflateRaw, Zlib);
 util.inherits(Unzip, Zlib);
 }).call(this,require('_process'))
-},{"./binding":123,"_process":284,"assert":67,"buffer":128,"stream":368,"util":412}],125:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"dup":79}],126:[function(require,module,exports){
+},{"./binding":148,"_process":309,"assert":66,"buffer":153,"stream":393,"util":438}],150:[function(require,module,exports){
+arguments[4][104][0].apply(exports,arguments)
+},{"dup":104}],151:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -30334,7 +34734,7 @@ arguments[4][79][0].apply(exports,arguments)
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],127:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 (function (Buffer){
 module.exports = function xor (a, b) {
   var length = Math.min(a.length, b.length)
@@ -30348,7 +34748,7 @@ module.exports = function xor (a, b) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":128}],128:[function(require,module,exports){
+},{"buffer":153}],153:[function(require,module,exports){
 (function (Buffer){
 /*!
  * The buffer module from node.js, for the browser.
@@ -32129,7 +36529,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"base64-js":74,"buffer":128,"ieee754":237}],129:[function(require,module,exports){
+},{"base64-js":99,"buffer":153,"ieee754":262}],154:[function(require,module,exports){
 module.exports = {
   "100": "Continue",
   "101": "Switching Protocols",
@@ -32195,7 +36595,7 @@ module.exports = {
   "511": "Network Authentication Required"
 }
 
-},{}],130:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 function Caseless (dict) {
   this.dict = dict || {}
 }
@@ -32264,7 +36664,7 @@ module.exports.httpify = function (resp, headers) {
   return c
 }
 
-},{}],131:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('stream').Transform
 var StringDecoder = require('string_decoder').StringDecoder
@@ -32365,7 +36765,7 @@ CipherBase.prototype._toString = function (value, enc, fin) {
 
 module.exports = CipherBase
 
-},{"inherits":238,"safe-buffer":333,"stream":368,"string_decoder":388}],132:[function(require,module,exports){
+},{"inherits":263,"safe-buffer":358,"stream":393,"string_decoder":413}],157:[function(require,module,exports){
 (function (Buffer){
 var util = require('util');
 var Stream = require('stream').Stream;
@@ -32577,7 +36977,7 @@ CombinedStream.prototype._emitError = function(err) {
 };
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":239,"delayed-stream":141,"stream":368,"util":412}],133:[function(require,module,exports){
+},{"../../is-buffer/index.js":264,"delayed-stream":166,"stream":393,"util":438}],158:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -32688,7 +37088,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":239}],134:[function(require,module,exports){
+},{"../../is-buffer/index.js":264}],159:[function(require,module,exports){
 (function (Buffer){
 var elliptic = require('elliptic')
 var BN = require('bn.js')
@@ -32816,9 +37216,9 @@ function formatReturnValue (bn, enc, len) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"bn.js":135,"buffer":128,"elliptic":156}],135:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"buffer":79,"dup":59}],136:[function(require,module,exports){
+},{"bn.js":160,"buffer":153,"elliptic":181}],160:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"buffer":104,"dup":58}],161:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var MD5 = require('md5.js')
@@ -32850,14 +37250,14 @@ module.exports = function createHash (alg) {
   return new Hash(sha(alg))
 }
 
-},{"cipher-base":131,"inherits":238,"md5.js":248,"ripemd160":332,"sha.js":336}],137:[function(require,module,exports){
+},{"cipher-base":156,"inherits":263,"md5.js":273,"ripemd160":357,"sha.js":361}],162:[function(require,module,exports){
 var MD5 = require('md5.js')
 
 module.exports = function (buffer) {
   return new MD5().update(buffer).digest()
 }
 
-},{"md5.js":248}],138:[function(require,module,exports){
+},{"md5.js":273}],163:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var Legacy = require('./legacy')
@@ -32921,7 +37321,7 @@ module.exports = function createHmac (alg, key) {
   return new Hmac(alg, key)
 }
 
-},{"./legacy":139,"cipher-base":131,"create-hash/md5":137,"inherits":238,"ripemd160":332,"safe-buffer":333,"sha.js":336}],139:[function(require,module,exports){
+},{"./legacy":164,"cipher-base":156,"create-hash/md5":162,"inherits":263,"ripemd160":357,"safe-buffer":358,"sha.js":361}],164:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var Buffer = require('safe-buffer').Buffer
@@ -32969,7 +37369,7 @@ Hmac.prototype._final = function () {
 }
 module.exports = Hmac
 
-},{"cipher-base":131,"inherits":238,"safe-buffer":333}],140:[function(require,module,exports){
+},{"cipher-base":156,"inherits":263,"safe-buffer":358}],165:[function(require,module,exports){
 'use strict'
 
 exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require('randombytes')
@@ -33068,7 +37468,7 @@ exports.constants = {
   'POINT_CONVERSION_HYBRID': 6
 }
 
-},{"browserify-cipher":97,"browserify-sign":105,"browserify-sign/algos":102,"create-ecdh":134,"create-hash":136,"create-hmac":138,"diffie-hellman":148,"pbkdf2":277,"public-encrypt":287,"randombytes":302,"randomfill":303}],141:[function(require,module,exports){
+},{"browserify-cipher":122,"browserify-sign":130,"browserify-sign/algos":127,"create-ecdh":159,"create-hash":161,"create-hmac":163,"diffie-hellman":173,"pbkdf2":302,"public-encrypt":312,"randombytes":327,"randomfill":328}],166:[function(require,module,exports){
 var Stream = require('stream').Stream;
 var util = require('util');
 
@@ -33177,7 +37577,7 @@ DelayedStream.prototype._checkIfMaxDataSizeExceeded = function() {
   this.emit('error', new Error(message));
 };
 
-},{"stream":368,"util":412}],142:[function(require,module,exports){
+},{"stream":393,"util":438}],167:[function(require,module,exports){
 'use strict';
 
 exports.utils = require('./des/utils');
@@ -33186,7 +37586,7 @@ exports.DES = require('./des/des');
 exports.CBC = require('./des/cbc');
 exports.EDE = require('./des/ede');
 
-},{"./des/cbc":143,"./des/cipher":144,"./des/des":145,"./des/ede":146,"./des/utils":147}],143:[function(require,module,exports){
+},{"./des/cbc":168,"./des/cipher":169,"./des/des":170,"./des/ede":171,"./des/utils":172}],168:[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -33253,7 +37653,7 @@ proto._update = function _update(inp, inOff, out, outOff) {
   }
 };
 
-},{"inherits":238,"minimalistic-assert":256}],144:[function(require,module,exports){
+},{"inherits":263,"minimalistic-assert":281}],169:[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -33396,7 +37796,7 @@ Cipher.prototype._finalDecrypt = function _finalDecrypt() {
   return this._unpad(out);
 };
 
-},{"minimalistic-assert":256}],145:[function(require,module,exports){
+},{"minimalistic-assert":281}],170:[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -33540,7 +37940,7 @@ DES.prototype._decrypt = function _decrypt(state, lStart, rStart, out, off) {
   utils.rip(l, r, out, off);
 };
 
-},{"./cipher":144,"./utils":147,"inherits":238,"minimalistic-assert":256}],146:[function(require,module,exports){
+},{"./cipher":169,"./utils":172,"inherits":263,"minimalistic-assert":281}],171:[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -33596,7 +37996,7 @@ EDE.prototype._update = function _update(inp, inOff, out, outOff) {
 EDE.prototype._pad = DES.prototype._pad;
 EDE.prototype._unpad = DES.prototype._unpad;
 
-},{"./cipher":144,"./des":145,"inherits":238,"minimalistic-assert":256}],147:[function(require,module,exports){
+},{"./cipher":169,"./des":170,"inherits":263,"minimalistic-assert":281}],172:[function(require,module,exports){
 'use strict';
 
 exports.readUInt32BE = function readUInt32BE(bytes, off) {
@@ -33854,7 +38254,7 @@ exports.padSplit = function padSplit(num, size, group) {
   return out.join(' ');
 };
 
-},{}],148:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 (function (Buffer){
 var generatePrime = require('./lib/generatePrime')
 var primes = require('./lib/primes.json')
@@ -33900,7 +38300,7 @@ exports.DiffieHellmanGroup = exports.createDiffieHellmanGroup = exports.getDiffi
 exports.createDiffieHellman = exports.DiffieHellman = createDiffieHellman
 
 }).call(this,require("buffer").Buffer)
-},{"./lib/dh":149,"./lib/generatePrime":150,"./lib/primes.json":151,"buffer":128}],149:[function(require,module,exports){
+},{"./lib/dh":174,"./lib/generatePrime":175,"./lib/primes.json":176,"buffer":153}],174:[function(require,module,exports){
 (function (Buffer){
 var BN = require('bn.js');
 var MillerRabin = require('miller-rabin');
@@ -34068,7 +38468,7 @@ function formatReturnValue(bn, enc) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"./generatePrime":150,"bn.js":152,"buffer":128,"miller-rabin":249,"randombytes":302}],150:[function(require,module,exports){
+},{"./generatePrime":175,"bn.js":177,"buffer":153,"miller-rabin":274,"randombytes":327}],175:[function(require,module,exports){
 var randomBytes = require('randombytes');
 module.exports = findPrime;
 findPrime.simpleSieve = simpleSieve;
@@ -34175,7 +38575,7 @@ function findPrime(bits, gen) {
 
 }
 
-},{"bn.js":152,"miller-rabin":249,"randombytes":302}],151:[function(require,module,exports){
+},{"bn.js":177,"miller-rabin":274,"randombytes":327}],176:[function(require,module,exports){
 module.exports={
     "modp1": {
         "gen": "02",
@@ -34210,9 +38610,9 @@ module.exports={
         "prime": "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff"
     }
 }
-},{}],152:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"buffer":79,"dup":59}],153:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"buffer":104,"dup":58}],178:[function(require,module,exports){
 var crypto = require("crypto");
 var BigInteger = require("jsbn").BigInteger;
 var ECPointFp = require("./lib/ec.js").ECPointFp;
@@ -34272,7 +38672,7 @@ exports.ECKey = function(curve, key, isPublic)
 }
 
 
-},{"./lib/ec.js":154,"./lib/sec.js":155,"crypto":140,"jsbn":243,"safer-buffer":334}],154:[function(require,module,exports){
+},{"./lib/ec.js":179,"./lib/sec.js":180,"crypto":165,"jsbn":268,"safer-buffer":359}],179:[function(require,module,exports){
 // Basic Javascript Elliptic Curve implementation
 // Ported loosely from BouncyCastle's Java EC code
 // Only Fp curves implemented for now
@@ -34835,7 +39235,7 @@ var exports = {
 
 module.exports = exports
 
-},{"jsbn":243}],155:[function(require,module,exports){
+},{"jsbn":268}],180:[function(require,module,exports){
 // Named EC curves
 
 // Requires ec.js, jsbn.js, and jsbn2.js
@@ -35007,7 +39407,7 @@ module.exports = {
   "secp256r1":secp256r1
 }
 
-},{"./ec.js":154,"jsbn":243}],156:[function(require,module,exports){
+},{"./ec.js":179,"jsbn":268}],181:[function(require,module,exports){
 'use strict';
 
 var elliptic = exports;
@@ -35022,7 +39422,7 @@ elliptic.curves = require('./elliptic/curves');
 elliptic.ec = require('./elliptic/ec');
 elliptic.eddsa = require('./elliptic/eddsa');
 
-},{"../package.json":172,"./elliptic/curve":159,"./elliptic/curves":162,"./elliptic/ec":163,"./elliptic/eddsa":166,"./elliptic/utils":170,"brorand":78}],157:[function(require,module,exports){
+},{"../package.json":197,"./elliptic/curve":184,"./elliptic/curves":187,"./elliptic/ec":188,"./elliptic/eddsa":191,"./elliptic/utils":195,"brorand":103}],182:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -35400,7 +39800,7 @@ BasePoint.prototype.dblp = function dblp(k) {
   return r;
 };
 
-},{"../utils":170,"bn.js":171}],158:[function(require,module,exports){
+},{"../utils":195,"bn.js":196}],183:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -35834,7 +40234,7 @@ Point.prototype.eqXToP = function eqXToP(x) {
 Point.prototype.toP = Point.prototype.normalize;
 Point.prototype.mixedAdd = Point.prototype.add;
 
-},{"../utils":170,"./base":157,"bn.js":171,"inherits":238}],159:[function(require,module,exports){
+},{"../utils":195,"./base":182,"bn.js":196,"inherits":263}],184:[function(require,module,exports){
 'use strict';
 
 var curve = exports;
@@ -35844,7 +40244,7 @@ curve.short = require('./short');
 curve.mont = require('./mont');
 curve.edwards = require('./edwards');
 
-},{"./base":157,"./edwards":158,"./mont":160,"./short":161}],160:[function(require,module,exports){
+},{"./base":182,"./edwards":183,"./mont":185,"./short":186}],185:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -36024,7 +40424,7 @@ Point.prototype.getX = function getX() {
   return this.x.fromRed();
 };
 
-},{"../utils":170,"./base":157,"bn.js":171,"inherits":238}],161:[function(require,module,exports){
+},{"../utils":195,"./base":182,"bn.js":196,"inherits":263}],186:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -36963,7 +41363,7 @@ JPoint.prototype.isInfinity = function isInfinity() {
   return this.z.cmpn(0) === 0;
 };
 
-},{"../utils":170,"./base":157,"bn.js":171,"inherits":238}],162:[function(require,module,exports){
+},{"../utils":195,"./base":182,"bn.js":196,"inherits":263}],187:[function(require,module,exports){
 'use strict';
 
 var curves = exports;
@@ -37171,7 +41571,7 @@ defineCurve('secp256k1', {
   ]
 });
 
-},{"./curve":159,"./precomputed/secp256k1":169,"./utils":170,"hash.js":218}],163:[function(require,module,exports){
+},{"./curve":184,"./precomputed/secp256k1":194,"./utils":195,"hash.js":243}],188:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -37414,7 +41814,7 @@ EC.prototype.getKeyRecoveryParam = function(e, signature, Q, enc) {
   throw new Error('Unable to find valid recovery factor');
 };
 
-},{"../curves":162,"../utils":170,"./key":164,"./signature":165,"bn.js":171,"brorand":78,"hmac-drbg":230}],164:[function(require,module,exports){
+},{"../curves":187,"../utils":195,"./key":189,"./signature":190,"bn.js":196,"brorand":103,"hmac-drbg":255}],189:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -37534,7 +41934,7 @@ KeyPair.prototype.inspect = function inspect() {
          ' pub: ' + (this.pub && this.pub.inspect()) + ' >';
 };
 
-},{"../utils":170,"bn.js":171}],165:[function(require,module,exports){
+},{"../utils":195,"bn.js":196}],190:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -37670,7 +42070,7 @@ Signature.prototype.toDER = function toDER(enc) {
   return utils.encode(res, enc);
 };
 
-},{"../utils":170,"bn.js":171}],166:[function(require,module,exports){
+},{"../utils":195,"bn.js":196}],191:[function(require,module,exports){
 'use strict';
 
 var hash = require('hash.js');
@@ -37790,7 +42190,7 @@ EDDSA.prototype.isPoint = function isPoint(val) {
   return val instanceof this.pointClass;
 };
 
-},{"../curves":162,"../utils":170,"./key":167,"./signature":168,"hash.js":218}],167:[function(require,module,exports){
+},{"../curves":187,"../utils":195,"./key":192,"./signature":193,"hash.js":243}],192:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -37887,7 +42287,7 @@ KeyPair.prototype.getPublic = function getPublic(enc) {
 
 module.exports = KeyPair;
 
-},{"../utils":170}],168:[function(require,module,exports){
+},{"../utils":195}],193:[function(require,module,exports){
 'use strict';
 
 var BN = require('bn.js');
@@ -37954,7 +42354,7 @@ Signature.prototype.toHex = function toHex() {
 
 module.exports = Signature;
 
-},{"../utils":170,"bn.js":171}],169:[function(require,module,exports){
+},{"../utils":195,"bn.js":196}],194:[function(require,module,exports){
 module.exports = {
   doubles: {
     step: 4,
@@ -38736,7 +43136,7 @@ module.exports = {
   }
 };
 
-},{}],170:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 'use strict';
 
 var utils = exports;
@@ -38857,9 +43257,9 @@ function intFromLE(bytes) {
 utils.intFromLE = intFromLE;
 
 
-},{"bn.js":171,"minimalistic-assert":256,"minimalistic-crypto-utils":257}],171:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"buffer":79,"dup":59}],172:[function(require,module,exports){
+},{"bn.js":196,"minimalistic-assert":281,"minimalistic-crypto-utils":282}],196:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"buffer":104,"dup":58}],197:[function(require,module,exports){
 module.exports={
   "_from": "elliptic@^6.5.2",
   "_id": "elliptic@6.5.2",
@@ -38884,7 +43284,7 @@ module.exports={
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.5.2.tgz",
   "_shasum": "05c5678d7173c049d8ca433552224a495d0e3762",
   "_spec": "elliptic@^6.5.2",
-  "_where": "/Users/darcyvitacca/Desktop/VS/twitViewChromeExtension/twitView/node_modules/browserify-sign",
+  "_where": "/Users/darcyvitacca/Desktop/VS/twitView/node_modules/browserify-sign",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -38948,7 +43348,7 @@ module.exports={
   "version": "6.5.2"
 }
 
-},{}],173:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -39473,7 +43873,7 @@ function functionBindPolyfill(context) {
   };
 }
 
-},{}],174:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 var MD5 = require('md5.js')
 
@@ -39520,7 +43920,7 @@ function EVP_BytesToKey (password, salt, keyBits, ivLen) {
 
 module.exports = EVP_BytesToKey
 
-},{"md5.js":248,"safe-buffer":333}],175:[function(require,module,exports){
+},{"md5.js":273,"safe-buffer":358}],200:[function(require,module,exports){
 'use strict';
 
 var hasOwn = Object.prototype.hasOwnProperty;
@@ -39639,7 +44039,7 @@ module.exports = function extend() {
 	return target;
 };
 
-},{}],176:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 (function (process){
 /*
  * extsprintf.js: extended POSIX-style sprintf
@@ -39826,7 +44226,7 @@ function dumpException(ex)
 }
 
 }).call(this,require('_process'))
-},{"_process":284,"assert":67,"util":412}],177:[function(require,module,exports){
+},{"_process":309,"assert":66,"util":438}],202:[function(require,module,exports){
 'use strict';
 
 // do not edit .js files directly - edit src/index.jst
@@ -39874,7 +44274,7 @@ module.exports = function equal(a, b) {
   return a!==a && b!==b;
 };
 
-},{}],178:[function(require,module,exports){
+},{}],203:[function(require,module,exports){
 'use strict';
 
 module.exports = function (data, opts) {
@@ -39935,7 +44335,7 @@ module.exports = function (data, opts) {
     })(data);
 };
 
-},{}],179:[function(require,module,exports){
+},{}],204:[function(require,module,exports){
 module.exports = ForeverAgent
 ForeverAgent.SSL = ForeverAgentSSL
 
@@ -40075,11 +44475,11 @@ function createConnectionSSL (port, host, options) {
   return tls.connect(options);
 }
 
-},{"http":369,"https":236,"net":125,"tls":125,"util":412}],180:[function(require,module,exports){
+},{"http":394,"https":261,"net":150,"tls":150,"util":438}],205:[function(require,module,exports){
 /* eslint-env browser */
 module.exports = typeof self == 'object' ? self.FormData : window.FormData;
 
-},{}],181:[function(require,module,exports){
+},{}],206:[function(require,module,exports){
 module.exports={
   "$id": "afterRequest.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40111,7 +44511,7 @@ module.exports={
   }
 }
 
-},{}],182:[function(require,module,exports){
+},{}],207:[function(require,module,exports){
 module.exports={
   "$id": "beforeRequest.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40143,7 +44543,7 @@ module.exports={
   }
 }
 
-},{}],183:[function(require,module,exports){
+},{}],208:[function(require,module,exports){
 module.exports={
   "$id": "browser.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40165,7 +44565,7 @@ module.exports={
   }
 }
 
-},{}],184:[function(require,module,exports){
+},{}],209:[function(require,module,exports){
 module.exports={
   "$id": "cache.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40188,7 +44588,7 @@ module.exports={
   }
 }
 
-},{}],185:[function(require,module,exports){
+},{}],210:[function(require,module,exports){
 module.exports={
   "$id": "content.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40219,7 +44619,7 @@ module.exports={
   }
 }
 
-},{}],186:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 module.exports={
   "$id": "cookie.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40257,7 +44657,7 @@ module.exports={
   }
 }
 
-},{}],187:[function(require,module,exports){
+},{}],212:[function(require,module,exports){
 module.exports={
   "$id": "creator.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40279,7 +44679,7 @@ module.exports={
   }
 }
 
-},{}],188:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 module.exports={
   "$id": "entry.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40334,7 +44734,7 @@ module.exports={
   }
 }
 
-},{}],189:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 module.exports={
   "$id": "har.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40349,7 +44749,7 @@ module.exports={
   }
 }
 
-},{}],190:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 module.exports={
   "$id": "header.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40371,7 +44771,7 @@ module.exports={
   }
 }
 
-},{}],191:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 'use strict'
 
 module.exports = {
@@ -40395,7 +44795,7 @@ module.exports = {
   timings: require('./timings.json')
 }
 
-},{"./afterRequest.json":181,"./beforeRequest.json":182,"./browser.json":183,"./cache.json":184,"./content.json":185,"./cookie.json":186,"./creator.json":187,"./entry.json":188,"./har.json":189,"./header.json":190,"./log.json":192,"./page.json":193,"./pageTimings.json":194,"./postData.json":195,"./query.json":196,"./request.json":197,"./response.json":198,"./timings.json":199}],192:[function(require,module,exports){
+},{"./afterRequest.json":206,"./beforeRequest.json":207,"./browser.json":208,"./cache.json":209,"./content.json":210,"./cookie.json":211,"./creator.json":212,"./entry.json":213,"./har.json":214,"./header.json":215,"./log.json":217,"./page.json":218,"./pageTimings.json":219,"./postData.json":220,"./query.json":221,"./request.json":222,"./response.json":223,"./timings.json":224}],217:[function(require,module,exports){
 module.exports={
   "$id": "log.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40433,7 +44833,7 @@ module.exports={
   }
 }
 
-},{}],193:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 module.exports={
   "$id": "page.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40467,7 +44867,7 @@ module.exports={
   }
 }
 
-},{}],194:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 module.exports={
   "$id": "pageTimings.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40487,7 +44887,7 @@ module.exports={
   }
 }
 
-},{}],195:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 module.exports={
   "$id": "postData.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40532,7 +44932,7 @@ module.exports={
   }
 }
 
-},{}],196:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 module.exports={
   "$id": "query.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40554,7 +44954,7 @@ module.exports={
   }
 }
 
-},{}],197:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 module.exports={
   "$id": "request.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40613,7 +45013,7 @@ module.exports={
   }
 }
 
-},{}],198:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 module.exports={
   "$id": "response.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40669,7 +45069,7 @@ module.exports={
   }
 }
 
-},{}],199:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 module.exports={
   "$id": "timings.json#",
   "$schema": "http://json-schema.org/draft-06/schema#",
@@ -40713,7 +45113,7 @@ module.exports={
   }
 }
 
-},{}],200:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 function HARError (errors) {
   var message = 'validation failed'
 
@@ -40732,7 +45132,7 @@ HARError.prototype = Error.prototype
 
 module.exports = HARError
 
-},{}],201:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 var Ajv = require('ajv')
 var HARError = require('./error')
 var schemas = require('har-schema')
@@ -40836,7 +45236,7 @@ exports.timings = function (data) {
   return validate('timings', data)
 }
 
-},{"./error":200,"ajv":2,"ajv/lib/refs/json-schema-draft-06.json":43,"har-schema":191}],202:[function(require,module,exports){
+},{"./error":225,"ajv":1,"ajv/lib/refs/json-schema-draft-06.json":42,"har-schema":216}],227:[function(require,module,exports){
 'use strict'
 var Buffer = require('safe-buffer').Buffer
 var Transform = require('readable-stream').Transform
@@ -40933,37 +45333,37 @@ HashBase.prototype._digest = function () {
 
 module.exports = HashBase
 
-},{"inherits":238,"readable-stream":217,"safe-buffer":333}],203:[function(require,module,exports){
-arguments[4][108][0].apply(exports,arguments)
-},{"dup":108}],204:[function(require,module,exports){
-arguments[4][109][0].apply(exports,arguments)
-},{"./_stream_readable":206,"./_stream_writable":208,"_process":284,"dup":109,"inherits":238}],205:[function(require,module,exports){
-arguments[4][110][0].apply(exports,arguments)
-},{"./_stream_transform":207,"dup":110,"inherits":238}],206:[function(require,module,exports){
-arguments[4][111][0].apply(exports,arguments)
-},{"../errors":203,"./_stream_duplex":204,"./internal/streams/async_iterator":209,"./internal/streams/buffer_list":210,"./internal/streams/destroy":211,"./internal/streams/from":213,"./internal/streams/state":215,"./internal/streams/stream":216,"_process":284,"buffer":128,"dup":111,"events":173,"inherits":238,"string_decoder/":388,"util":79}],207:[function(require,module,exports){
-arguments[4][112][0].apply(exports,arguments)
-},{"../errors":203,"./_stream_duplex":204,"dup":112,"inherits":238}],208:[function(require,module,exports){
-arguments[4][113][0].apply(exports,arguments)
-},{"../errors":203,"./_stream_duplex":204,"./internal/streams/destroy":211,"./internal/streams/state":215,"./internal/streams/stream":216,"_process":284,"buffer":128,"dup":113,"inherits":238,"util-deprecate":409}],209:[function(require,module,exports){
-arguments[4][114][0].apply(exports,arguments)
-},{"./end-of-stream":212,"_process":284,"dup":114}],210:[function(require,module,exports){
-arguments[4][115][0].apply(exports,arguments)
-},{"buffer":128,"dup":115,"util":79}],211:[function(require,module,exports){
-arguments[4][116][0].apply(exports,arguments)
-},{"_process":284,"dup":116}],212:[function(require,module,exports){
-arguments[4][117][0].apply(exports,arguments)
-},{"../../../errors":203,"dup":117}],213:[function(require,module,exports){
-arguments[4][118][0].apply(exports,arguments)
-},{"dup":118}],214:[function(require,module,exports){
-arguments[4][119][0].apply(exports,arguments)
-},{"../../../errors":203,"./end-of-stream":212,"dup":119}],215:[function(require,module,exports){
-arguments[4][120][0].apply(exports,arguments)
-},{"../../../errors":203,"dup":120}],216:[function(require,module,exports){
-arguments[4][121][0].apply(exports,arguments)
-},{"dup":121,"events":173}],217:[function(require,module,exports){
-arguments[4][122][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":204,"./lib/_stream_passthrough.js":205,"./lib/_stream_readable.js":206,"./lib/_stream_transform.js":207,"./lib/_stream_writable.js":208,"./lib/internal/streams/end-of-stream.js":212,"./lib/internal/streams/pipeline.js":214,"dup":122}],218:[function(require,module,exports){
+},{"inherits":263,"readable-stream":242,"safe-buffer":358}],228:[function(require,module,exports){
+arguments[4][133][0].apply(exports,arguments)
+},{"dup":133}],229:[function(require,module,exports){
+arguments[4][134][0].apply(exports,arguments)
+},{"./_stream_readable":231,"./_stream_writable":233,"_process":309,"dup":134,"inherits":263}],230:[function(require,module,exports){
+arguments[4][135][0].apply(exports,arguments)
+},{"./_stream_transform":232,"dup":135,"inherits":263}],231:[function(require,module,exports){
+arguments[4][136][0].apply(exports,arguments)
+},{"../errors":228,"./_stream_duplex":229,"./internal/streams/async_iterator":234,"./internal/streams/buffer_list":235,"./internal/streams/destroy":236,"./internal/streams/from":238,"./internal/streams/state":240,"./internal/streams/stream":241,"_process":309,"buffer":153,"dup":136,"events":198,"inherits":263,"string_decoder/":413,"util":104}],232:[function(require,module,exports){
+arguments[4][137][0].apply(exports,arguments)
+},{"../errors":228,"./_stream_duplex":229,"dup":137,"inherits":263}],233:[function(require,module,exports){
+arguments[4][138][0].apply(exports,arguments)
+},{"../errors":228,"./_stream_duplex":229,"./internal/streams/destroy":236,"./internal/streams/state":240,"./internal/streams/stream":241,"_process":309,"buffer":153,"dup":138,"inherits":263,"util-deprecate":435}],234:[function(require,module,exports){
+arguments[4][139][0].apply(exports,arguments)
+},{"./end-of-stream":237,"_process":309,"dup":139}],235:[function(require,module,exports){
+arguments[4][140][0].apply(exports,arguments)
+},{"buffer":153,"dup":140,"util":104}],236:[function(require,module,exports){
+arguments[4][141][0].apply(exports,arguments)
+},{"_process":309,"dup":141}],237:[function(require,module,exports){
+arguments[4][142][0].apply(exports,arguments)
+},{"../../../errors":228,"dup":142}],238:[function(require,module,exports){
+arguments[4][143][0].apply(exports,arguments)
+},{"dup":143}],239:[function(require,module,exports){
+arguments[4][144][0].apply(exports,arguments)
+},{"../../../errors":228,"./end-of-stream":237,"dup":144}],240:[function(require,module,exports){
+arguments[4][145][0].apply(exports,arguments)
+},{"../../../errors":228,"dup":145}],241:[function(require,module,exports){
+arguments[4][146][0].apply(exports,arguments)
+},{"dup":146,"events":198}],242:[function(require,module,exports){
+arguments[4][147][0].apply(exports,arguments)
+},{"./lib/_stream_duplex.js":229,"./lib/_stream_passthrough.js":230,"./lib/_stream_readable.js":231,"./lib/_stream_transform.js":232,"./lib/_stream_writable.js":233,"./lib/internal/streams/end-of-stream.js":237,"./lib/internal/streams/pipeline.js":239,"dup":147}],243:[function(require,module,exports){
 var hash = exports;
 
 hash.utils = require('./hash/utils');
@@ -40980,7 +45380,7 @@ hash.sha384 = hash.sha.sha384;
 hash.sha512 = hash.sha.sha512;
 hash.ripemd160 = hash.ripemd.ripemd160;
 
-},{"./hash/common":219,"./hash/hmac":220,"./hash/ripemd":221,"./hash/sha":222,"./hash/utils":229}],219:[function(require,module,exports){
+},{"./hash/common":244,"./hash/hmac":245,"./hash/ripemd":246,"./hash/sha":247,"./hash/utils":254}],244:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -41074,7 +45474,7 @@ BlockHash.prototype._pad = function pad() {
   return res;
 };
 
-},{"./utils":229,"minimalistic-assert":256}],220:[function(require,module,exports){
+},{"./utils":254,"minimalistic-assert":281}],245:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -41123,7 +45523,7 @@ Hmac.prototype.digest = function digest(enc) {
   return this.outer.digest(enc);
 };
 
-},{"./utils":229,"minimalistic-assert":256}],221:[function(require,module,exports){
+},{"./utils":254,"minimalistic-assert":281}],246:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -41271,7 +45671,7 @@ var sh = [
   8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11
 ];
 
-},{"./common":219,"./utils":229}],222:[function(require,module,exports){
+},{"./common":244,"./utils":254}],247:[function(require,module,exports){
 'use strict';
 
 exports.sha1 = require('./sha/1');
@@ -41280,7 +45680,7 @@ exports.sha256 = require('./sha/256');
 exports.sha384 = require('./sha/384');
 exports.sha512 = require('./sha/512');
 
-},{"./sha/1":223,"./sha/224":224,"./sha/256":225,"./sha/384":226,"./sha/512":227}],223:[function(require,module,exports){
+},{"./sha/1":248,"./sha/224":249,"./sha/256":250,"./sha/384":251,"./sha/512":252}],248:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -41356,7 +45756,7 @@ SHA1.prototype._digest = function digest(enc) {
     return utils.split32(this.h, 'big');
 };
 
-},{"../common":219,"../utils":229,"./common":228}],224:[function(require,module,exports){
+},{"../common":244,"../utils":254,"./common":253}],249:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -41388,7 +45788,7 @@ SHA224.prototype._digest = function digest(enc) {
 };
 
 
-},{"../utils":229,"./256":225}],225:[function(require,module,exports){
+},{"../utils":254,"./256":250}],250:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -41495,7 +45895,7 @@ SHA256.prototype._digest = function digest(enc) {
     return utils.split32(this.h, 'big');
 };
 
-},{"../common":219,"../utils":229,"./common":228,"minimalistic-assert":256}],226:[function(require,module,exports){
+},{"../common":244,"../utils":254,"./common":253,"minimalistic-assert":281}],251:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -41532,7 +45932,7 @@ SHA384.prototype._digest = function digest(enc) {
     return utils.split32(this.h.slice(0, 12), 'big');
 };
 
-},{"../utils":229,"./512":227}],227:[function(require,module,exports){
+},{"../utils":254,"./512":252}],252:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -41864,7 +46264,7 @@ function g1_512_lo(xh, xl) {
   return r;
 }
 
-},{"../common":219,"../utils":229,"minimalistic-assert":256}],228:[function(require,module,exports){
+},{"../common":244,"../utils":254,"minimalistic-assert":281}],253:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -41915,7 +46315,7 @@ function g1_256(x) {
 }
 exports.g1_256 = g1_256;
 
-},{"../utils":229}],229:[function(require,module,exports){
+},{"../utils":254}],254:[function(require,module,exports){
 'use strict';
 
 var assert = require('minimalistic-assert');
@@ -42195,7 +46595,7 @@ function shr64_lo(ah, al, num) {
 }
 exports.shr64_lo = shr64_lo;
 
-},{"inherits":238,"minimalistic-assert":256}],230:[function(require,module,exports){
+},{"inherits":263,"minimalistic-assert":281}],255:[function(require,module,exports){
 'use strict';
 
 var hash = require('hash.js');
@@ -42310,7 +46710,7 @@ HmacDRBG.prototype.generate = function generate(len, enc, add, addEnc) {
   return utils.encode(res, enc);
 };
 
-},{"hash.js":218,"minimalistic-assert":256,"minimalistic-crypto-utils":257}],231:[function(require,module,exports){
+},{"hash.js":243,"minimalistic-assert":281,"minimalistic-crypto-utils":282}],256:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 var parser = require('./parser');
@@ -42341,7 +46741,7 @@ module.exports = {
   verifyHMAC: verify.verifyHMAC
 };
 
-},{"./parser":232,"./signer":233,"./utils":234,"./verify":235}],232:[function(require,module,exports){
+},{"./parser":257,"./signer":258,"./utils":259,"./verify":260}],257:[function(require,module,exports){
 // Copyright 2012 Joyent, Inc.  All rights reserved.
 
 var assert = require('assert-plus');
@@ -42658,7 +47058,7 @@ module.exports = {
 
 };
 
-},{"./utils":234,"assert-plus":66,"util":412}],233:[function(require,module,exports){
+},{"./utils":259,"assert-plus":65,"util":438}],258:[function(require,module,exports){
 (function (Buffer){
 // Copyright 2012 Joyent, Inc.  All rights reserved.
 
@@ -43063,7 +47463,7 @@ module.exports = {
 };
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":239,"./utils":234,"assert-plus":66,"crypto":140,"http":369,"jsprim":247,"sshpk":362,"util":412}],234:[function(require,module,exports){
+},{"../../is-buffer/index.js":264,"./utils":259,"assert-plus":65,"crypto":165,"http":394,"jsprim":272,"sshpk":387,"util":438}],259:[function(require,module,exports){
 // Copyright 2012 Joyent, Inc.  All rights reserved.
 
 var assert = require('assert-plus');
@@ -43177,7 +47577,7 @@ module.exports = {
   }
 };
 
-},{"assert-plus":66,"sshpk":362,"util":412}],235:[function(require,module,exports){
+},{"assert-plus":65,"sshpk":387,"util":438}],260:[function(require,module,exports){
 (function (Buffer){
 // Copyright 2015 Joyent, Inc.
 
@@ -43269,7 +47669,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"./utils":234,"assert-plus":66,"buffer":128,"crypto":140,"sshpk":362}],236:[function(require,module,exports){
+},{"./utils":259,"assert-plus":65,"buffer":153,"crypto":165,"sshpk":387}],261:[function(require,module,exports){
 var http = require('http')
 var url = require('url')
 
@@ -43302,7 +47702,7 @@ function validateParams (params) {
   return params
 }
 
-},{"http":369,"url":407}],237:[function(require,module,exports){
+},{"http":394,"url":433}],262:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -43388,7 +47788,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],238:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -43417,7 +47817,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],239:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -43440,7 +47840,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],240:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 module.exports      = isTypedArray
 isTypedArray.strict = isStrictTypedArray
 isTypedArray.loose  = isLooseTypedArray
@@ -43483,14 +47883,14 @@ function isLooseTypedArray(arr) {
   return names[toString.call(arr)]
 }
 
-},{}],241:[function(require,module,exports){
+},{}],266:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],242:[function(require,module,exports){
+},{}],267:[function(require,module,exports){
 var stream = require('stream')
 
 
@@ -43519,7 +47919,7 @@ module.exports.isReadable = isReadable
 module.exports.isWritable = isWritable
 module.exports.isDuplex   = isDuplex
 
-},{"stream":368}],243:[function(require,module,exports){
+},{"stream":393}],268:[function(require,module,exports){
 (function(){
 
     // Copyright (c) 2005  Tom Wu
@@ -44878,7 +49278,7 @@ module.exports.isDuplex   = isDuplex
 
 }).call(this);
 
-},{}],244:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 'use strict';
 
 var traverse = module.exports = function (schema, opts, cb) {
@@ -44969,7 +49369,7 @@ function escapeJsonPtr(str) {
   return str.replace(/~/g, '~0').replace(/\//g, '~1');
 }
 
-},{}],245:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 /**
  * JSONSchema Validator - Validates JavaScript objects using JSON Schemas
  *	(http://www.json.com/json-schema-proposal/)
@@ -45244,7 +49644,7 @@ exports.mustBeValid = function(result){
 return exports;
 }));
 
-},{}],246:[function(require,module,exports){
+},{}],271:[function(require,module,exports){
 exports = module.exports = stringify
 exports.getSerialize = serializer
 
@@ -45273,7 +49673,7 @@ function serializer(replacer, cycleReplacer) {
   }
 }
 
-},{}],247:[function(require,module,exports){
+},{}],272:[function(require,module,exports){
 /*
  * lib/jsprim.js: utilities for primitive JavaScript types
  */
@@ -46010,7 +50410,7 @@ function mergeObjects(provided, overrides, defaults)
 	return (rv);
 }
 
-},{"assert-plus":66,"extsprintf":176,"json-schema":245,"util":412,"verror":416}],248:[function(require,module,exports){
+},{"assert-plus":65,"extsprintf":201,"json-schema":270,"util":438,"verror":442}],273:[function(require,module,exports){
 'use strict'
 var inherits = require('inherits')
 var HashBase = require('hash-base')
@@ -46158,7 +50558,7 @@ function fnI (a, b, c, d, m, k, s) {
 
 module.exports = MD5
 
-},{"hash-base":202,"inherits":238,"safe-buffer":333}],249:[function(require,module,exports){
+},{"hash-base":227,"inherits":263,"safe-buffer":358}],274:[function(require,module,exports){
 var bn = require('bn.js');
 var brorand = require('brorand');
 
@@ -46275,9 +50675,9 @@ MillerRabin.prototype.getDivisor = function getDivisor(n, k) {
   return false;
 };
 
-},{"bn.js":250,"brorand":78}],250:[function(require,module,exports){
-arguments[4][59][0].apply(exports,arguments)
-},{"buffer":79,"dup":59}],251:[function(require,module,exports){
+},{"bn.js":275,"brorand":103}],275:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"buffer":104,"dup":58}],276:[function(require,module,exports){
 module.exports={
   "application/1d-interleaved-parityfec": {
     "source": "iana"
@@ -54455,7 +58855,7 @@ module.exports={
   }
 }
 
-},{}],252:[function(require,module,exports){
+},{}],277:[function(require,module,exports){
 /*!
  * mime-db
  * Copyright(c) 2014 Jonathan Ong
@@ -54468,7 +58868,7 @@ module.exports={
 
 module.exports = require('./db.json')
 
-},{"./db.json":251}],253:[function(require,module,exports){
+},{"./db.json":276}],278:[function(require,module,exports){
 /*!
  * mime-types
  * Copyright(c) 2014 Jonathan Ong
@@ -54658,7 +59058,7 @@ function populateMaps (extensions, types) {
   })
 }
 
-},{"mime-db":252,"path":276}],254:[function(require,module,exports){
+},{"mime-db":277,"path":301}],279:[function(require,module,exports){
 (function (process){
 var path = require('path');
 var fs = require('fs');
@@ -54770,9 +59170,9 @@ mime.charsets = {
 module.exports = mime;
 
 }).call(this,require('_process'))
-},{"./types.json":255,"_process":284,"fs":125,"path":276}],255:[function(require,module,exports){
+},{"./types.json":280,"_process":309,"fs":150,"path":301}],280:[function(require,module,exports){
 module.exports={"application/andrew-inset":["ez"],"application/applixware":["aw"],"application/atom+xml":["atom"],"application/atomcat+xml":["atomcat"],"application/atomsvc+xml":["atomsvc"],"application/bdoc":["bdoc"],"application/ccxml+xml":["ccxml"],"application/cdmi-capability":["cdmia"],"application/cdmi-container":["cdmic"],"application/cdmi-domain":["cdmid"],"application/cdmi-object":["cdmio"],"application/cdmi-queue":["cdmiq"],"application/cu-seeme":["cu"],"application/dash+xml":["mpd"],"application/davmount+xml":["davmount"],"application/docbook+xml":["dbk"],"application/dssc+der":["dssc"],"application/dssc+xml":["xdssc"],"application/ecmascript":["ecma"],"application/emma+xml":["emma"],"application/epub+zip":["epub"],"application/exi":["exi"],"application/font-tdpfr":["pfr"],"application/font-woff":[],"application/font-woff2":[],"application/geo+json":["geojson"],"application/gml+xml":["gml"],"application/gpx+xml":["gpx"],"application/gxf":["gxf"],"application/gzip":["gz"],"application/hyperstudio":["stk"],"application/inkml+xml":["ink","inkml"],"application/ipfix":["ipfix"],"application/java-archive":["jar","war","ear"],"application/java-serialized-object":["ser"],"application/java-vm":["class"],"application/javascript":["js","mjs"],"application/json":["json","map"],"application/json5":["json5"],"application/jsonml+json":["jsonml"],"application/ld+json":["jsonld"],"application/lost+xml":["lostxml"],"application/mac-binhex40":["hqx"],"application/mac-compactpro":["cpt"],"application/mads+xml":["mads"],"application/manifest+json":["webmanifest"],"application/marc":["mrc"],"application/marcxml+xml":["mrcx"],"application/mathematica":["ma","nb","mb"],"application/mathml+xml":["mathml"],"application/mbox":["mbox"],"application/mediaservercontrol+xml":["mscml"],"application/metalink+xml":["metalink"],"application/metalink4+xml":["meta4"],"application/mets+xml":["mets"],"application/mods+xml":["mods"],"application/mp21":["m21","mp21"],"application/mp4":["mp4s","m4p"],"application/msword":["doc","dot"],"application/mxf":["mxf"],"application/octet-stream":["bin","dms","lrf","mar","so","dist","distz","pkg","bpk","dump","elc","deploy","exe","dll","deb","dmg","iso","img","msi","msp","msm","buffer"],"application/oda":["oda"],"application/oebps-package+xml":["opf"],"application/ogg":["ogx"],"application/omdoc+xml":["omdoc"],"application/onenote":["onetoc","onetoc2","onetmp","onepkg"],"application/oxps":["oxps"],"application/patch-ops-error+xml":["xer"],"application/pdf":["pdf"],"application/pgp-encrypted":["pgp"],"application/pgp-signature":["asc","sig"],"application/pics-rules":["prf"],"application/pkcs10":["p10"],"application/pkcs7-mime":["p7m","p7c"],"application/pkcs7-signature":["p7s"],"application/pkcs8":["p8"],"application/pkix-attr-cert":["ac"],"application/pkix-cert":["cer"],"application/pkix-crl":["crl"],"application/pkix-pkipath":["pkipath"],"application/pkixcmp":["pki"],"application/pls+xml":["pls"],"application/postscript":["ai","eps","ps"],"application/prs.cww":["cww"],"application/pskc+xml":["pskcxml"],"application/raml+yaml":["raml"],"application/rdf+xml":["rdf"],"application/reginfo+xml":["rif"],"application/relax-ng-compact-syntax":["rnc"],"application/resource-lists+xml":["rl"],"application/resource-lists-diff+xml":["rld"],"application/rls-services+xml":["rs"],"application/rpki-ghostbusters":["gbr"],"application/rpki-manifest":["mft"],"application/rpki-roa":["roa"],"application/rsd+xml":["rsd"],"application/rss+xml":["rss"],"application/rtf":["rtf"],"application/sbml+xml":["sbml"],"application/scvp-cv-request":["scq"],"application/scvp-cv-response":["scs"],"application/scvp-vp-request":["spq"],"application/scvp-vp-response":["spp"],"application/sdp":["sdp"],"application/set-payment-initiation":["setpay"],"application/set-registration-initiation":["setreg"],"application/shf+xml":["shf"],"application/smil+xml":["smi","smil"],"application/sparql-query":["rq"],"application/sparql-results+xml":["srx"],"application/srgs":["gram"],"application/srgs+xml":["grxml"],"application/sru+xml":["sru"],"application/ssdl+xml":["ssdl"],"application/ssml+xml":["ssml"],"application/tei+xml":["tei","teicorpus"],"application/thraud+xml":["tfi"],"application/timestamped-data":["tsd"],"application/vnd.3gpp.pic-bw-large":["plb"],"application/vnd.3gpp.pic-bw-small":["psb"],"application/vnd.3gpp.pic-bw-var":["pvb"],"application/vnd.3gpp2.tcap":["tcap"],"application/vnd.3m.post-it-notes":["pwn"],"application/vnd.accpac.simply.aso":["aso"],"application/vnd.accpac.simply.imp":["imp"],"application/vnd.acucobol":["acu"],"application/vnd.acucorp":["atc","acutc"],"application/vnd.adobe.air-application-installer-package+zip":["air"],"application/vnd.adobe.formscentral.fcdt":["fcdt"],"application/vnd.adobe.fxp":["fxp","fxpl"],"application/vnd.adobe.xdp+xml":["xdp"],"application/vnd.adobe.xfdf":["xfdf"],"application/vnd.ahead.space":["ahead"],"application/vnd.airzip.filesecure.azf":["azf"],"application/vnd.airzip.filesecure.azs":["azs"],"application/vnd.amazon.ebook":["azw"],"application/vnd.americandynamics.acc":["acc"],"application/vnd.amiga.ami":["ami"],"application/vnd.android.package-archive":["apk"],"application/vnd.anser-web-certificate-issue-initiation":["cii"],"application/vnd.anser-web-funds-transfer-initiation":["fti"],"application/vnd.antix.game-component":["atx"],"application/vnd.apple.installer+xml":["mpkg"],"application/vnd.apple.mpegurl":["m3u8"],"application/vnd.apple.pkpass":["pkpass"],"application/vnd.aristanetworks.swi":["swi"],"application/vnd.astraea-software.iota":["iota"],"application/vnd.audiograph":["aep"],"application/vnd.blueice.multipass":["mpm"],"application/vnd.bmi":["bmi"],"application/vnd.businessobjects":["rep"],"application/vnd.chemdraw+xml":["cdxml"],"application/vnd.chipnuts.karaoke-mmd":["mmd"],"application/vnd.cinderella":["cdy"],"application/vnd.claymore":["cla"],"application/vnd.cloanto.rp9":["rp9"],"application/vnd.clonk.c4group":["c4g","c4d","c4f","c4p","c4u"],"application/vnd.cluetrust.cartomobile-config":["c11amc"],"application/vnd.cluetrust.cartomobile-config-pkg":["c11amz"],"application/vnd.commonspace":["csp"],"application/vnd.contact.cmsg":["cdbcmsg"],"application/vnd.cosmocaller":["cmc"],"application/vnd.crick.clicker":["clkx"],"application/vnd.crick.clicker.keyboard":["clkk"],"application/vnd.crick.clicker.palette":["clkp"],"application/vnd.crick.clicker.template":["clkt"],"application/vnd.crick.clicker.wordbank":["clkw"],"application/vnd.criticaltools.wbs+xml":["wbs"],"application/vnd.ctc-posml":["pml"],"application/vnd.cups-ppd":["ppd"],"application/vnd.curl.car":["car"],"application/vnd.curl.pcurl":["pcurl"],"application/vnd.dart":["dart"],"application/vnd.data-vision.rdz":["rdz"],"application/vnd.dece.data":["uvf","uvvf","uvd","uvvd"],"application/vnd.dece.ttml+xml":["uvt","uvvt"],"application/vnd.dece.unspecified":["uvx","uvvx"],"application/vnd.dece.zip":["uvz","uvvz"],"application/vnd.denovo.fcselayout-link":["fe_launch"],"application/vnd.dna":["dna"],"application/vnd.dolby.mlp":["mlp"],"application/vnd.dpgraph":["dpg"],"application/vnd.dreamfactory":["dfac"],"application/vnd.ds-keypoint":["kpxx"],"application/vnd.dvb.ait":["ait"],"application/vnd.dvb.service":["svc"],"application/vnd.dynageo":["geo"],"application/vnd.ecowin.chart":["mag"],"application/vnd.enliven":["nml"],"application/vnd.epson.esf":["esf"],"application/vnd.epson.msf":["msf"],"application/vnd.epson.quickanime":["qam"],"application/vnd.epson.salt":["slt"],"application/vnd.epson.ssf":["ssf"],"application/vnd.eszigno3+xml":["es3","et3"],"application/vnd.ezpix-album":["ez2"],"application/vnd.ezpix-package":["ez3"],"application/vnd.fdf":["fdf"],"application/vnd.fdsn.mseed":["mseed"],"application/vnd.fdsn.seed":["seed","dataless"],"application/vnd.flographit":["gph"],"application/vnd.fluxtime.clip":["ftc"],"application/vnd.framemaker":["fm","frame","maker","book"],"application/vnd.frogans.fnc":["fnc"],"application/vnd.frogans.ltf":["ltf"],"application/vnd.fsc.weblaunch":["fsc"],"application/vnd.fujitsu.oasys":["oas"],"application/vnd.fujitsu.oasys2":["oa2"],"application/vnd.fujitsu.oasys3":["oa3"],"application/vnd.fujitsu.oasysgp":["fg5"],"application/vnd.fujitsu.oasysprs":["bh2"],"application/vnd.fujixerox.ddd":["ddd"],"application/vnd.fujixerox.docuworks":["xdw"],"application/vnd.fujixerox.docuworks.binder":["xbd"],"application/vnd.fuzzysheet":["fzs"],"application/vnd.genomatix.tuxedo":["txd"],"application/vnd.geogebra.file":["ggb"],"application/vnd.geogebra.tool":["ggt"],"application/vnd.geometry-explorer":["gex","gre"],"application/vnd.geonext":["gxt"],"application/vnd.geoplan":["g2w"],"application/vnd.geospace":["g3w"],"application/vnd.gmx":["gmx"],"application/vnd.google-apps.document":["gdoc"],"application/vnd.google-apps.presentation":["gslides"],"application/vnd.google-apps.spreadsheet":["gsheet"],"application/vnd.google-earth.kml+xml":["kml"],"application/vnd.google-earth.kmz":["kmz"],"application/vnd.grafeq":["gqf","gqs"],"application/vnd.groove-account":["gac"],"application/vnd.groove-help":["ghf"],"application/vnd.groove-identity-message":["gim"],"application/vnd.groove-injector":["grv"],"application/vnd.groove-tool-message":["gtm"],"application/vnd.groove-tool-template":["tpl"],"application/vnd.groove-vcard":["vcg"],"application/vnd.hal+xml":["hal"],"application/vnd.handheld-entertainment+xml":["zmm"],"application/vnd.hbci":["hbci"],"application/vnd.hhe.lesson-player":["les"],"application/vnd.hp-hpgl":["hpgl"],"application/vnd.hp-hpid":["hpid"],"application/vnd.hp-hps":["hps"],"application/vnd.hp-jlyt":["jlt"],"application/vnd.hp-pcl":["pcl"],"application/vnd.hp-pclxl":["pclxl"],"application/vnd.hydrostatix.sof-data":["sfd-hdstx"],"application/vnd.ibm.minipay":["mpy"],"application/vnd.ibm.modcap":["afp","listafp","list3820"],"application/vnd.ibm.rights-management":["irm"],"application/vnd.ibm.secure-container":["sc"],"application/vnd.iccprofile":["icc","icm"],"application/vnd.igloader":["igl"],"application/vnd.immervision-ivp":["ivp"],"application/vnd.immervision-ivu":["ivu"],"application/vnd.insors.igm":["igm"],"application/vnd.intercon.formnet":["xpw","xpx"],"application/vnd.intergeo":["i2g"],"application/vnd.intu.qbo":["qbo"],"application/vnd.intu.qfx":["qfx"],"application/vnd.ipunplugged.rcprofile":["rcprofile"],"application/vnd.irepository.package+xml":["irp"],"application/vnd.is-xpr":["xpr"],"application/vnd.isac.fcs":["fcs"],"application/vnd.jam":["jam"],"application/vnd.jcp.javame.midlet-rms":["rms"],"application/vnd.jisp":["jisp"],"application/vnd.joost.joda-archive":["joda"],"application/vnd.kahootz":["ktz","ktr"],"application/vnd.kde.karbon":["karbon"],"application/vnd.kde.kchart":["chrt"],"application/vnd.kde.kformula":["kfo"],"application/vnd.kde.kivio":["flw"],"application/vnd.kde.kontour":["kon"],"application/vnd.kde.kpresenter":["kpr","kpt"],"application/vnd.kde.kspread":["ksp"],"application/vnd.kde.kword":["kwd","kwt"],"application/vnd.kenameaapp":["htke"],"application/vnd.kidspiration":["kia"],"application/vnd.kinar":["kne","knp"],"application/vnd.koan":["skp","skd","skt","skm"],"application/vnd.kodak-descriptor":["sse"],"application/vnd.las.las+xml":["lasxml"],"application/vnd.llamagraphics.life-balance.desktop":["lbd"],"application/vnd.llamagraphics.life-balance.exchange+xml":["lbe"],"application/vnd.lotus-1-2-3":["123"],"application/vnd.lotus-approach":["apr"],"application/vnd.lotus-freelance":["pre"],"application/vnd.lotus-notes":["nsf"],"application/vnd.lotus-organizer":["org"],"application/vnd.lotus-screencam":["scm"],"application/vnd.lotus-wordpro":["lwp"],"application/vnd.macports.portpkg":["portpkg"],"application/vnd.mcd":["mcd"],"application/vnd.medcalcdata":["mc1"],"application/vnd.mediastation.cdkey":["cdkey"],"application/vnd.mfer":["mwf"],"application/vnd.mfmp":["mfm"],"application/vnd.micrografx.flo":["flo"],"application/vnd.micrografx.igx":["igx"],"application/vnd.mif":["mif"],"application/vnd.mobius.daf":["daf"],"application/vnd.mobius.dis":["dis"],"application/vnd.mobius.mbk":["mbk"],"application/vnd.mobius.mqy":["mqy"],"application/vnd.mobius.msl":["msl"],"application/vnd.mobius.plc":["plc"],"application/vnd.mobius.txf":["txf"],"application/vnd.mophun.application":["mpn"],"application/vnd.mophun.certificate":["mpc"],"application/vnd.mozilla.xul+xml":["xul"],"application/vnd.ms-artgalry":["cil"],"application/vnd.ms-cab-compressed":["cab"],"application/vnd.ms-excel":["xls","xlm","xla","xlc","xlt","xlw"],"application/vnd.ms-excel.addin.macroenabled.12":["xlam"],"application/vnd.ms-excel.sheet.binary.macroenabled.12":["xlsb"],"application/vnd.ms-excel.sheet.macroenabled.12":["xlsm"],"application/vnd.ms-excel.template.macroenabled.12":["xltm"],"application/vnd.ms-fontobject":["eot"],"application/vnd.ms-htmlhelp":["chm"],"application/vnd.ms-ims":["ims"],"application/vnd.ms-lrm":["lrm"],"application/vnd.ms-officetheme":["thmx"],"application/vnd.ms-outlook":["msg"],"application/vnd.ms-pki.seccat":["cat"],"application/vnd.ms-pki.stl":["stl"],"application/vnd.ms-powerpoint":["ppt","pps","pot"],"application/vnd.ms-powerpoint.addin.macroenabled.12":["ppam"],"application/vnd.ms-powerpoint.presentation.macroenabled.12":["pptm"],"application/vnd.ms-powerpoint.slide.macroenabled.12":["sldm"],"application/vnd.ms-powerpoint.slideshow.macroenabled.12":["ppsm"],"application/vnd.ms-powerpoint.template.macroenabled.12":["potm"],"application/vnd.ms-project":["mpp","mpt"],"application/vnd.ms-word.document.macroenabled.12":["docm"],"application/vnd.ms-word.template.macroenabled.12":["dotm"],"application/vnd.ms-works":["wps","wks","wcm","wdb"],"application/vnd.ms-wpl":["wpl"],"application/vnd.ms-xpsdocument":["xps"],"application/vnd.mseq":["mseq"],"application/vnd.musician":["mus"],"application/vnd.muvee.style":["msty"],"application/vnd.mynfc":["taglet"],"application/vnd.neurolanguage.nlu":["nlu"],"application/vnd.nitf":["ntf","nitf"],"application/vnd.noblenet-directory":["nnd"],"application/vnd.noblenet-sealer":["nns"],"application/vnd.noblenet-web":["nnw"],"application/vnd.nokia.n-gage.data":["ngdat"],"application/vnd.nokia.n-gage.symbian.install":["n-gage"],"application/vnd.nokia.radio-preset":["rpst"],"application/vnd.nokia.radio-presets":["rpss"],"application/vnd.novadigm.edm":["edm"],"application/vnd.novadigm.edx":["edx"],"application/vnd.novadigm.ext":["ext"],"application/vnd.oasis.opendocument.chart":["odc"],"application/vnd.oasis.opendocument.chart-template":["otc"],"application/vnd.oasis.opendocument.database":["odb"],"application/vnd.oasis.opendocument.formula":["odf"],"application/vnd.oasis.opendocument.formula-template":["odft"],"application/vnd.oasis.opendocument.graphics":["odg"],"application/vnd.oasis.opendocument.graphics-template":["otg"],"application/vnd.oasis.opendocument.image":["odi"],"application/vnd.oasis.opendocument.image-template":["oti"],"application/vnd.oasis.opendocument.presentation":["odp"],"application/vnd.oasis.opendocument.presentation-template":["otp"],"application/vnd.oasis.opendocument.spreadsheet":["ods"],"application/vnd.oasis.opendocument.spreadsheet-template":["ots"],"application/vnd.oasis.opendocument.text":["odt"],"application/vnd.oasis.opendocument.text-master":["odm"],"application/vnd.oasis.opendocument.text-template":["ott"],"application/vnd.oasis.opendocument.text-web":["oth"],"application/vnd.olpc-sugar":["xo"],"application/vnd.oma.dd2+xml":["dd2"],"application/vnd.openofficeorg.extension":["oxt"],"application/vnd.openxmlformats-officedocument.presentationml.presentation":["pptx"],"application/vnd.openxmlformats-officedocument.presentationml.slide":["sldx"],"application/vnd.openxmlformats-officedocument.presentationml.slideshow":["ppsx"],"application/vnd.openxmlformats-officedocument.presentationml.template":["potx"],"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":["xlsx"],"application/vnd.openxmlformats-officedocument.spreadsheetml.template":["xltx"],"application/vnd.openxmlformats-officedocument.wordprocessingml.document":["docx"],"application/vnd.openxmlformats-officedocument.wordprocessingml.template":["dotx"],"application/vnd.osgeo.mapguide.package":["mgp"],"application/vnd.osgi.dp":["dp"],"application/vnd.osgi.subsystem":["esa"],"application/vnd.palm":["pdb","pqa","oprc"],"application/vnd.pawaafile":["paw"],"application/vnd.pg.format":["str"],"application/vnd.pg.osasli":["ei6"],"application/vnd.picsel":["efif"],"application/vnd.pmi.widget":["wg"],"application/vnd.pocketlearn":["plf"],"application/vnd.powerbuilder6":["pbd"],"application/vnd.previewsystems.box":["box"],"application/vnd.proteus.magazine":["mgz"],"application/vnd.publishare-delta-tree":["qps"],"application/vnd.pvi.ptid1":["ptid"],"application/vnd.quark.quarkxpress":["qxd","qxt","qwd","qwt","qxl","qxb"],"application/vnd.realvnc.bed":["bed"],"application/vnd.recordare.musicxml":["mxl"],"application/vnd.recordare.musicxml+xml":["musicxml"],"application/vnd.rig.cryptonote":["cryptonote"],"application/vnd.rim.cod":["cod"],"application/vnd.rn-realmedia":["rm"],"application/vnd.rn-realmedia-vbr":["rmvb"],"application/vnd.route66.link66+xml":["link66"],"application/vnd.sailingtracker.track":["st"],"application/vnd.seemail":["see"],"application/vnd.sema":["sema"],"application/vnd.semd":["semd"],"application/vnd.semf":["semf"],"application/vnd.shana.informed.formdata":["ifm"],"application/vnd.shana.informed.formtemplate":["itp"],"application/vnd.shana.informed.interchange":["iif"],"application/vnd.shana.informed.package":["ipk"],"application/vnd.simtech-mindmapper":["twd","twds"],"application/vnd.smaf":["mmf"],"application/vnd.smart.teacher":["teacher"],"application/vnd.solent.sdkm+xml":["sdkm","sdkd"],"application/vnd.spotfire.dxp":["dxp"],"application/vnd.spotfire.sfs":["sfs"],"application/vnd.stardivision.calc":["sdc"],"application/vnd.stardivision.draw":["sda"],"application/vnd.stardivision.impress":["sdd"],"application/vnd.stardivision.math":["smf"],"application/vnd.stardivision.writer":["sdw","vor"],"application/vnd.stardivision.writer-global":["sgl"],"application/vnd.stepmania.package":["smzip"],"application/vnd.stepmania.stepchart":["sm"],"application/vnd.sun.wadl+xml":["wadl"],"application/vnd.sun.xml.calc":["sxc"],"application/vnd.sun.xml.calc.template":["stc"],"application/vnd.sun.xml.draw":["sxd"],"application/vnd.sun.xml.draw.template":["std"],"application/vnd.sun.xml.impress":["sxi"],"application/vnd.sun.xml.impress.template":["sti"],"application/vnd.sun.xml.math":["sxm"],"application/vnd.sun.xml.writer":["sxw"],"application/vnd.sun.xml.writer.global":["sxg"],"application/vnd.sun.xml.writer.template":["stw"],"application/vnd.sus-calendar":["sus","susp"],"application/vnd.svd":["svd"],"application/vnd.symbian.install":["sis","sisx"],"application/vnd.syncml+xml":["xsm"],"application/vnd.syncml.dm+wbxml":["bdm"],"application/vnd.syncml.dm+xml":["xdm"],"application/vnd.tao.intent-module-archive":["tao"],"application/vnd.tcpdump.pcap":["pcap","cap","dmp"],"application/vnd.tmobile-livetv":["tmo"],"application/vnd.trid.tpt":["tpt"],"application/vnd.triscape.mxs":["mxs"],"application/vnd.trueapp":["tra"],"application/vnd.ufdl":["ufd","ufdl"],"application/vnd.uiq.theme":["utz"],"application/vnd.umajin":["umj"],"application/vnd.unity":["unityweb"],"application/vnd.uoml+xml":["uoml"],"application/vnd.vcx":["vcx"],"application/vnd.visio":["vsd","vst","vss","vsw"],"application/vnd.visionary":["vis"],"application/vnd.vsf":["vsf"],"application/vnd.wap.wbxml":["wbxml"],"application/vnd.wap.wmlc":["wmlc"],"application/vnd.wap.wmlscriptc":["wmlsc"],"application/vnd.webturbo":["wtb"],"application/vnd.wolfram.player":["nbp"],"application/vnd.wordperfect":["wpd"],"application/vnd.wqd":["wqd"],"application/vnd.wt.stf":["stf"],"application/vnd.xara":["xar"],"application/vnd.xfdl":["xfdl"],"application/vnd.yamaha.hv-dic":["hvd"],"application/vnd.yamaha.hv-script":["hvs"],"application/vnd.yamaha.hv-voice":["hvp"],"application/vnd.yamaha.openscoreformat":["osf"],"application/vnd.yamaha.openscoreformat.osfpvg+xml":["osfpvg"],"application/vnd.yamaha.smaf-audio":["saf"],"application/vnd.yamaha.smaf-phrase":["spf"],"application/vnd.yellowriver-custom-menu":["cmp"],"application/vnd.zul":["zir","zirz"],"application/vnd.zzazz.deck+xml":["zaz"],"application/voicexml+xml":["vxml"],"application/wasm":["wasm"],"application/widget":["wgt"],"application/winhlp":["hlp"],"application/wsdl+xml":["wsdl"],"application/wspolicy+xml":["wspolicy"],"application/x-7z-compressed":["7z"],"application/x-abiword":["abw"],"application/x-ace-compressed":["ace"],"application/x-apple-diskimage":[],"application/x-arj":["arj"],"application/x-authorware-bin":["aab","x32","u32","vox"],"application/x-authorware-map":["aam"],"application/x-authorware-seg":["aas"],"application/x-bcpio":["bcpio"],"application/x-bdoc":[],"application/x-bittorrent":["torrent"],"application/x-blorb":["blb","blorb"],"application/x-bzip":["bz"],"application/x-bzip2":["bz2","boz"],"application/x-cbr":["cbr","cba","cbt","cbz","cb7"],"application/x-cdlink":["vcd"],"application/x-cfs-compressed":["cfs"],"application/x-chat":["chat"],"application/x-chess-pgn":["pgn"],"application/x-chrome-extension":["crx"],"application/x-cocoa":["cco"],"application/x-conference":["nsc"],"application/x-cpio":["cpio"],"application/x-csh":["csh"],"application/x-debian-package":["udeb"],"application/x-dgc-compressed":["dgc"],"application/x-director":["dir","dcr","dxr","cst","cct","cxt","w3d","fgd","swa"],"application/x-doom":["wad"],"application/x-dtbncx+xml":["ncx"],"application/x-dtbook+xml":["dtb"],"application/x-dtbresource+xml":["res"],"application/x-dvi":["dvi"],"application/x-envoy":["evy"],"application/x-eva":["eva"],"application/x-font-bdf":["bdf"],"application/x-font-ghostscript":["gsf"],"application/x-font-linux-psf":["psf"],"application/x-font-pcf":["pcf"],"application/x-font-snf":["snf"],"application/x-font-type1":["pfa","pfb","pfm","afm"],"application/x-freearc":["arc"],"application/x-futuresplash":["spl"],"application/x-gca-compressed":["gca"],"application/x-glulx":["ulx"],"application/x-gnumeric":["gnumeric"],"application/x-gramps-xml":["gramps"],"application/x-gtar":["gtar"],"application/x-hdf":["hdf"],"application/x-httpd-php":["php"],"application/x-install-instructions":["install"],"application/x-iso9660-image":[],"application/x-java-archive-diff":["jardiff"],"application/x-java-jnlp-file":["jnlp"],"application/x-latex":["latex"],"application/x-lua-bytecode":["luac"],"application/x-lzh-compressed":["lzh","lha"],"application/x-makeself":["run"],"application/x-mie":["mie"],"application/x-mobipocket-ebook":["prc","mobi"],"application/x-ms-application":["application"],"application/x-ms-shortcut":["lnk"],"application/x-ms-wmd":["wmd"],"application/x-ms-wmz":["wmz"],"application/x-ms-xbap":["xbap"],"application/x-msaccess":["mdb"],"application/x-msbinder":["obd"],"application/x-mscardfile":["crd"],"application/x-msclip":["clp"],"application/x-msdos-program":[],"application/x-msdownload":["com","bat"],"application/x-msmediaview":["mvb","m13","m14"],"application/x-msmetafile":["wmf","emf","emz"],"application/x-msmoney":["mny"],"application/x-mspublisher":["pub"],"application/x-msschedule":["scd"],"application/x-msterminal":["trm"],"application/x-mswrite":["wri"],"application/x-netcdf":["nc","cdf"],"application/x-ns-proxy-autoconfig":["pac"],"application/x-nzb":["nzb"],"application/x-perl":["pl","pm"],"application/x-pilot":[],"application/x-pkcs12":["p12","pfx"],"application/x-pkcs7-certificates":["p7b","spc"],"application/x-pkcs7-certreqresp":["p7r"],"application/x-rar-compressed":["rar"],"application/x-redhat-package-manager":["rpm"],"application/x-research-info-systems":["ris"],"application/x-sea":["sea"],"application/x-sh":["sh"],"application/x-shar":["shar"],"application/x-shockwave-flash":["swf"],"application/x-silverlight-app":["xap"],"application/x-sql":["sql"],"application/x-stuffit":["sit"],"application/x-stuffitx":["sitx"],"application/x-subrip":["srt"],"application/x-sv4cpio":["sv4cpio"],"application/x-sv4crc":["sv4crc"],"application/x-t3vm-image":["t3"],"application/x-tads":["gam"],"application/x-tar":["tar"],"application/x-tcl":["tcl","tk"],"application/x-tex":["tex"],"application/x-tex-tfm":["tfm"],"application/x-texinfo":["texinfo","texi"],"application/x-tgif":["obj"],"application/x-ustar":["ustar"],"application/x-virtualbox-hdd":["hdd"],"application/x-virtualbox-ova":["ova"],"application/x-virtualbox-ovf":["ovf"],"application/x-virtualbox-vbox":["vbox"],"application/x-virtualbox-vbox-extpack":["vbox-extpack"],"application/x-virtualbox-vdi":["vdi"],"application/x-virtualbox-vhd":["vhd"],"application/x-virtualbox-vmdk":["vmdk"],"application/x-wais-source":["src"],"application/x-web-app-manifest+json":["webapp"],"application/x-x509-ca-cert":["der","crt","pem"],"application/x-xfig":["fig"],"application/x-xliff+xml":["xlf"],"application/x-xpinstall":["xpi"],"application/x-xz":["xz"],"application/x-zmachine":["z1","z2","z3","z4","z5","z6","z7","z8"],"application/xaml+xml":["xaml"],"application/xcap-diff+xml":["xdf"],"application/xenc+xml":["xenc"],"application/xhtml+xml":["xhtml","xht"],"application/xml":["xml","xsl","xsd","rng"],"application/xml-dtd":["dtd"],"application/xop+xml":["xop"],"application/xproc+xml":["xpl"],"application/xslt+xml":["xslt"],"application/xspf+xml":["xspf"],"application/xv+xml":["mxml","xhvml","xvml","xvm"],"application/yang":["yang"],"application/yin+xml":["yin"],"application/zip":["zip"],"audio/3gpp":[],"audio/adpcm":["adp"],"audio/basic":["au","snd"],"audio/midi":["mid","midi","kar","rmi"],"audio/mp3":[],"audio/mp4":["m4a","mp4a"],"audio/mpeg":["mpga","mp2","mp2a","mp3","m2a","m3a"],"audio/ogg":["oga","ogg","spx"],"audio/s3m":["s3m"],"audio/silk":["sil"],"audio/vnd.dece.audio":["uva","uvva"],"audio/vnd.digital-winds":["eol"],"audio/vnd.dra":["dra"],"audio/vnd.dts":["dts"],"audio/vnd.dts.hd":["dtshd"],"audio/vnd.lucent.voice":["lvp"],"audio/vnd.ms-playready.media.pya":["pya"],"audio/vnd.nuera.ecelp4800":["ecelp4800"],"audio/vnd.nuera.ecelp7470":["ecelp7470"],"audio/vnd.nuera.ecelp9600":["ecelp9600"],"audio/vnd.rip":["rip"],"audio/wav":["wav"],"audio/wave":[],"audio/webm":["weba"],"audio/x-aac":["aac"],"audio/x-aiff":["aif","aiff","aifc"],"audio/x-caf":["caf"],"audio/x-flac":["flac"],"audio/x-m4a":[],"audio/x-matroska":["mka"],"audio/x-mpegurl":["m3u"],"audio/x-ms-wax":["wax"],"audio/x-ms-wma":["wma"],"audio/x-pn-realaudio":["ram","ra"],"audio/x-pn-realaudio-plugin":["rmp"],"audio/x-realaudio":[],"audio/x-wav":[],"audio/xm":["xm"],"chemical/x-cdx":["cdx"],"chemical/x-cif":["cif"],"chemical/x-cmdf":["cmdf"],"chemical/x-cml":["cml"],"chemical/x-csml":["csml"],"chemical/x-xyz":["xyz"],"font/collection":["ttc"],"font/otf":["otf"],"font/ttf":["ttf"],"font/woff":["woff"],"font/woff2":["woff2"],"image/apng":["apng"],"image/bmp":["bmp"],"image/cgm":["cgm"],"image/g3fax":["g3"],"image/gif":["gif"],"image/ief":["ief"],"image/jp2":["jp2","jpg2"],"image/jpeg":["jpeg","jpg","jpe"],"image/jpm":["jpm"],"image/jpx":["jpx","jpf"],"image/ktx":["ktx"],"image/png":["png"],"image/prs.btif":["btif"],"image/sgi":["sgi"],"image/svg+xml":["svg","svgz"],"image/tiff":["tiff","tif"],"image/vnd.adobe.photoshop":["psd"],"image/vnd.dece.graphic":["uvi","uvvi","uvg","uvvg"],"image/vnd.djvu":["djvu","djv"],"image/vnd.dvb.subtitle":[],"image/vnd.dwg":["dwg"],"image/vnd.dxf":["dxf"],"image/vnd.fastbidsheet":["fbs"],"image/vnd.fpx":["fpx"],"image/vnd.fst":["fst"],"image/vnd.fujixerox.edmics-mmr":["mmr"],"image/vnd.fujixerox.edmics-rlc":["rlc"],"image/vnd.ms-modi":["mdi"],"image/vnd.ms-photo":["wdp"],"image/vnd.net-fpx":["npx"],"image/vnd.wap.wbmp":["wbmp"],"image/vnd.xiff":["xif"],"image/webp":["webp"],"image/x-3ds":["3ds"],"image/x-cmu-raster":["ras"],"image/x-cmx":["cmx"],"image/x-freehand":["fh","fhc","fh4","fh5","fh7"],"image/x-icon":["ico"],"image/x-jng":["jng"],"image/x-mrsid-image":["sid"],"image/x-ms-bmp":[],"image/x-pcx":["pcx"],"image/x-pict":["pic","pct"],"image/x-portable-anymap":["pnm"],"image/x-portable-bitmap":["pbm"],"image/x-portable-graymap":["pgm"],"image/x-portable-pixmap":["ppm"],"image/x-rgb":["rgb"],"image/x-tga":["tga"],"image/x-xbitmap":["xbm"],"image/x-xpixmap":["xpm"],"image/x-xwindowdump":["xwd"],"message/rfc822":["eml","mime"],"model/gltf+json":["gltf"],"model/gltf-binary":["glb"],"model/iges":["igs","iges"],"model/mesh":["msh","mesh","silo"],"model/vnd.collada+xml":["dae"],"model/vnd.dwf":["dwf"],"model/vnd.gdl":["gdl"],"model/vnd.gtw":["gtw"],"model/vnd.mts":["mts"],"model/vnd.vtu":["vtu"],"model/vrml":["wrl","vrml"],"model/x3d+binary":["x3db","x3dbz"],"model/x3d+vrml":["x3dv","x3dvz"],"model/x3d+xml":["x3d","x3dz"],"text/cache-manifest":["appcache","manifest"],"text/calendar":["ics","ifb"],"text/coffeescript":["coffee","litcoffee"],"text/css":["css"],"text/csv":["csv"],"text/hjson":["hjson"],"text/html":["html","htm","shtml"],"text/jade":["jade"],"text/jsx":["jsx"],"text/less":["less"],"text/markdown":["markdown","md"],"text/mathml":["mml"],"text/n3":["n3"],"text/plain":["txt","text","conf","def","list","log","in","ini"],"text/prs.lines.tag":["dsc"],"text/richtext":["rtx"],"text/rtf":[],"text/sgml":["sgml","sgm"],"text/slim":["slim","slm"],"text/stylus":["stylus","styl"],"text/tab-separated-values":["tsv"],"text/troff":["t","tr","roff","man","me","ms"],"text/turtle":["ttl"],"text/uri-list":["uri","uris","urls"],"text/vcard":["vcard"],"text/vnd.curl":["curl"],"text/vnd.curl.dcurl":["dcurl"],"text/vnd.curl.mcurl":["mcurl"],"text/vnd.curl.scurl":["scurl"],"text/vnd.dvb.subtitle":["sub"],"text/vnd.fly":["fly"],"text/vnd.fmi.flexstor":["flx"],"text/vnd.graphviz":["gv"],"text/vnd.in3d.3dml":["3dml"],"text/vnd.in3d.spot":["spot"],"text/vnd.sun.j2me.app-descriptor":["jad"],"text/vnd.wap.wml":["wml"],"text/vnd.wap.wmlscript":["wmls"],"text/vtt":["vtt"],"text/x-asm":["s","asm"],"text/x-c":["c","cc","cxx","cpp","h","hh","dic"],"text/x-component":["htc"],"text/x-fortran":["f","for","f77","f90"],"text/x-handlebars-template":["hbs"],"text/x-java-source":["java"],"text/x-lua":["lua"],"text/x-markdown":["mkd"],"text/x-nfo":["nfo"],"text/x-opml":["opml"],"text/x-org":[],"text/x-pascal":["p","pas"],"text/x-processing":["pde"],"text/x-sass":["sass"],"text/x-scss":["scss"],"text/x-setext":["etx"],"text/x-sfv":["sfv"],"text/x-suse-ymp":["ymp"],"text/x-uuencode":["uu"],"text/x-vcalendar":["vcs"],"text/x-vcard":["vcf"],"text/xml":[],"text/yaml":["yaml","yml"],"video/3gpp":["3gp","3gpp"],"video/3gpp2":["3g2"],"video/h261":["h261"],"video/h263":["h263"],"video/h264":["h264"],"video/jpeg":["jpgv"],"video/jpm":["jpgm"],"video/mj2":["mj2","mjp2"],"video/mp2t":["ts"],"video/mp4":["mp4","mp4v","mpg4"],"video/mpeg":["mpeg","mpg","mpe","m1v","m2v"],"video/ogg":["ogv"],"video/quicktime":["qt","mov"],"video/vnd.dece.hd":["uvh","uvvh"],"video/vnd.dece.mobile":["uvm","uvvm"],"video/vnd.dece.pd":["uvp","uvvp"],"video/vnd.dece.sd":["uvs","uvvs"],"video/vnd.dece.video":["uvv","uvvv"],"video/vnd.dvb.file":["dvb"],"video/vnd.fvt":["fvt"],"video/vnd.mpegurl":["mxu","m4u"],"video/vnd.ms-playready.media.pyv":["pyv"],"video/vnd.uvvu.mp4":["uvu","uvvu"],"video/vnd.vivo":["viv"],"video/webm":["webm"],"video/x-f4v":["f4v"],"video/x-fli":["fli"],"video/x-flv":["flv"],"video/x-m4v":["m4v"],"video/x-matroska":["mkv","mk3d","mks"],"video/x-mng":["mng"],"video/x-ms-asf":["asf","asx"],"video/x-ms-vob":["vob"],"video/x-ms-wm":["wm"],"video/x-ms-wmv":["wmv"],"video/x-ms-wmx":["wmx"],"video/x-ms-wvx":["wvx"],"video/x-msvideo":["avi"],"video/x-sgi-movie":["movie"],"video/x-smv":["smv"],"x-conference/x-cooltalk":["ice"]}
-},{}],256:[function(require,module,exports){
+},{}],281:[function(require,module,exports){
 module.exports = assert;
 
 function assert(val, msg) {
@@ -54785,7 +59185,7 @@ assert.equal = function assertEqual(l, r, msg) {
     throw new Error(msg || ('Assertion failed: ' + l + ' != ' + r));
 };
 
-},{}],257:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 'use strict';
 
 var utils = exports;
@@ -54845,7 +59245,7 @@ utils.encode = function encode(arr, enc) {
     return arr;
 };
 
-},{}],258:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 var crypto = require('crypto')
 
 function sha (key, body, algorithm) {
@@ -54992,7 +59392,7 @@ exports.plaintext = plaintext
 exports.sign = sign
 exports.rfc3986 = rfc3986
 exports.generateBase = generateBase
-},{"crypto":140}],259:[function(require,module,exports){
+},{"crypto":165}],284:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -55084,7 +59484,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],260:[function(require,module,exports){
+},{}],285:[function(require,module,exports){
 'use strict';
 
 
@@ -55191,7 +59591,7 @@ exports.setTyped = function (on) {
 
 exports.setTyped(TYPED_OK);
 
-},{}],261:[function(require,module,exports){
+},{}],286:[function(require,module,exports){
 'use strict';
 
 // Note: adler32 takes 12% for level 0 and 2% for level 6.
@@ -55244,7 +59644,7 @@ function adler32(adler, buf, len, pos) {
 
 module.exports = adler32;
 
-},{}],262:[function(require,module,exports){
+},{}],287:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -55314,7 +59714,7 @@ module.exports = {
   //Z_NULL:                 null // Use -1 or null inline, depending on var type
 };
 
-},{}],263:[function(require,module,exports){
+},{}],288:[function(require,module,exports){
 'use strict';
 
 // Note: we can't get significant speed boost here.
@@ -55375,7 +59775,7 @@ function crc32(crc, buf, len, pos) {
 
 module.exports = crc32;
 
-},{}],264:[function(require,module,exports){
+},{}],289:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -55397,11 +59797,11 @@ module.exports = crc32;
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils   = require('pako/lib/utils/common');
-var trees   = require('pako/lib/zlib/trees');
-var adler32 = require('pako/lib/zlib/adler32');
-var crc32   = require('pako/lib/zlib/crc32');
-var msg     = require('pako/lib/zlib/messages');
+var utils   = require('../utils/common');
+var trees   = require('./trees');
+var adler32 = require('./adler32');
+var crc32   = require('./crc32');
+var msg     = require('./messages');
 
 /* Public constants ==========================================================*/
 /* ===========================================================================*/
@@ -57251,7 +61651,7 @@ exports.deflatePrime = deflatePrime;
 exports.deflateTune = deflateTune;
 */
 
-},{"pako/lib/utils/common":260,"pako/lib/zlib/adler32":261,"pako/lib/zlib/crc32":263,"pako/lib/zlib/messages":268,"pako/lib/zlib/trees":269}],265:[function(require,module,exports){
+},{"../utils/common":285,"./adler32":286,"./crc32":288,"./messages":293,"./trees":294}],290:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -57598,7 +61998,7 @@ module.exports = function inflate_fast(strm, start) {
   return;
 };
 
-},{}],266:[function(require,module,exports){
+},{}],291:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -57620,11 +62020,11 @@ module.exports = function inflate_fast(strm, start) {
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-var utils         = require('pako/lib/utils/common');
-var adler32       = require('pako/lib/zlib/adler32');
-var crc32         = require('pako/lib/zlib/crc32');
-var inflate_fast  = require('pako/lib/zlib/inffast');
-var inflate_table = require('pako/lib/zlib/inftrees');
+var utils         = require('../utils/common');
+var adler32       = require('./adler32');
+var crc32         = require('./crc32');
+var inflate_fast  = require('./inffast');
+var inflate_table = require('./inftrees');
 
 var CODES = 0;
 var LENS = 1;
@@ -59156,7 +63556,7 @@ exports.inflateSyncPoint = inflateSyncPoint;
 exports.inflateUndermine = inflateUndermine;
 */
 
-},{"pako/lib/utils/common":260,"pako/lib/zlib/adler32":261,"pako/lib/zlib/crc32":263,"pako/lib/zlib/inffast":265,"pako/lib/zlib/inftrees":267}],267:[function(require,module,exports){
+},{"../utils/common":285,"./adler32":286,"./crc32":288,"./inffast":290,"./inftrees":292}],292:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -59501,7 +63901,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
   return 0;
 };
 
-},{"../utils/common":260}],268:[function(require,module,exports){
+},{"../utils/common":285}],293:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -59535,7 +63935,7 @@ module.exports = {
   '-6':   'incompatible version' /* Z_VERSION_ERROR (-6) */
 };
 
-},{}],269:[function(require,module,exports){
+},{}],294:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -60759,7 +65159,7 @@ exports._tr_flush_block  = _tr_flush_block;
 exports._tr_tally = _tr_tally;
 exports._tr_align = _tr_align;
 
-},{"../utils/common":260}],270:[function(require,module,exports){
+},{"../utils/common":285}],295:[function(require,module,exports){
 'use strict';
 
 // (C) 1995-2013 Jean-loup Gailly and Mark Adler
@@ -60808,7 +65208,7 @@ function ZStream() {
 
 module.exports = ZStream;
 
-},{}],271:[function(require,module,exports){
+},{}],296:[function(require,module,exports){
 module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
 "2.16.840.1.101.3.4.1.3": "aes-128-ofb",
@@ -60822,7 +65222,7 @@ module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.43": "aes-256-ofb",
 "2.16.840.1.101.3.4.1.44": "aes-256-cfb"
 }
-},{}],272:[function(require,module,exports){
+},{}],297:[function(require,module,exports){
 // from https://github.com/indutny/self-signed/blob/gh-pages/lib/asn1.js
 // Fedor, you are amazing.
 'use strict'
@@ -60946,7 +65346,7 @@ exports.signature = asn1.define('signature', function () {
   )
 })
 
-},{"./certificate":273,"asn1.js":45}],273:[function(require,module,exports){
+},{"./certificate":298,"asn1.js":44}],298:[function(require,module,exports){
 // from https://github.com/Rantanen/node-dtls/blob/25a7dc861bda38cfeac93a723500eea4f0ac2e86/Certificate.js
 // thanks to @Rantanen
 
@@ -61037,7 +65437,7 @@ var X509Certificate = asn.define('X509Certificate', function () {
 
 module.exports = X509Certificate
 
-},{"asn1.js":45}],274:[function(require,module,exports){
+},{"asn1.js":44}],299:[function(require,module,exports){
 // adapted from https://github.com/apatil/pemstrip
 var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r\+\/\=]+)[\n\r]+/m
 var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m
@@ -61070,7 +65470,7 @@ module.exports = function (okey, password) {
   }
 }
 
-},{"browserify-aes":82,"evp_bytestokey":174,"safe-buffer":333}],275:[function(require,module,exports){
+},{"browserify-aes":107,"evp_bytestokey":199,"safe-buffer":358}],300:[function(require,module,exports){
 var asn1 = require('./asn1')
 var aesid = require('./aesid.json')
 var fixProc = require('./fixProc')
@@ -61179,7 +65579,7 @@ function decrypt (data, password) {
   return Buffer.concat(out)
 }
 
-},{"./aesid.json":271,"./asn1":272,"./fixProc":274,"browserify-aes":82,"pbkdf2":277,"safe-buffer":333}],276:[function(require,module,exports){
+},{"./aesid.json":296,"./asn1":297,"./fixProc":299,"browserify-aes":107,"pbkdf2":302,"safe-buffer":358}],301:[function(require,module,exports){
 (function (process){
 // .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
 // backported and transplited with Babel, with backwards-compat fixes
@@ -61485,11 +65885,11 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":284}],277:[function(require,module,exports){
+},{"_process":309}],302:[function(require,module,exports){
 exports.pbkdf2 = require('./lib/async')
 exports.pbkdf2Sync = require('./lib/sync')
 
-},{"./lib/async":278,"./lib/sync":281}],278:[function(require,module,exports){
+},{"./lib/async":303,"./lib/sync":306}],303:[function(require,module,exports){
 (function (process,global){
 var checkParameters = require('./precondition')
 var defaultEncoding = require('./default-encoding')
@@ -61593,7 +65993,7 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./default-encoding":279,"./precondition":280,"./sync":281,"_process":284,"safe-buffer":333}],279:[function(require,module,exports){
+},{"./default-encoding":304,"./precondition":305,"./sync":306,"_process":309,"safe-buffer":358}],304:[function(require,module,exports){
 (function (process){
 var defaultEncoding
 /* istanbul ignore next */
@@ -61607,7 +66007,7 @@ if (process.browser) {
 module.exports = defaultEncoding
 
 }).call(this,require('_process'))
-},{"_process":284}],280:[function(require,module,exports){
+},{"_process":309}],305:[function(require,module,exports){
 (function (Buffer){
 var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
@@ -61639,7 +66039,7 @@ module.exports = function (password, salt, iterations, keylen) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":239}],281:[function(require,module,exports){
+},{"../../is-buffer/index.js":264}],306:[function(require,module,exports){
 var md5 = require('create-hash/md5')
 var RIPEMD160 = require('ripemd160')
 var sha = require('sha.js')
@@ -61745,7 +66145,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest) {
 
 module.exports = pbkdf2
 
-},{"./default-encoding":279,"./precondition":280,"create-hash/md5":137,"ripemd160":332,"safe-buffer":333,"sha.js":336}],282:[function(require,module,exports){
+},{"./default-encoding":304,"./precondition":305,"create-hash/md5":162,"ripemd160":357,"safe-buffer":358,"sha.js":361}],307:[function(require,module,exports){
 (function (process){
 // Generated by CoffeeScript 1.12.2
 (function() {
@@ -61785,7 +66185,7 @@ module.exports = pbkdf2
 
 
 }).call(this,require('_process'))
-},{"_process":284}],283:[function(require,module,exports){
+},{"_process":309}],308:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -61834,7 +66234,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 
 
 }).call(this,require('_process'))
-},{"_process":284}],284:[function(require,module,exports){
+},{"_process":309}],309:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -62020,7 +66420,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],285:[function(require,module,exports){
+},{}],310:[function(require,module,exports){
 module.exports=[
 "ac",
 "com.ac",
@@ -70855,7 +75255,7 @@ module.exports=[
 "virtualserver.io",
 "enterprisecloud.nu"
 ]
-},{}],286:[function(require,module,exports){
+},{}],311:[function(require,module,exports){
 /*eslint no-var:0, prefer-arrow-callback: 0, object-shorthand: 0 */
 'use strict';
 
@@ -71126,7 +75526,7 @@ exports.isValid = function (domain) {
   return Boolean(parsed.domain && parsed.listed);
 };
 
-},{"./data/rules.json":285,"punycode":126}],287:[function(require,module,exports){
+},{"./data/rules.json":310,"punycode":151}],312:[function(require,module,exports){
 exports.publicEncrypt = require('./publicEncrypt')
 exports.privateDecrypt = require('./privateDecrypt')
 
@@ -71138,7 +75538,7 @@ exports.publicDecrypt = function publicDecrypt (key, buf) {
   return exports.privateDecrypt(key, buf, true)
 }
 
-},{"./privateDecrypt":290,"./publicEncrypt":291}],288:[function(require,module,exports){
+},{"./privateDecrypt":315,"./publicEncrypt":316}],313:[function(require,module,exports){
 var createHash = require('create-hash')
 var Buffer = require('safe-buffer').Buffer
 
@@ -71159,3442 +75559,9 @@ function i2ops (c) {
   return out
 }
 
-},{"create-hash":136,"safe-buffer":333}],289:[function(require,module,exports){
-(function (module, exports) {
-  'use strict';
-
-  // Utils
-  function assert (val, msg) {
-    if (!val) throw new Error(msg || 'Assertion failed');
-  }
-
-  // Could use `inherits` module, but don't want to move from single file
-  // architecture yet.
-  function inherits (ctor, superCtor) {
-    ctor.super_ = superCtor;
-    var TempCtor = function () {};
-    TempCtor.prototype = superCtor.prototype;
-    ctor.prototype = new TempCtor();
-    ctor.prototype.constructor = ctor;
-  }
-
-  // BN
-
-  function BN (number, base, endian) {
-    if (BN.isBN(number)) {
-      return number;
-    }
-
-    this.negative = 0;
-    this.words = null;
-    this.length = 0;
-
-    // Reduction context
-    this.red = null;
-
-    if (number !== null) {
-      if (base === 'le' || base === 'be') {
-        endian = base;
-        base = 10;
-      }
-
-      this._init(number || 0, base || 10, endian || 'be');
-    }
-  }
-  if (typeof module === 'object') {
-    module.exports = BN;
-  } else {
-    exports.BN = BN;
-  }
-
-  BN.BN = BN;
-  BN.wordSize = 26;
-
-  var Buffer;
-  try {
-    Buffer = require('buffer').Buffer;
-  } catch (e) {
-  }
-
-  BN.isBN = function isBN (num) {
-    if (num instanceof BN) {
-      return true;
-    }
-
-    return num !== null && typeof num === 'object' &&
-      num.constructor.wordSize === BN.wordSize && Array.isArray(num.words);
-  };
-
-  BN.max = function max (left, right) {
-    if (left.cmp(right) > 0) return left;
-    return right;
-  };
-
-  BN.min = function min (left, right) {
-    if (left.cmp(right) < 0) return left;
-    return right;
-  };
-
-  BN.prototype._init = function init (number, base, endian) {
-    if (typeof number === 'number') {
-      return this._initNumber(number, base, endian);
-    }
-
-    if (typeof number === 'object') {
-      return this._initArray(number, base, endian);
-    }
-
-    if (base === 'hex') {
-      base = 16;
-    }
-    assert(base === (base | 0) && base >= 2 && base <= 36);
-
-    number = number.toString().replace(/\s+/g, '');
-    var start = 0;
-    if (number[0] === '-') {
-      start++;
-    }
-
-    if (base === 16) {
-      this._parseHex(number, start);
-    } else {
-      this._parseBase(number, base, start);
-    }
-
-    if (number[0] === '-') {
-      this.negative = 1;
-    }
-
-    this.strip();
-
-    if (endian !== 'le') return;
-
-    this._initArray(this.toArray(), base, endian);
-  };
-
-  BN.prototype._initNumber = function _initNumber (number, base, endian) {
-    if (number < 0) {
-      this.negative = 1;
-      number = -number;
-    }
-    if (number < 0x4000000) {
-      this.words = [ number & 0x3ffffff ];
-      this.length = 1;
-    } else if (number < 0x10000000000000) {
-      this.words = [
-        number & 0x3ffffff,
-        (number / 0x4000000) & 0x3ffffff
-      ];
-      this.length = 2;
-    } else {
-      assert(number < 0x20000000000000); // 2 ^ 53 (unsafe)
-      this.words = [
-        number & 0x3ffffff,
-        (number / 0x4000000) & 0x3ffffff,
-        1
-      ];
-      this.length = 3;
-    }
-
-    if (endian !== 'le') return;
-
-    // Reverse the bytes
-    this._initArray(this.toArray(), base, endian);
-  };
-
-  BN.prototype._initArray = function _initArray (number, base, endian) {
-    // Perhaps a Uint8Array
-    assert(typeof number.length === 'number');
-    if (number.length <= 0) {
-      this.words = [ 0 ];
-      this.length = 1;
-      return this;
-    }
-
-    this.length = Math.ceil(number.length / 3);
-    this.words = new Array(this.length);
-    for (var i = 0; i < this.length; i++) {
-      this.words[i] = 0;
-    }
-
-    var j, w;
-    var off = 0;
-    if (endian === 'be') {
-      for (i = number.length - 1, j = 0; i >= 0; i -= 3) {
-        w = number[i] | (number[i - 1] << 8) | (number[i - 2] << 16);
-        this.words[j] |= (w << off) & 0x3ffffff;
-        this.words[j + 1] = (w >>> (26 - off)) & 0x3ffffff;
-        off += 24;
-        if (off >= 26) {
-          off -= 26;
-          j++;
-        }
-      }
-    } else if (endian === 'le') {
-      for (i = 0, j = 0; i < number.length; i += 3) {
-        w = number[i] | (number[i + 1] << 8) | (number[i + 2] << 16);
-        this.words[j] |= (w << off) & 0x3ffffff;
-        this.words[j + 1] = (w >>> (26 - off)) & 0x3ffffff;
-        off += 24;
-        if (off >= 26) {
-          off -= 26;
-          j++;
-        }
-      }
-    }
-    return this.strip();
-  };
-
-  function parseHex (str, start, end) {
-    var r = 0;
-    var len = Math.min(str.length, end);
-    for (var i = start; i < len; i++) {
-      var c = str.charCodeAt(i) - 48;
-
-      r <<= 4;
-
-      // 'a' - 'f'
-      if (c >= 49 && c <= 54) {
-        r |= c - 49 + 0xa;
-
-      // 'A' - 'F'
-      } else if (c >= 17 && c <= 22) {
-        r |= c - 17 + 0xa;
-
-      // '0' - '9'
-      } else {
-        r |= c & 0xf;
-      }
-    }
-    return r;
-  }
-
-  BN.prototype._parseHex = function _parseHex (number, start) {
-    // Create possibly bigger array to ensure that it fits the number
-    this.length = Math.ceil((number.length - start) / 6);
-    this.words = new Array(this.length);
-    for (var i = 0; i < this.length; i++) {
-      this.words[i] = 0;
-    }
-
-    var j, w;
-    // Scan 24-bit chunks and add them to the number
-    var off = 0;
-    for (i = number.length - 6, j = 0; i >= start; i -= 6) {
-      w = parseHex(number, i, i + 6);
-      this.words[j] |= (w << off) & 0x3ffffff;
-      // NOTE: `0x3fffff` is intentional here, 26bits max shift + 24bit hex limb
-      this.words[j + 1] |= w >>> (26 - off) & 0x3fffff;
-      off += 24;
-      if (off >= 26) {
-        off -= 26;
-        j++;
-      }
-    }
-    if (i + 6 !== start) {
-      w = parseHex(number, start, i + 6);
-      this.words[j] |= (w << off) & 0x3ffffff;
-      this.words[j + 1] |= w >>> (26 - off) & 0x3fffff;
-    }
-    this.strip();
-  };
-
-  function parseBase (str, start, end, mul) {
-    var r = 0;
-    var len = Math.min(str.length, end);
-    for (var i = start; i < len; i++) {
-      var c = str.charCodeAt(i) - 48;
-
-      r *= mul;
-
-      // 'a'
-      if (c >= 49) {
-        r += c - 49 + 0xa;
-
-      // 'A'
-      } else if (c >= 17) {
-        r += c - 17 + 0xa;
-
-      // '0' - '9'
-      } else {
-        r += c;
-      }
-    }
-    return r;
-  }
-
-  BN.prototype._parseBase = function _parseBase (number, base, start) {
-    // Initialize as zero
-    this.words = [ 0 ];
-    this.length = 1;
-
-    // Find length of limb in base
-    for (var limbLen = 0, limbPow = 1; limbPow <= 0x3ffffff; limbPow *= base) {
-      limbLen++;
-    }
-    limbLen--;
-    limbPow = (limbPow / base) | 0;
-
-    var total = number.length - start;
-    var mod = total % limbLen;
-    var end = Math.min(total, total - mod) + start;
-
-    var word = 0;
-    for (var i = start; i < end; i += limbLen) {
-      word = parseBase(number, i, i + limbLen, base);
-
-      this.imuln(limbPow);
-      if (this.words[0] + word < 0x4000000) {
-        this.words[0] += word;
-      } else {
-        this._iaddn(word);
-      }
-    }
-
-    if (mod !== 0) {
-      var pow = 1;
-      word = parseBase(number, i, number.length, base);
-
-      for (i = 0; i < mod; i++) {
-        pow *= base;
-      }
-
-      this.imuln(pow);
-      if (this.words[0] + word < 0x4000000) {
-        this.words[0] += word;
-      } else {
-        this._iaddn(word);
-      }
-    }
-  };
-
-  BN.prototype.copy = function copy (dest) {
-    dest.words = new Array(this.length);
-    for (var i = 0; i < this.length; i++) {
-      dest.words[i] = this.words[i];
-    }
-    dest.length = this.length;
-    dest.negative = this.negative;
-    dest.red = this.red;
-  };
-
-  BN.prototype.clone = function clone () {
-    var r = new BN(null);
-    this.copy(r);
-    return r;
-  };
-
-  BN.prototype._expand = function _expand (size) {
-    while (this.length < size) {
-      this.words[this.length++] = 0;
-    }
-    return this;
-  };
-
-  // Remove leading `0` from `this`
-  BN.prototype.strip = function strip () {
-    while (this.length > 1 && this.words[this.length - 1] === 0) {
-      this.length--;
-    }
-    return this._normSign();
-  };
-
-  BN.prototype._normSign = function _normSign () {
-    // -0 = 0
-    if (this.length === 1 && this.words[0] === 0) {
-      this.negative = 0;
-    }
-    return this;
-  };
-
-  BN.prototype.inspect = function inspect () {
-    return (this.red ? '<BN-R: ' : '<BN: ') + this.toString(16) + '>';
-  };
-
-  /*
-
-  var zeros = [];
-  var groupSizes = [];
-  var groupBases = [];
-
-  var s = '';
-  var i = -1;
-  while (++i < BN.wordSize) {
-    zeros[i] = s;
-    s += '0';
-  }
-  groupSizes[0] = 0;
-  groupSizes[1] = 0;
-  groupBases[0] = 0;
-  groupBases[1] = 0;
-  var base = 2 - 1;
-  while (++base < 36 + 1) {
-    var groupSize = 0;
-    var groupBase = 1;
-    while (groupBase < (1 << BN.wordSize) / base) {
-      groupBase *= base;
-      groupSize += 1;
-    }
-    groupSizes[base] = groupSize;
-    groupBases[base] = groupBase;
-  }
-
-  */
-
-  var zeros = [
-    '',
-    '0',
-    '00',
-    '000',
-    '0000',
-    '00000',
-    '000000',
-    '0000000',
-    '00000000',
-    '000000000',
-    '0000000000',
-    '00000000000',
-    '000000000000',
-    '0000000000000',
-    '00000000000000',
-    '000000000000000',
-    '0000000000000000',
-    '00000000000000000',
-    '000000000000000000',
-    '0000000000000000000',
-    '00000000000000000000',
-    '000000000000000000000',
-    '0000000000000000000000',
-    '00000000000000000000000',
-    '000000000000000000000000',
-    '0000000000000000000000000'
-  ];
-
-  var groupSizes = [
-    0, 0,
-    25, 16, 12, 11, 10, 9, 8,
-    8, 7, 7, 7, 7, 6, 6,
-    6, 6, 6, 6, 6, 5, 5,
-    5, 5, 5, 5, 5, 5, 5,
-    5, 5, 5, 5, 5, 5, 5
-  ];
-
-  var groupBases = [
-    0, 0,
-    33554432, 43046721, 16777216, 48828125, 60466176, 40353607, 16777216,
-    43046721, 10000000, 19487171, 35831808, 62748517, 7529536, 11390625,
-    16777216, 24137569, 34012224, 47045881, 64000000, 4084101, 5153632,
-    6436343, 7962624, 9765625, 11881376, 14348907, 17210368, 20511149,
-    24300000, 28629151, 33554432, 39135393, 45435424, 52521875, 60466176
-  ];
-
-  BN.prototype.toString = function toString (base, padding) {
-    base = base || 10;
-    padding = padding | 0 || 1;
-
-    var out;
-    if (base === 16 || base === 'hex') {
-      out = '';
-      var off = 0;
-      var carry = 0;
-      for (var i = 0; i < this.length; i++) {
-        var w = this.words[i];
-        var word = (((w << off) | carry) & 0xffffff).toString(16);
-        carry = (w >>> (24 - off)) & 0xffffff;
-        if (carry !== 0 || i !== this.length - 1) {
-          out = zeros[6 - word.length] + word + out;
-        } else {
-          out = word + out;
-        }
-        off += 2;
-        if (off >= 26) {
-          off -= 26;
-          i--;
-        }
-      }
-      if (carry !== 0) {
-        out = carry.toString(16) + out;
-      }
-      while (out.length % padding !== 0) {
-        out = '0' + out;
-      }
-      if (this.negative !== 0) {
-        out = '-' + out;
-      }
-      return out;
-    }
-
-    if (base === (base | 0) && base >= 2 && base <= 36) {
-      // var groupSize = Math.floor(BN.wordSize * Math.LN2 / Math.log(base));
-      var groupSize = groupSizes[base];
-      // var groupBase = Math.pow(base, groupSize);
-      var groupBase = groupBases[base];
-      out = '';
-      var c = this.clone();
-      c.negative = 0;
-      while (!c.isZero()) {
-        var r = c.modn(groupBase).toString(base);
-        c = c.idivn(groupBase);
-
-        if (!c.isZero()) {
-          out = zeros[groupSize - r.length] + r + out;
-        } else {
-          out = r + out;
-        }
-      }
-      if (this.isZero()) {
-        out = '0' + out;
-      }
-      while (out.length % padding !== 0) {
-        out = '0' + out;
-      }
-      if (this.negative !== 0) {
-        out = '-' + out;
-      }
-      return out;
-    }
-
-    assert(false, 'Base should be between 2 and 36');
-  };
-
-  BN.prototype.toNumber = function toNumber () {
-    var ret = this.words[0];
-    if (this.length === 2) {
-      ret += this.words[1] * 0x4000000;
-    } else if (this.length === 3 && this.words[2] === 0x01) {
-      // NOTE: at this stage it is known that the top bit is set
-      ret += 0x10000000000000 + (this.words[1] * 0x4000000);
-    } else if (this.length > 2) {
-      assert(false, 'Number can only safely store up to 53 bits');
-    }
-    return (this.negative !== 0) ? -ret : ret;
-  };
-
-  BN.prototype.toJSON = function toJSON () {
-    return this.toString(16);
-  };
-
-  BN.prototype.toBuffer = function toBuffer (endian, length) {
-    assert(typeof Buffer !== 'undefined');
-    return this.toArrayLike(Buffer, endian, length);
-  };
-
-  BN.prototype.toArray = function toArray (endian, length) {
-    return this.toArrayLike(Array, endian, length);
-  };
-
-  BN.prototype.toArrayLike = function toArrayLike (ArrayType, endian, length) {
-    var byteLength = this.byteLength();
-    var reqLength = length || Math.max(1, byteLength);
-    assert(byteLength <= reqLength, 'byte array longer than desired length');
-    assert(reqLength > 0, 'Requested array length <= 0');
-
-    this.strip();
-    var littleEndian = endian === 'le';
-    var res = new ArrayType(reqLength);
-
-    var b, i;
-    var q = this.clone();
-    if (!littleEndian) {
-      // Assume big-endian
-      for (i = 0; i < reqLength - byteLength; i++) {
-        res[i] = 0;
-      }
-
-      for (i = 0; !q.isZero(); i++) {
-        b = q.andln(0xff);
-        q.iushrn(8);
-
-        res[reqLength - i - 1] = b;
-      }
-    } else {
-      for (i = 0; !q.isZero(); i++) {
-        b = q.andln(0xff);
-        q.iushrn(8);
-
-        res[i] = b;
-      }
-
-      for (; i < reqLength; i++) {
-        res[i] = 0;
-      }
-    }
-
-    return res;
-  };
-
-  if (Math.clz32) {
-    BN.prototype._countBits = function _countBits (w) {
-      return 32 - Math.clz32(w);
-    };
-  } else {
-    BN.prototype._countBits = function _countBits (w) {
-      var t = w;
-      var r = 0;
-      if (t >= 0x1000) {
-        r += 13;
-        t >>>= 13;
-      }
-      if (t >= 0x40) {
-        r += 7;
-        t >>>= 7;
-      }
-      if (t >= 0x8) {
-        r += 4;
-        t >>>= 4;
-      }
-      if (t >= 0x02) {
-        r += 2;
-        t >>>= 2;
-      }
-      return r + t;
-    };
-  }
-
-  BN.prototype._zeroBits = function _zeroBits (w) {
-    // Short-cut
-    if (w === 0) return 26;
-
-    var t = w;
-    var r = 0;
-    if ((t & 0x1fff) === 0) {
-      r += 13;
-      t >>>= 13;
-    }
-    if ((t & 0x7f) === 0) {
-      r += 7;
-      t >>>= 7;
-    }
-    if ((t & 0xf) === 0) {
-      r += 4;
-      t >>>= 4;
-    }
-    if ((t & 0x3) === 0) {
-      r += 2;
-      t >>>= 2;
-    }
-    if ((t & 0x1) === 0) {
-      r++;
-    }
-    return r;
-  };
-
-  // Return number of used bits in a BN
-  BN.prototype.bitLength = function bitLength () {
-    var w = this.words[this.length - 1];
-    var hi = this._countBits(w);
-    return (this.length - 1) * 26 + hi;
-  };
-
-  function toBitArray (num) {
-    var w = new Array(num.bitLength());
-
-    for (var bit = 0; bit < w.length; bit++) {
-      var off = (bit / 26) | 0;
-      var wbit = bit % 26;
-
-      w[bit] = (num.words[off] & (1 << wbit)) >>> wbit;
-    }
-
-    return w;
-  }
-
-  // Number of trailing zero bits
-  BN.prototype.zeroBits = function zeroBits () {
-    if (this.isZero()) return 0;
-
-    var r = 0;
-    for (var i = 0; i < this.length; i++) {
-      var b = this._zeroBits(this.words[i]);
-      r += b;
-      if (b !== 26) break;
-    }
-    return r;
-  };
-
-  BN.prototype.byteLength = function byteLength () {
-    return Math.ceil(this.bitLength() / 8);
-  };
-
-  BN.prototype.toTwos = function toTwos (width) {
-    if (this.negative !== 0) {
-      return this.abs().inotn(width).iaddn(1);
-    }
-    return this.clone();
-  };
-
-  BN.prototype.fromTwos = function fromTwos (width) {
-    if (this.testn(width - 1)) {
-      return this.notn(width).iaddn(1).ineg();
-    }
-    return this.clone();
-  };
-
-  BN.prototype.isNeg = function isNeg () {
-    return this.negative !== 0;
-  };
-
-  // Return negative clone of `this`
-  BN.prototype.neg = function neg () {
-    return this.clone().ineg();
-  };
-
-  BN.prototype.ineg = function ineg () {
-    if (!this.isZero()) {
-      this.negative ^= 1;
-    }
-
-    return this;
-  };
-
-  // Or `num` with `this` in-place
-  BN.prototype.iuor = function iuor (num) {
-    while (this.length < num.length) {
-      this.words[this.length++] = 0;
-    }
-
-    for (var i = 0; i < num.length; i++) {
-      this.words[i] = this.words[i] | num.words[i];
-    }
-
-    return this.strip();
-  };
-
-  BN.prototype.ior = function ior (num) {
-    assert((this.negative | num.negative) === 0);
-    return this.iuor(num);
-  };
-
-  // Or `num` with `this`
-  BN.prototype.or = function or (num) {
-    if (this.length > num.length) return this.clone().ior(num);
-    return num.clone().ior(this);
-  };
-
-  BN.prototype.uor = function uor (num) {
-    if (this.length > num.length) return this.clone().iuor(num);
-    return num.clone().iuor(this);
-  };
-
-  // And `num` with `this` in-place
-  BN.prototype.iuand = function iuand (num) {
-    // b = min-length(num, this)
-    var b;
-    if (this.length > num.length) {
-      b = num;
-    } else {
-      b = this;
-    }
-
-    for (var i = 0; i < b.length; i++) {
-      this.words[i] = this.words[i] & num.words[i];
-    }
-
-    this.length = b.length;
-
-    return this.strip();
-  };
-
-  BN.prototype.iand = function iand (num) {
-    assert((this.negative | num.negative) === 0);
-    return this.iuand(num);
-  };
-
-  // And `num` with `this`
-  BN.prototype.and = function and (num) {
-    if (this.length > num.length) return this.clone().iand(num);
-    return num.clone().iand(this);
-  };
-
-  BN.prototype.uand = function uand (num) {
-    if (this.length > num.length) return this.clone().iuand(num);
-    return num.clone().iuand(this);
-  };
-
-  // Xor `num` with `this` in-place
-  BN.prototype.iuxor = function iuxor (num) {
-    // a.length > b.length
-    var a;
-    var b;
-    if (this.length > num.length) {
-      a = this;
-      b = num;
-    } else {
-      a = num;
-      b = this;
-    }
-
-    for (var i = 0; i < b.length; i++) {
-      this.words[i] = a.words[i] ^ b.words[i];
-    }
-
-    if (this !== a) {
-      for (; i < a.length; i++) {
-        this.words[i] = a.words[i];
-      }
-    }
-
-    this.length = a.length;
-
-    return this.strip();
-  };
-
-  BN.prototype.ixor = function ixor (num) {
-    assert((this.negative | num.negative) === 0);
-    return this.iuxor(num);
-  };
-
-  // Xor `num` with `this`
-  BN.prototype.xor = function xor (num) {
-    if (this.length > num.length) return this.clone().ixor(num);
-    return num.clone().ixor(this);
-  };
-
-  BN.prototype.uxor = function uxor (num) {
-    if (this.length > num.length) return this.clone().iuxor(num);
-    return num.clone().iuxor(this);
-  };
-
-  // Not ``this`` with ``width`` bitwidth
-  BN.prototype.inotn = function inotn (width) {
-    assert(typeof width === 'number' && width >= 0);
-
-    var bytesNeeded = Math.ceil(width / 26) | 0;
-    var bitsLeft = width % 26;
-
-    // Extend the buffer with leading zeroes
-    this._expand(bytesNeeded);
-
-    if (bitsLeft > 0) {
-      bytesNeeded--;
-    }
-
-    // Handle complete words
-    for (var i = 0; i < bytesNeeded; i++) {
-      this.words[i] = ~this.words[i] & 0x3ffffff;
-    }
-
-    // Handle the residue
-    if (bitsLeft > 0) {
-      this.words[i] = ~this.words[i] & (0x3ffffff >> (26 - bitsLeft));
-    }
-
-    // And remove leading zeroes
-    return this.strip();
-  };
-
-  BN.prototype.notn = function notn (width) {
-    return this.clone().inotn(width);
-  };
-
-  // Set `bit` of `this`
-  BN.prototype.setn = function setn (bit, val) {
-    assert(typeof bit === 'number' && bit >= 0);
-
-    var off = (bit / 26) | 0;
-    var wbit = bit % 26;
-
-    this._expand(off + 1);
-
-    if (val) {
-      this.words[off] = this.words[off] | (1 << wbit);
-    } else {
-      this.words[off] = this.words[off] & ~(1 << wbit);
-    }
-
-    return this.strip();
-  };
-
-  // Add `num` to `this` in-place
-  BN.prototype.iadd = function iadd (num) {
-    var r;
-
-    // negative + positive
-    if (this.negative !== 0 && num.negative === 0) {
-      this.negative = 0;
-      r = this.isub(num);
-      this.negative ^= 1;
-      return this._normSign();
-
-    // positive + negative
-    } else if (this.negative === 0 && num.negative !== 0) {
-      num.negative = 0;
-      r = this.isub(num);
-      num.negative = 1;
-      return r._normSign();
-    }
-
-    // a.length > b.length
-    var a, b;
-    if (this.length > num.length) {
-      a = this;
-      b = num;
-    } else {
-      a = num;
-      b = this;
-    }
-
-    var carry = 0;
-    for (var i = 0; i < b.length; i++) {
-      r = (a.words[i] | 0) + (b.words[i] | 0) + carry;
-      this.words[i] = r & 0x3ffffff;
-      carry = r >>> 26;
-    }
-    for (; carry !== 0 && i < a.length; i++) {
-      r = (a.words[i] | 0) + carry;
-      this.words[i] = r & 0x3ffffff;
-      carry = r >>> 26;
-    }
-
-    this.length = a.length;
-    if (carry !== 0) {
-      this.words[this.length] = carry;
-      this.length++;
-    // Copy the rest of the words
-    } else if (a !== this) {
-      for (; i < a.length; i++) {
-        this.words[i] = a.words[i];
-      }
-    }
-
-    return this;
-  };
-
-  // Add `num` to `this`
-  BN.prototype.add = function add (num) {
-    var res;
-    if (num.negative !== 0 && this.negative === 0) {
-      num.negative = 0;
-      res = this.sub(num);
-      num.negative ^= 1;
-      return res;
-    } else if (num.negative === 0 && this.negative !== 0) {
-      this.negative = 0;
-      res = num.sub(this);
-      this.negative = 1;
-      return res;
-    }
-
-    if (this.length > num.length) return this.clone().iadd(num);
-
-    return num.clone().iadd(this);
-  };
-
-  // Subtract `num` from `this` in-place
-  BN.prototype.isub = function isub (num) {
-    // this - (-num) = this + num
-    if (num.negative !== 0) {
-      num.negative = 0;
-      var r = this.iadd(num);
-      num.negative = 1;
-      return r._normSign();
-
-    // -this - num = -(this + num)
-    } else if (this.negative !== 0) {
-      this.negative = 0;
-      this.iadd(num);
-      this.negative = 1;
-      return this._normSign();
-    }
-
-    // At this point both numbers are positive
-    var cmp = this.cmp(num);
-
-    // Optimization - zeroify
-    if (cmp === 0) {
-      this.negative = 0;
-      this.length = 1;
-      this.words[0] = 0;
-      return this;
-    }
-
-    // a > b
-    var a, b;
-    if (cmp > 0) {
-      a = this;
-      b = num;
-    } else {
-      a = num;
-      b = this;
-    }
-
-    var carry = 0;
-    for (var i = 0; i < b.length; i++) {
-      r = (a.words[i] | 0) - (b.words[i] | 0) + carry;
-      carry = r >> 26;
-      this.words[i] = r & 0x3ffffff;
-    }
-    for (; carry !== 0 && i < a.length; i++) {
-      r = (a.words[i] | 0) + carry;
-      carry = r >> 26;
-      this.words[i] = r & 0x3ffffff;
-    }
-
-    // Copy rest of the words
-    if (carry === 0 && i < a.length && a !== this) {
-      for (; i < a.length; i++) {
-        this.words[i] = a.words[i];
-      }
-    }
-
-    this.length = Math.max(this.length, i);
-
-    if (a !== this) {
-      this.negative = 1;
-    }
-
-    return this.strip();
-  };
-
-  // Subtract `num` from `this`
-  BN.prototype.sub = function sub (num) {
-    return this.clone().isub(num);
-  };
-
-  function smallMulTo (self, num, out) {
-    out.negative = num.negative ^ self.negative;
-    var len = (self.length + num.length) | 0;
-    out.length = len;
-    len = (len - 1) | 0;
-
-    // Peel one iteration (compiler can't do it, because of code complexity)
-    var a = self.words[0] | 0;
-    var b = num.words[0] | 0;
-    var r = a * b;
-
-    var lo = r & 0x3ffffff;
-    var carry = (r / 0x4000000) | 0;
-    out.words[0] = lo;
-
-    for (var k = 1; k < len; k++) {
-      // Sum all words with the same `i + j = k` and accumulate `ncarry`,
-      // note that ncarry could be >= 0x3ffffff
-      var ncarry = carry >>> 26;
-      var rword = carry & 0x3ffffff;
-      var maxJ = Math.min(k, num.length - 1);
-      for (var j = Math.max(0, k - self.length + 1); j <= maxJ; j++) {
-        var i = (k - j) | 0;
-        a = self.words[i] | 0;
-        b = num.words[j] | 0;
-        r = a * b + rword;
-        ncarry += (r / 0x4000000) | 0;
-        rword = r & 0x3ffffff;
-      }
-      out.words[k] = rword | 0;
-      carry = ncarry | 0;
-    }
-    if (carry !== 0) {
-      out.words[k] = carry | 0;
-    } else {
-      out.length--;
-    }
-
-    return out.strip();
-  }
-
-  // TODO(indutny): it may be reasonable to omit it for users who don't need
-  // to work with 256-bit numbers, otherwise it gives 20% improvement for 256-bit
-  // multiplication (like elliptic secp256k1).
-  var comb10MulTo = function comb10MulTo (self, num, out) {
-    var a = self.words;
-    var b = num.words;
-    var o = out.words;
-    var c = 0;
-    var lo;
-    var mid;
-    var hi;
-    var a0 = a[0] | 0;
-    var al0 = a0 & 0x1fff;
-    var ah0 = a0 >>> 13;
-    var a1 = a[1] | 0;
-    var al1 = a1 & 0x1fff;
-    var ah1 = a1 >>> 13;
-    var a2 = a[2] | 0;
-    var al2 = a2 & 0x1fff;
-    var ah2 = a2 >>> 13;
-    var a3 = a[3] | 0;
-    var al3 = a3 & 0x1fff;
-    var ah3 = a3 >>> 13;
-    var a4 = a[4] | 0;
-    var al4 = a4 & 0x1fff;
-    var ah4 = a4 >>> 13;
-    var a5 = a[5] | 0;
-    var al5 = a5 & 0x1fff;
-    var ah5 = a5 >>> 13;
-    var a6 = a[6] | 0;
-    var al6 = a6 & 0x1fff;
-    var ah6 = a6 >>> 13;
-    var a7 = a[7] | 0;
-    var al7 = a7 & 0x1fff;
-    var ah7 = a7 >>> 13;
-    var a8 = a[8] | 0;
-    var al8 = a8 & 0x1fff;
-    var ah8 = a8 >>> 13;
-    var a9 = a[9] | 0;
-    var al9 = a9 & 0x1fff;
-    var ah9 = a9 >>> 13;
-    var b0 = b[0] | 0;
-    var bl0 = b0 & 0x1fff;
-    var bh0 = b0 >>> 13;
-    var b1 = b[1] | 0;
-    var bl1 = b1 & 0x1fff;
-    var bh1 = b1 >>> 13;
-    var b2 = b[2] | 0;
-    var bl2 = b2 & 0x1fff;
-    var bh2 = b2 >>> 13;
-    var b3 = b[3] | 0;
-    var bl3 = b3 & 0x1fff;
-    var bh3 = b3 >>> 13;
-    var b4 = b[4] | 0;
-    var bl4 = b4 & 0x1fff;
-    var bh4 = b4 >>> 13;
-    var b5 = b[5] | 0;
-    var bl5 = b5 & 0x1fff;
-    var bh5 = b5 >>> 13;
-    var b6 = b[6] | 0;
-    var bl6 = b6 & 0x1fff;
-    var bh6 = b6 >>> 13;
-    var b7 = b[7] | 0;
-    var bl7 = b7 & 0x1fff;
-    var bh7 = b7 >>> 13;
-    var b8 = b[8] | 0;
-    var bl8 = b8 & 0x1fff;
-    var bh8 = b8 >>> 13;
-    var b9 = b[9] | 0;
-    var bl9 = b9 & 0x1fff;
-    var bh9 = b9 >>> 13;
-
-    out.negative = self.negative ^ num.negative;
-    out.length = 19;
-    /* k = 0 */
-    lo = Math.imul(al0, bl0);
-    mid = Math.imul(al0, bh0);
-    mid = (mid + Math.imul(ah0, bl0)) | 0;
-    hi = Math.imul(ah0, bh0);
-    var w0 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w0 >>> 26)) | 0;
-    w0 &= 0x3ffffff;
-    /* k = 1 */
-    lo = Math.imul(al1, bl0);
-    mid = Math.imul(al1, bh0);
-    mid = (mid + Math.imul(ah1, bl0)) | 0;
-    hi = Math.imul(ah1, bh0);
-    lo = (lo + Math.imul(al0, bl1)) | 0;
-    mid = (mid + Math.imul(al0, bh1)) | 0;
-    mid = (mid + Math.imul(ah0, bl1)) | 0;
-    hi = (hi + Math.imul(ah0, bh1)) | 0;
-    var w1 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w1 >>> 26)) | 0;
-    w1 &= 0x3ffffff;
-    /* k = 2 */
-    lo = Math.imul(al2, bl0);
-    mid = Math.imul(al2, bh0);
-    mid = (mid + Math.imul(ah2, bl0)) | 0;
-    hi = Math.imul(ah2, bh0);
-    lo = (lo + Math.imul(al1, bl1)) | 0;
-    mid = (mid + Math.imul(al1, bh1)) | 0;
-    mid = (mid + Math.imul(ah1, bl1)) | 0;
-    hi = (hi + Math.imul(ah1, bh1)) | 0;
-    lo = (lo + Math.imul(al0, bl2)) | 0;
-    mid = (mid + Math.imul(al0, bh2)) | 0;
-    mid = (mid + Math.imul(ah0, bl2)) | 0;
-    hi = (hi + Math.imul(ah0, bh2)) | 0;
-    var w2 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w2 >>> 26)) | 0;
-    w2 &= 0x3ffffff;
-    /* k = 3 */
-    lo = Math.imul(al3, bl0);
-    mid = Math.imul(al3, bh0);
-    mid = (mid + Math.imul(ah3, bl0)) | 0;
-    hi = Math.imul(ah3, bh0);
-    lo = (lo + Math.imul(al2, bl1)) | 0;
-    mid = (mid + Math.imul(al2, bh1)) | 0;
-    mid = (mid + Math.imul(ah2, bl1)) | 0;
-    hi = (hi + Math.imul(ah2, bh1)) | 0;
-    lo = (lo + Math.imul(al1, bl2)) | 0;
-    mid = (mid + Math.imul(al1, bh2)) | 0;
-    mid = (mid + Math.imul(ah1, bl2)) | 0;
-    hi = (hi + Math.imul(ah1, bh2)) | 0;
-    lo = (lo + Math.imul(al0, bl3)) | 0;
-    mid = (mid + Math.imul(al0, bh3)) | 0;
-    mid = (mid + Math.imul(ah0, bl3)) | 0;
-    hi = (hi + Math.imul(ah0, bh3)) | 0;
-    var w3 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w3 >>> 26)) | 0;
-    w3 &= 0x3ffffff;
-    /* k = 4 */
-    lo = Math.imul(al4, bl0);
-    mid = Math.imul(al4, bh0);
-    mid = (mid + Math.imul(ah4, bl0)) | 0;
-    hi = Math.imul(ah4, bh0);
-    lo = (lo + Math.imul(al3, bl1)) | 0;
-    mid = (mid + Math.imul(al3, bh1)) | 0;
-    mid = (mid + Math.imul(ah3, bl1)) | 0;
-    hi = (hi + Math.imul(ah3, bh1)) | 0;
-    lo = (lo + Math.imul(al2, bl2)) | 0;
-    mid = (mid + Math.imul(al2, bh2)) | 0;
-    mid = (mid + Math.imul(ah2, bl2)) | 0;
-    hi = (hi + Math.imul(ah2, bh2)) | 0;
-    lo = (lo + Math.imul(al1, bl3)) | 0;
-    mid = (mid + Math.imul(al1, bh3)) | 0;
-    mid = (mid + Math.imul(ah1, bl3)) | 0;
-    hi = (hi + Math.imul(ah1, bh3)) | 0;
-    lo = (lo + Math.imul(al0, bl4)) | 0;
-    mid = (mid + Math.imul(al0, bh4)) | 0;
-    mid = (mid + Math.imul(ah0, bl4)) | 0;
-    hi = (hi + Math.imul(ah0, bh4)) | 0;
-    var w4 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w4 >>> 26)) | 0;
-    w4 &= 0x3ffffff;
-    /* k = 5 */
-    lo = Math.imul(al5, bl0);
-    mid = Math.imul(al5, bh0);
-    mid = (mid + Math.imul(ah5, bl0)) | 0;
-    hi = Math.imul(ah5, bh0);
-    lo = (lo + Math.imul(al4, bl1)) | 0;
-    mid = (mid + Math.imul(al4, bh1)) | 0;
-    mid = (mid + Math.imul(ah4, bl1)) | 0;
-    hi = (hi + Math.imul(ah4, bh1)) | 0;
-    lo = (lo + Math.imul(al3, bl2)) | 0;
-    mid = (mid + Math.imul(al3, bh2)) | 0;
-    mid = (mid + Math.imul(ah3, bl2)) | 0;
-    hi = (hi + Math.imul(ah3, bh2)) | 0;
-    lo = (lo + Math.imul(al2, bl3)) | 0;
-    mid = (mid + Math.imul(al2, bh3)) | 0;
-    mid = (mid + Math.imul(ah2, bl3)) | 0;
-    hi = (hi + Math.imul(ah2, bh3)) | 0;
-    lo = (lo + Math.imul(al1, bl4)) | 0;
-    mid = (mid + Math.imul(al1, bh4)) | 0;
-    mid = (mid + Math.imul(ah1, bl4)) | 0;
-    hi = (hi + Math.imul(ah1, bh4)) | 0;
-    lo = (lo + Math.imul(al0, bl5)) | 0;
-    mid = (mid + Math.imul(al0, bh5)) | 0;
-    mid = (mid + Math.imul(ah0, bl5)) | 0;
-    hi = (hi + Math.imul(ah0, bh5)) | 0;
-    var w5 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w5 >>> 26)) | 0;
-    w5 &= 0x3ffffff;
-    /* k = 6 */
-    lo = Math.imul(al6, bl0);
-    mid = Math.imul(al6, bh0);
-    mid = (mid + Math.imul(ah6, bl0)) | 0;
-    hi = Math.imul(ah6, bh0);
-    lo = (lo + Math.imul(al5, bl1)) | 0;
-    mid = (mid + Math.imul(al5, bh1)) | 0;
-    mid = (mid + Math.imul(ah5, bl1)) | 0;
-    hi = (hi + Math.imul(ah5, bh1)) | 0;
-    lo = (lo + Math.imul(al4, bl2)) | 0;
-    mid = (mid + Math.imul(al4, bh2)) | 0;
-    mid = (mid + Math.imul(ah4, bl2)) | 0;
-    hi = (hi + Math.imul(ah4, bh2)) | 0;
-    lo = (lo + Math.imul(al3, bl3)) | 0;
-    mid = (mid + Math.imul(al3, bh3)) | 0;
-    mid = (mid + Math.imul(ah3, bl3)) | 0;
-    hi = (hi + Math.imul(ah3, bh3)) | 0;
-    lo = (lo + Math.imul(al2, bl4)) | 0;
-    mid = (mid + Math.imul(al2, bh4)) | 0;
-    mid = (mid + Math.imul(ah2, bl4)) | 0;
-    hi = (hi + Math.imul(ah2, bh4)) | 0;
-    lo = (lo + Math.imul(al1, bl5)) | 0;
-    mid = (mid + Math.imul(al1, bh5)) | 0;
-    mid = (mid + Math.imul(ah1, bl5)) | 0;
-    hi = (hi + Math.imul(ah1, bh5)) | 0;
-    lo = (lo + Math.imul(al0, bl6)) | 0;
-    mid = (mid + Math.imul(al0, bh6)) | 0;
-    mid = (mid + Math.imul(ah0, bl6)) | 0;
-    hi = (hi + Math.imul(ah0, bh6)) | 0;
-    var w6 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w6 >>> 26)) | 0;
-    w6 &= 0x3ffffff;
-    /* k = 7 */
-    lo = Math.imul(al7, bl0);
-    mid = Math.imul(al7, bh0);
-    mid = (mid + Math.imul(ah7, bl0)) | 0;
-    hi = Math.imul(ah7, bh0);
-    lo = (lo + Math.imul(al6, bl1)) | 0;
-    mid = (mid + Math.imul(al6, bh1)) | 0;
-    mid = (mid + Math.imul(ah6, bl1)) | 0;
-    hi = (hi + Math.imul(ah6, bh1)) | 0;
-    lo = (lo + Math.imul(al5, bl2)) | 0;
-    mid = (mid + Math.imul(al5, bh2)) | 0;
-    mid = (mid + Math.imul(ah5, bl2)) | 0;
-    hi = (hi + Math.imul(ah5, bh2)) | 0;
-    lo = (lo + Math.imul(al4, bl3)) | 0;
-    mid = (mid + Math.imul(al4, bh3)) | 0;
-    mid = (mid + Math.imul(ah4, bl3)) | 0;
-    hi = (hi + Math.imul(ah4, bh3)) | 0;
-    lo = (lo + Math.imul(al3, bl4)) | 0;
-    mid = (mid + Math.imul(al3, bh4)) | 0;
-    mid = (mid + Math.imul(ah3, bl4)) | 0;
-    hi = (hi + Math.imul(ah3, bh4)) | 0;
-    lo = (lo + Math.imul(al2, bl5)) | 0;
-    mid = (mid + Math.imul(al2, bh5)) | 0;
-    mid = (mid + Math.imul(ah2, bl5)) | 0;
-    hi = (hi + Math.imul(ah2, bh5)) | 0;
-    lo = (lo + Math.imul(al1, bl6)) | 0;
-    mid = (mid + Math.imul(al1, bh6)) | 0;
-    mid = (mid + Math.imul(ah1, bl6)) | 0;
-    hi = (hi + Math.imul(ah1, bh6)) | 0;
-    lo = (lo + Math.imul(al0, bl7)) | 0;
-    mid = (mid + Math.imul(al0, bh7)) | 0;
-    mid = (mid + Math.imul(ah0, bl7)) | 0;
-    hi = (hi + Math.imul(ah0, bh7)) | 0;
-    var w7 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w7 >>> 26)) | 0;
-    w7 &= 0x3ffffff;
-    /* k = 8 */
-    lo = Math.imul(al8, bl0);
-    mid = Math.imul(al8, bh0);
-    mid = (mid + Math.imul(ah8, bl0)) | 0;
-    hi = Math.imul(ah8, bh0);
-    lo = (lo + Math.imul(al7, bl1)) | 0;
-    mid = (mid + Math.imul(al7, bh1)) | 0;
-    mid = (mid + Math.imul(ah7, bl1)) | 0;
-    hi = (hi + Math.imul(ah7, bh1)) | 0;
-    lo = (lo + Math.imul(al6, bl2)) | 0;
-    mid = (mid + Math.imul(al6, bh2)) | 0;
-    mid = (mid + Math.imul(ah6, bl2)) | 0;
-    hi = (hi + Math.imul(ah6, bh2)) | 0;
-    lo = (lo + Math.imul(al5, bl3)) | 0;
-    mid = (mid + Math.imul(al5, bh3)) | 0;
-    mid = (mid + Math.imul(ah5, bl3)) | 0;
-    hi = (hi + Math.imul(ah5, bh3)) | 0;
-    lo = (lo + Math.imul(al4, bl4)) | 0;
-    mid = (mid + Math.imul(al4, bh4)) | 0;
-    mid = (mid + Math.imul(ah4, bl4)) | 0;
-    hi = (hi + Math.imul(ah4, bh4)) | 0;
-    lo = (lo + Math.imul(al3, bl5)) | 0;
-    mid = (mid + Math.imul(al3, bh5)) | 0;
-    mid = (mid + Math.imul(ah3, bl5)) | 0;
-    hi = (hi + Math.imul(ah3, bh5)) | 0;
-    lo = (lo + Math.imul(al2, bl6)) | 0;
-    mid = (mid + Math.imul(al2, bh6)) | 0;
-    mid = (mid + Math.imul(ah2, bl6)) | 0;
-    hi = (hi + Math.imul(ah2, bh6)) | 0;
-    lo = (lo + Math.imul(al1, bl7)) | 0;
-    mid = (mid + Math.imul(al1, bh7)) | 0;
-    mid = (mid + Math.imul(ah1, bl7)) | 0;
-    hi = (hi + Math.imul(ah1, bh7)) | 0;
-    lo = (lo + Math.imul(al0, bl8)) | 0;
-    mid = (mid + Math.imul(al0, bh8)) | 0;
-    mid = (mid + Math.imul(ah0, bl8)) | 0;
-    hi = (hi + Math.imul(ah0, bh8)) | 0;
-    var w8 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w8 >>> 26)) | 0;
-    w8 &= 0x3ffffff;
-    /* k = 9 */
-    lo = Math.imul(al9, bl0);
-    mid = Math.imul(al9, bh0);
-    mid = (mid + Math.imul(ah9, bl0)) | 0;
-    hi = Math.imul(ah9, bh0);
-    lo = (lo + Math.imul(al8, bl1)) | 0;
-    mid = (mid + Math.imul(al8, bh1)) | 0;
-    mid = (mid + Math.imul(ah8, bl1)) | 0;
-    hi = (hi + Math.imul(ah8, bh1)) | 0;
-    lo = (lo + Math.imul(al7, bl2)) | 0;
-    mid = (mid + Math.imul(al7, bh2)) | 0;
-    mid = (mid + Math.imul(ah7, bl2)) | 0;
-    hi = (hi + Math.imul(ah7, bh2)) | 0;
-    lo = (lo + Math.imul(al6, bl3)) | 0;
-    mid = (mid + Math.imul(al6, bh3)) | 0;
-    mid = (mid + Math.imul(ah6, bl3)) | 0;
-    hi = (hi + Math.imul(ah6, bh3)) | 0;
-    lo = (lo + Math.imul(al5, bl4)) | 0;
-    mid = (mid + Math.imul(al5, bh4)) | 0;
-    mid = (mid + Math.imul(ah5, bl4)) | 0;
-    hi = (hi + Math.imul(ah5, bh4)) | 0;
-    lo = (lo + Math.imul(al4, bl5)) | 0;
-    mid = (mid + Math.imul(al4, bh5)) | 0;
-    mid = (mid + Math.imul(ah4, bl5)) | 0;
-    hi = (hi + Math.imul(ah4, bh5)) | 0;
-    lo = (lo + Math.imul(al3, bl6)) | 0;
-    mid = (mid + Math.imul(al3, bh6)) | 0;
-    mid = (mid + Math.imul(ah3, bl6)) | 0;
-    hi = (hi + Math.imul(ah3, bh6)) | 0;
-    lo = (lo + Math.imul(al2, bl7)) | 0;
-    mid = (mid + Math.imul(al2, bh7)) | 0;
-    mid = (mid + Math.imul(ah2, bl7)) | 0;
-    hi = (hi + Math.imul(ah2, bh7)) | 0;
-    lo = (lo + Math.imul(al1, bl8)) | 0;
-    mid = (mid + Math.imul(al1, bh8)) | 0;
-    mid = (mid + Math.imul(ah1, bl8)) | 0;
-    hi = (hi + Math.imul(ah1, bh8)) | 0;
-    lo = (lo + Math.imul(al0, bl9)) | 0;
-    mid = (mid + Math.imul(al0, bh9)) | 0;
-    mid = (mid + Math.imul(ah0, bl9)) | 0;
-    hi = (hi + Math.imul(ah0, bh9)) | 0;
-    var w9 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w9 >>> 26)) | 0;
-    w9 &= 0x3ffffff;
-    /* k = 10 */
-    lo = Math.imul(al9, bl1);
-    mid = Math.imul(al9, bh1);
-    mid = (mid + Math.imul(ah9, bl1)) | 0;
-    hi = Math.imul(ah9, bh1);
-    lo = (lo + Math.imul(al8, bl2)) | 0;
-    mid = (mid + Math.imul(al8, bh2)) | 0;
-    mid = (mid + Math.imul(ah8, bl2)) | 0;
-    hi = (hi + Math.imul(ah8, bh2)) | 0;
-    lo = (lo + Math.imul(al7, bl3)) | 0;
-    mid = (mid + Math.imul(al7, bh3)) | 0;
-    mid = (mid + Math.imul(ah7, bl3)) | 0;
-    hi = (hi + Math.imul(ah7, bh3)) | 0;
-    lo = (lo + Math.imul(al6, bl4)) | 0;
-    mid = (mid + Math.imul(al6, bh4)) | 0;
-    mid = (mid + Math.imul(ah6, bl4)) | 0;
-    hi = (hi + Math.imul(ah6, bh4)) | 0;
-    lo = (lo + Math.imul(al5, bl5)) | 0;
-    mid = (mid + Math.imul(al5, bh5)) | 0;
-    mid = (mid + Math.imul(ah5, bl5)) | 0;
-    hi = (hi + Math.imul(ah5, bh5)) | 0;
-    lo = (lo + Math.imul(al4, bl6)) | 0;
-    mid = (mid + Math.imul(al4, bh6)) | 0;
-    mid = (mid + Math.imul(ah4, bl6)) | 0;
-    hi = (hi + Math.imul(ah4, bh6)) | 0;
-    lo = (lo + Math.imul(al3, bl7)) | 0;
-    mid = (mid + Math.imul(al3, bh7)) | 0;
-    mid = (mid + Math.imul(ah3, bl7)) | 0;
-    hi = (hi + Math.imul(ah3, bh7)) | 0;
-    lo = (lo + Math.imul(al2, bl8)) | 0;
-    mid = (mid + Math.imul(al2, bh8)) | 0;
-    mid = (mid + Math.imul(ah2, bl8)) | 0;
-    hi = (hi + Math.imul(ah2, bh8)) | 0;
-    lo = (lo + Math.imul(al1, bl9)) | 0;
-    mid = (mid + Math.imul(al1, bh9)) | 0;
-    mid = (mid + Math.imul(ah1, bl9)) | 0;
-    hi = (hi + Math.imul(ah1, bh9)) | 0;
-    var w10 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w10 >>> 26)) | 0;
-    w10 &= 0x3ffffff;
-    /* k = 11 */
-    lo = Math.imul(al9, bl2);
-    mid = Math.imul(al9, bh2);
-    mid = (mid + Math.imul(ah9, bl2)) | 0;
-    hi = Math.imul(ah9, bh2);
-    lo = (lo + Math.imul(al8, bl3)) | 0;
-    mid = (mid + Math.imul(al8, bh3)) | 0;
-    mid = (mid + Math.imul(ah8, bl3)) | 0;
-    hi = (hi + Math.imul(ah8, bh3)) | 0;
-    lo = (lo + Math.imul(al7, bl4)) | 0;
-    mid = (mid + Math.imul(al7, bh4)) | 0;
-    mid = (mid + Math.imul(ah7, bl4)) | 0;
-    hi = (hi + Math.imul(ah7, bh4)) | 0;
-    lo = (lo + Math.imul(al6, bl5)) | 0;
-    mid = (mid + Math.imul(al6, bh5)) | 0;
-    mid = (mid + Math.imul(ah6, bl5)) | 0;
-    hi = (hi + Math.imul(ah6, bh5)) | 0;
-    lo = (lo + Math.imul(al5, bl6)) | 0;
-    mid = (mid + Math.imul(al5, bh6)) | 0;
-    mid = (mid + Math.imul(ah5, bl6)) | 0;
-    hi = (hi + Math.imul(ah5, bh6)) | 0;
-    lo = (lo + Math.imul(al4, bl7)) | 0;
-    mid = (mid + Math.imul(al4, bh7)) | 0;
-    mid = (mid + Math.imul(ah4, bl7)) | 0;
-    hi = (hi + Math.imul(ah4, bh7)) | 0;
-    lo = (lo + Math.imul(al3, bl8)) | 0;
-    mid = (mid + Math.imul(al3, bh8)) | 0;
-    mid = (mid + Math.imul(ah3, bl8)) | 0;
-    hi = (hi + Math.imul(ah3, bh8)) | 0;
-    lo = (lo + Math.imul(al2, bl9)) | 0;
-    mid = (mid + Math.imul(al2, bh9)) | 0;
-    mid = (mid + Math.imul(ah2, bl9)) | 0;
-    hi = (hi + Math.imul(ah2, bh9)) | 0;
-    var w11 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w11 >>> 26)) | 0;
-    w11 &= 0x3ffffff;
-    /* k = 12 */
-    lo = Math.imul(al9, bl3);
-    mid = Math.imul(al9, bh3);
-    mid = (mid + Math.imul(ah9, bl3)) | 0;
-    hi = Math.imul(ah9, bh3);
-    lo = (lo + Math.imul(al8, bl4)) | 0;
-    mid = (mid + Math.imul(al8, bh4)) | 0;
-    mid = (mid + Math.imul(ah8, bl4)) | 0;
-    hi = (hi + Math.imul(ah8, bh4)) | 0;
-    lo = (lo + Math.imul(al7, bl5)) | 0;
-    mid = (mid + Math.imul(al7, bh5)) | 0;
-    mid = (mid + Math.imul(ah7, bl5)) | 0;
-    hi = (hi + Math.imul(ah7, bh5)) | 0;
-    lo = (lo + Math.imul(al6, bl6)) | 0;
-    mid = (mid + Math.imul(al6, bh6)) | 0;
-    mid = (mid + Math.imul(ah6, bl6)) | 0;
-    hi = (hi + Math.imul(ah6, bh6)) | 0;
-    lo = (lo + Math.imul(al5, bl7)) | 0;
-    mid = (mid + Math.imul(al5, bh7)) | 0;
-    mid = (mid + Math.imul(ah5, bl7)) | 0;
-    hi = (hi + Math.imul(ah5, bh7)) | 0;
-    lo = (lo + Math.imul(al4, bl8)) | 0;
-    mid = (mid + Math.imul(al4, bh8)) | 0;
-    mid = (mid + Math.imul(ah4, bl8)) | 0;
-    hi = (hi + Math.imul(ah4, bh8)) | 0;
-    lo = (lo + Math.imul(al3, bl9)) | 0;
-    mid = (mid + Math.imul(al3, bh9)) | 0;
-    mid = (mid + Math.imul(ah3, bl9)) | 0;
-    hi = (hi + Math.imul(ah3, bh9)) | 0;
-    var w12 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w12 >>> 26)) | 0;
-    w12 &= 0x3ffffff;
-    /* k = 13 */
-    lo = Math.imul(al9, bl4);
-    mid = Math.imul(al9, bh4);
-    mid = (mid + Math.imul(ah9, bl4)) | 0;
-    hi = Math.imul(ah9, bh4);
-    lo = (lo + Math.imul(al8, bl5)) | 0;
-    mid = (mid + Math.imul(al8, bh5)) | 0;
-    mid = (mid + Math.imul(ah8, bl5)) | 0;
-    hi = (hi + Math.imul(ah8, bh5)) | 0;
-    lo = (lo + Math.imul(al7, bl6)) | 0;
-    mid = (mid + Math.imul(al7, bh6)) | 0;
-    mid = (mid + Math.imul(ah7, bl6)) | 0;
-    hi = (hi + Math.imul(ah7, bh6)) | 0;
-    lo = (lo + Math.imul(al6, bl7)) | 0;
-    mid = (mid + Math.imul(al6, bh7)) | 0;
-    mid = (mid + Math.imul(ah6, bl7)) | 0;
-    hi = (hi + Math.imul(ah6, bh7)) | 0;
-    lo = (lo + Math.imul(al5, bl8)) | 0;
-    mid = (mid + Math.imul(al5, bh8)) | 0;
-    mid = (mid + Math.imul(ah5, bl8)) | 0;
-    hi = (hi + Math.imul(ah5, bh8)) | 0;
-    lo = (lo + Math.imul(al4, bl9)) | 0;
-    mid = (mid + Math.imul(al4, bh9)) | 0;
-    mid = (mid + Math.imul(ah4, bl9)) | 0;
-    hi = (hi + Math.imul(ah4, bh9)) | 0;
-    var w13 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w13 >>> 26)) | 0;
-    w13 &= 0x3ffffff;
-    /* k = 14 */
-    lo = Math.imul(al9, bl5);
-    mid = Math.imul(al9, bh5);
-    mid = (mid + Math.imul(ah9, bl5)) | 0;
-    hi = Math.imul(ah9, bh5);
-    lo = (lo + Math.imul(al8, bl6)) | 0;
-    mid = (mid + Math.imul(al8, bh6)) | 0;
-    mid = (mid + Math.imul(ah8, bl6)) | 0;
-    hi = (hi + Math.imul(ah8, bh6)) | 0;
-    lo = (lo + Math.imul(al7, bl7)) | 0;
-    mid = (mid + Math.imul(al7, bh7)) | 0;
-    mid = (mid + Math.imul(ah7, bl7)) | 0;
-    hi = (hi + Math.imul(ah7, bh7)) | 0;
-    lo = (lo + Math.imul(al6, bl8)) | 0;
-    mid = (mid + Math.imul(al6, bh8)) | 0;
-    mid = (mid + Math.imul(ah6, bl8)) | 0;
-    hi = (hi + Math.imul(ah6, bh8)) | 0;
-    lo = (lo + Math.imul(al5, bl9)) | 0;
-    mid = (mid + Math.imul(al5, bh9)) | 0;
-    mid = (mid + Math.imul(ah5, bl9)) | 0;
-    hi = (hi + Math.imul(ah5, bh9)) | 0;
-    var w14 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w14 >>> 26)) | 0;
-    w14 &= 0x3ffffff;
-    /* k = 15 */
-    lo = Math.imul(al9, bl6);
-    mid = Math.imul(al9, bh6);
-    mid = (mid + Math.imul(ah9, bl6)) | 0;
-    hi = Math.imul(ah9, bh6);
-    lo = (lo + Math.imul(al8, bl7)) | 0;
-    mid = (mid + Math.imul(al8, bh7)) | 0;
-    mid = (mid + Math.imul(ah8, bl7)) | 0;
-    hi = (hi + Math.imul(ah8, bh7)) | 0;
-    lo = (lo + Math.imul(al7, bl8)) | 0;
-    mid = (mid + Math.imul(al7, bh8)) | 0;
-    mid = (mid + Math.imul(ah7, bl8)) | 0;
-    hi = (hi + Math.imul(ah7, bh8)) | 0;
-    lo = (lo + Math.imul(al6, bl9)) | 0;
-    mid = (mid + Math.imul(al6, bh9)) | 0;
-    mid = (mid + Math.imul(ah6, bl9)) | 0;
-    hi = (hi + Math.imul(ah6, bh9)) | 0;
-    var w15 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w15 >>> 26)) | 0;
-    w15 &= 0x3ffffff;
-    /* k = 16 */
-    lo = Math.imul(al9, bl7);
-    mid = Math.imul(al9, bh7);
-    mid = (mid + Math.imul(ah9, bl7)) | 0;
-    hi = Math.imul(ah9, bh7);
-    lo = (lo + Math.imul(al8, bl8)) | 0;
-    mid = (mid + Math.imul(al8, bh8)) | 0;
-    mid = (mid + Math.imul(ah8, bl8)) | 0;
-    hi = (hi + Math.imul(ah8, bh8)) | 0;
-    lo = (lo + Math.imul(al7, bl9)) | 0;
-    mid = (mid + Math.imul(al7, bh9)) | 0;
-    mid = (mid + Math.imul(ah7, bl9)) | 0;
-    hi = (hi + Math.imul(ah7, bh9)) | 0;
-    var w16 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w16 >>> 26)) | 0;
-    w16 &= 0x3ffffff;
-    /* k = 17 */
-    lo = Math.imul(al9, bl8);
-    mid = Math.imul(al9, bh8);
-    mid = (mid + Math.imul(ah9, bl8)) | 0;
-    hi = Math.imul(ah9, bh8);
-    lo = (lo + Math.imul(al8, bl9)) | 0;
-    mid = (mid + Math.imul(al8, bh9)) | 0;
-    mid = (mid + Math.imul(ah8, bl9)) | 0;
-    hi = (hi + Math.imul(ah8, bh9)) | 0;
-    var w17 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w17 >>> 26)) | 0;
-    w17 &= 0x3ffffff;
-    /* k = 18 */
-    lo = Math.imul(al9, bl9);
-    mid = Math.imul(al9, bh9);
-    mid = (mid + Math.imul(ah9, bl9)) | 0;
-    hi = Math.imul(ah9, bh9);
-    var w18 = (((c + lo) | 0) + ((mid & 0x1fff) << 13)) | 0;
-    c = (((hi + (mid >>> 13)) | 0) + (w18 >>> 26)) | 0;
-    w18 &= 0x3ffffff;
-    o[0] = w0;
-    o[1] = w1;
-    o[2] = w2;
-    o[3] = w3;
-    o[4] = w4;
-    o[5] = w5;
-    o[6] = w6;
-    o[7] = w7;
-    o[8] = w8;
-    o[9] = w9;
-    o[10] = w10;
-    o[11] = w11;
-    o[12] = w12;
-    o[13] = w13;
-    o[14] = w14;
-    o[15] = w15;
-    o[16] = w16;
-    o[17] = w17;
-    o[18] = w18;
-    if (c !== 0) {
-      o[19] = c;
-      out.length++;
-    }
-    return out;
-  };
-
-  // Polyfill comb
-  if (!Math.imul) {
-    comb10MulTo = smallMulTo;
-  }
-
-  function bigMulTo (self, num, out) {
-    out.negative = num.negative ^ self.negative;
-    out.length = self.length + num.length;
-
-    var carry = 0;
-    var hncarry = 0;
-    for (var k = 0; k < out.length - 1; k++) {
-      // Sum all words with the same `i + j = k` and accumulate `ncarry`,
-      // note that ncarry could be >= 0x3ffffff
-      var ncarry = hncarry;
-      hncarry = 0;
-      var rword = carry & 0x3ffffff;
-      var maxJ = Math.min(k, num.length - 1);
-      for (var j = Math.max(0, k - self.length + 1); j <= maxJ; j++) {
-        var i = k - j;
-        var a = self.words[i] | 0;
-        var b = num.words[j] | 0;
-        var r = a * b;
-
-        var lo = r & 0x3ffffff;
-        ncarry = (ncarry + ((r / 0x4000000) | 0)) | 0;
-        lo = (lo + rword) | 0;
-        rword = lo & 0x3ffffff;
-        ncarry = (ncarry + (lo >>> 26)) | 0;
-
-        hncarry += ncarry >>> 26;
-        ncarry &= 0x3ffffff;
-      }
-      out.words[k] = rword;
-      carry = ncarry;
-      ncarry = hncarry;
-    }
-    if (carry !== 0) {
-      out.words[k] = carry;
-    } else {
-      out.length--;
-    }
-
-    return out.strip();
-  }
-
-  function jumboMulTo (self, num, out) {
-    var fftm = new FFTM();
-    return fftm.mulp(self, num, out);
-  }
-
-  BN.prototype.mulTo = function mulTo (num, out) {
-    var res;
-    var len = this.length + num.length;
-    if (this.length === 10 && num.length === 10) {
-      res = comb10MulTo(this, num, out);
-    } else if (len < 63) {
-      res = smallMulTo(this, num, out);
-    } else if (len < 1024) {
-      res = bigMulTo(this, num, out);
-    } else {
-      res = jumboMulTo(this, num, out);
-    }
-
-    return res;
-  };
-
-  // Cooley-Tukey algorithm for FFT
-  // slightly revisited to rely on looping instead of recursion
-
-  function FFTM (x, y) {
-    this.x = x;
-    this.y = y;
-  }
-
-  FFTM.prototype.makeRBT = function makeRBT (N) {
-    var t = new Array(N);
-    var l = BN.prototype._countBits(N) - 1;
-    for (var i = 0; i < N; i++) {
-      t[i] = this.revBin(i, l, N);
-    }
-
-    return t;
-  };
-
-  // Returns binary-reversed representation of `x`
-  FFTM.prototype.revBin = function revBin (x, l, N) {
-    if (x === 0 || x === N - 1) return x;
-
-    var rb = 0;
-    for (var i = 0; i < l; i++) {
-      rb |= (x & 1) << (l - i - 1);
-      x >>= 1;
-    }
-
-    return rb;
-  };
-
-  // Performs "tweedling" phase, therefore 'emulating'
-  // behaviour of the recursive algorithm
-  FFTM.prototype.permute = function permute (rbt, rws, iws, rtws, itws, N) {
-    for (var i = 0; i < N; i++) {
-      rtws[i] = rws[rbt[i]];
-      itws[i] = iws[rbt[i]];
-    }
-  };
-
-  FFTM.prototype.transform = function transform (rws, iws, rtws, itws, N, rbt) {
-    this.permute(rbt, rws, iws, rtws, itws, N);
-
-    for (var s = 1; s < N; s <<= 1) {
-      var l = s << 1;
-
-      var rtwdf = Math.cos(2 * Math.PI / l);
-      var itwdf = Math.sin(2 * Math.PI / l);
-
-      for (var p = 0; p < N; p += l) {
-        var rtwdf_ = rtwdf;
-        var itwdf_ = itwdf;
-
-        for (var j = 0; j < s; j++) {
-          var re = rtws[p + j];
-          var ie = itws[p + j];
-
-          var ro = rtws[p + j + s];
-          var io = itws[p + j + s];
-
-          var rx = rtwdf_ * ro - itwdf_ * io;
-
-          io = rtwdf_ * io + itwdf_ * ro;
-          ro = rx;
-
-          rtws[p + j] = re + ro;
-          itws[p + j] = ie + io;
-
-          rtws[p + j + s] = re - ro;
-          itws[p + j + s] = ie - io;
-
-          /* jshint maxdepth : false */
-          if (j !== l) {
-            rx = rtwdf * rtwdf_ - itwdf * itwdf_;
-
-            itwdf_ = rtwdf * itwdf_ + itwdf * rtwdf_;
-            rtwdf_ = rx;
-          }
-        }
-      }
-    }
-  };
-
-  FFTM.prototype.guessLen13b = function guessLen13b (n, m) {
-    var N = Math.max(m, n) | 1;
-    var odd = N & 1;
-    var i = 0;
-    for (N = N / 2 | 0; N; N = N >>> 1) {
-      i++;
-    }
-
-    return 1 << i + 1 + odd;
-  };
-
-  FFTM.prototype.conjugate = function conjugate (rws, iws, N) {
-    if (N <= 1) return;
-
-    for (var i = 0; i < N / 2; i++) {
-      var t = rws[i];
-
-      rws[i] = rws[N - i - 1];
-      rws[N - i - 1] = t;
-
-      t = iws[i];
-
-      iws[i] = -iws[N - i - 1];
-      iws[N - i - 1] = -t;
-    }
-  };
-
-  FFTM.prototype.normalize13b = function normalize13b (ws, N) {
-    var carry = 0;
-    for (var i = 0; i < N / 2; i++) {
-      var w = Math.round(ws[2 * i + 1] / N) * 0x2000 +
-        Math.round(ws[2 * i] / N) +
-        carry;
-
-      ws[i] = w & 0x3ffffff;
-
-      if (w < 0x4000000) {
-        carry = 0;
-      } else {
-        carry = w / 0x4000000 | 0;
-      }
-    }
-
-    return ws;
-  };
-
-  FFTM.prototype.convert13b = function convert13b (ws, len, rws, N) {
-    var carry = 0;
-    for (var i = 0; i < len; i++) {
-      carry = carry + (ws[i] | 0);
-
-      rws[2 * i] = carry & 0x1fff; carry = carry >>> 13;
-      rws[2 * i + 1] = carry & 0x1fff; carry = carry >>> 13;
-    }
-
-    // Pad with zeroes
-    for (i = 2 * len; i < N; ++i) {
-      rws[i] = 0;
-    }
-
-    assert(carry === 0);
-    assert((carry & ~0x1fff) === 0);
-  };
-
-  FFTM.prototype.stub = function stub (N) {
-    var ph = new Array(N);
-    for (var i = 0; i < N; i++) {
-      ph[i] = 0;
-    }
-
-    return ph;
-  };
-
-  FFTM.prototype.mulp = function mulp (x, y, out) {
-    var N = 2 * this.guessLen13b(x.length, y.length);
-
-    var rbt = this.makeRBT(N);
-
-    var _ = this.stub(N);
-
-    var rws = new Array(N);
-    var rwst = new Array(N);
-    var iwst = new Array(N);
-
-    var nrws = new Array(N);
-    var nrwst = new Array(N);
-    var niwst = new Array(N);
-
-    var rmws = out.words;
-    rmws.length = N;
-
-    this.convert13b(x.words, x.length, rws, N);
-    this.convert13b(y.words, y.length, nrws, N);
-
-    this.transform(rws, _, rwst, iwst, N, rbt);
-    this.transform(nrws, _, nrwst, niwst, N, rbt);
-
-    for (var i = 0; i < N; i++) {
-      var rx = rwst[i] * nrwst[i] - iwst[i] * niwst[i];
-      iwst[i] = rwst[i] * niwst[i] + iwst[i] * nrwst[i];
-      rwst[i] = rx;
-    }
-
-    this.conjugate(rwst, iwst, N);
-    this.transform(rwst, iwst, rmws, _, N, rbt);
-    this.conjugate(rmws, _, N);
-    this.normalize13b(rmws, N);
-
-    out.negative = x.negative ^ y.negative;
-    out.length = x.length + y.length;
-    return out.strip();
-  };
-
-  // Multiply `this` by `num`
-  BN.prototype.mul = function mul (num) {
-    var out = new BN(null);
-    out.words = new Array(this.length + num.length);
-    return this.mulTo(num, out);
-  };
-
-  // Multiply employing FFT
-  BN.prototype.mulf = function mulf (num) {
-    var out = new BN(null);
-    out.words = new Array(this.length + num.length);
-    return jumboMulTo(this, num, out);
-  };
-
-  // In-place Multiplication
-  BN.prototype.imul = function imul (num) {
-    return this.clone().mulTo(num, this);
-  };
-
-  BN.prototype.imuln = function imuln (num) {
-    assert(typeof num === 'number');
-    assert(num < 0x4000000);
-
-    // Carry
-    var carry = 0;
-    for (var i = 0; i < this.length; i++) {
-      var w = (this.words[i] | 0) * num;
-      var lo = (w & 0x3ffffff) + (carry & 0x3ffffff);
-      carry >>= 26;
-      carry += (w / 0x4000000) | 0;
-      // NOTE: lo is 27bit maximum
-      carry += lo >>> 26;
-      this.words[i] = lo & 0x3ffffff;
-    }
-
-    if (carry !== 0) {
-      this.words[i] = carry;
-      this.length++;
-    }
-
-    return this;
-  };
-
-  BN.prototype.muln = function muln (num) {
-    return this.clone().imuln(num);
-  };
-
-  // `this` * `this`
-  BN.prototype.sqr = function sqr () {
-    return this.mul(this);
-  };
-
-  // `this` * `this` in-place
-  BN.prototype.isqr = function isqr () {
-    return this.imul(this.clone());
-  };
-
-  // Math.pow(`this`, `num`)
-  BN.prototype.pow = function pow (num) {
-    var w = toBitArray(num);
-    if (w.length === 0) return new BN(1);
-
-    // Skip leading zeroes
-    var res = this;
-    for (var i = 0; i < w.length; i++, res = res.sqr()) {
-      if (w[i] !== 0) break;
-    }
-
-    if (++i < w.length) {
-      for (var q = res.sqr(); i < w.length; i++, q = q.sqr()) {
-        if (w[i] === 0) continue;
-
-        res = res.mul(q);
-      }
-    }
-
-    return res;
-  };
-
-  // Shift-left in-place
-  BN.prototype.iushln = function iushln (bits) {
-    assert(typeof bits === 'number' && bits >= 0);
-    var r = bits % 26;
-    var s = (bits - r) / 26;
-    var carryMask = (0x3ffffff >>> (26 - r)) << (26 - r);
-    var i;
-
-    if (r !== 0) {
-      var carry = 0;
-
-      for (i = 0; i < this.length; i++) {
-        var newCarry = this.words[i] & carryMask;
-        var c = ((this.words[i] | 0) - newCarry) << r;
-        this.words[i] = c | carry;
-        carry = newCarry >>> (26 - r);
-      }
-
-      if (carry) {
-        this.words[i] = carry;
-        this.length++;
-      }
-    }
-
-    if (s !== 0) {
-      for (i = this.length - 1; i >= 0; i--) {
-        this.words[i + s] = this.words[i];
-      }
-
-      for (i = 0; i < s; i++) {
-        this.words[i] = 0;
-      }
-
-      this.length += s;
-    }
-
-    return this.strip();
-  };
-
-  BN.prototype.ishln = function ishln (bits) {
-    // TODO(indutny): implement me
-    assert(this.negative === 0);
-    return this.iushln(bits);
-  };
-
-  // Shift-right in-place
-  // NOTE: `hint` is a lowest bit before trailing zeroes
-  // NOTE: if `extended` is present - it will be filled with destroyed bits
-  BN.prototype.iushrn = function iushrn (bits, hint, extended) {
-    assert(typeof bits === 'number' && bits >= 0);
-    var h;
-    if (hint) {
-      h = (hint - (hint % 26)) / 26;
-    } else {
-      h = 0;
-    }
-
-    var r = bits % 26;
-    var s = Math.min((bits - r) / 26, this.length);
-    var mask = 0x3ffffff ^ ((0x3ffffff >>> r) << r);
-    var maskedWords = extended;
-
-    h -= s;
-    h = Math.max(0, h);
-
-    // Extended mode, copy masked part
-    if (maskedWords) {
-      for (var i = 0; i < s; i++) {
-        maskedWords.words[i] = this.words[i];
-      }
-      maskedWords.length = s;
-    }
-
-    if (s === 0) {
-      // No-op, we should not move anything at all
-    } else if (this.length > s) {
-      this.length -= s;
-      for (i = 0; i < this.length; i++) {
-        this.words[i] = this.words[i + s];
-      }
-    } else {
-      this.words[0] = 0;
-      this.length = 1;
-    }
-
-    var carry = 0;
-    for (i = this.length - 1; i >= 0 && (carry !== 0 || i >= h); i--) {
-      var word = this.words[i] | 0;
-      this.words[i] = (carry << (26 - r)) | (word >>> r);
-      carry = word & mask;
-    }
-
-    // Push carried bits as a mask
-    if (maskedWords && carry !== 0) {
-      maskedWords.words[maskedWords.length++] = carry;
-    }
-
-    if (this.length === 0) {
-      this.words[0] = 0;
-      this.length = 1;
-    }
-
-    return this.strip();
-  };
-
-  BN.prototype.ishrn = function ishrn (bits, hint, extended) {
-    // TODO(indutny): implement me
-    assert(this.negative === 0);
-    return this.iushrn(bits, hint, extended);
-  };
-
-  // Shift-left
-  BN.prototype.shln = function shln (bits) {
-    return this.clone().ishln(bits);
-  };
-
-  BN.prototype.ushln = function ushln (bits) {
-    return this.clone().iushln(bits);
-  };
-
-  // Shift-right
-  BN.prototype.shrn = function shrn (bits) {
-    return this.clone().ishrn(bits);
-  };
-
-  BN.prototype.ushrn = function ushrn (bits) {
-    return this.clone().iushrn(bits);
-  };
-
-  // Test if n bit is set
-  BN.prototype.testn = function testn (bit) {
-    assert(typeof bit === 'number' && bit >= 0);
-    var r = bit % 26;
-    var s = (bit - r) / 26;
-    var q = 1 << r;
-
-    // Fast case: bit is much higher than all existing words
-    if (this.length <= s) return false;
-
-    // Check bit and return
-    var w = this.words[s];
-
-    return !!(w & q);
-  };
-
-  // Return only lowers bits of number (in-place)
-  BN.prototype.imaskn = function imaskn (bits) {
-    assert(typeof bits === 'number' && bits >= 0);
-    var r = bits % 26;
-    var s = (bits - r) / 26;
-
-    assert(this.negative === 0, 'imaskn works only with positive numbers');
-
-    if (this.length <= s) {
-      return this;
-    }
-
-    if (r !== 0) {
-      s++;
-    }
-    this.length = Math.min(s, this.length);
-
-    if (r !== 0) {
-      var mask = 0x3ffffff ^ ((0x3ffffff >>> r) << r);
-      this.words[this.length - 1] &= mask;
-    }
-
-    return this.strip();
-  };
-
-  // Return only lowers bits of number
-  BN.prototype.maskn = function maskn (bits) {
-    return this.clone().imaskn(bits);
-  };
-
-  // Add plain number `num` to `this`
-  BN.prototype.iaddn = function iaddn (num) {
-    assert(typeof num === 'number');
-    assert(num < 0x4000000);
-    if (num < 0) return this.isubn(-num);
-
-    // Possible sign change
-    if (this.negative !== 0) {
-      if (this.length === 1 && (this.words[0] | 0) < num) {
-        this.words[0] = num - (this.words[0] | 0);
-        this.negative = 0;
-        return this;
-      }
-
-      this.negative = 0;
-      this.isubn(num);
-      this.negative = 1;
-      return this;
-    }
-
-    // Add without checks
-    return this._iaddn(num);
-  };
-
-  BN.prototype._iaddn = function _iaddn (num) {
-    this.words[0] += num;
-
-    // Carry
-    for (var i = 0; i < this.length && this.words[i] >= 0x4000000; i++) {
-      this.words[i] -= 0x4000000;
-      if (i === this.length - 1) {
-        this.words[i + 1] = 1;
-      } else {
-        this.words[i + 1]++;
-      }
-    }
-    this.length = Math.max(this.length, i + 1);
-
-    return this;
-  };
-
-  // Subtract plain number `num` from `this`
-  BN.prototype.isubn = function isubn (num) {
-    assert(typeof num === 'number');
-    assert(num < 0x4000000);
-    if (num < 0) return this.iaddn(-num);
-
-    if (this.negative !== 0) {
-      this.negative = 0;
-      this.iaddn(num);
-      this.negative = 1;
-      return this;
-    }
-
-    this.words[0] -= num;
-
-    if (this.length === 1 && this.words[0] < 0) {
-      this.words[0] = -this.words[0];
-      this.negative = 1;
-    } else {
-      // Carry
-      for (var i = 0; i < this.length && this.words[i] < 0; i++) {
-        this.words[i] += 0x4000000;
-        this.words[i + 1] -= 1;
-      }
-    }
-
-    return this.strip();
-  };
-
-  BN.prototype.addn = function addn (num) {
-    return this.clone().iaddn(num);
-  };
-
-  BN.prototype.subn = function subn (num) {
-    return this.clone().isubn(num);
-  };
-
-  BN.prototype.iabs = function iabs () {
-    this.negative = 0;
-
-    return this;
-  };
-
-  BN.prototype.abs = function abs () {
-    return this.clone().iabs();
-  };
-
-  BN.prototype._ishlnsubmul = function _ishlnsubmul (num, mul, shift) {
-    var len = num.length + shift;
-    var i;
-
-    this._expand(len);
-
-    var w;
-    var carry = 0;
-    for (i = 0; i < num.length; i++) {
-      w = (this.words[i + shift] | 0) + carry;
-      var right = (num.words[i] | 0) * mul;
-      w -= right & 0x3ffffff;
-      carry = (w >> 26) - ((right / 0x4000000) | 0);
-      this.words[i + shift] = w & 0x3ffffff;
-    }
-    for (; i < this.length - shift; i++) {
-      w = (this.words[i + shift] | 0) + carry;
-      carry = w >> 26;
-      this.words[i + shift] = w & 0x3ffffff;
-    }
-
-    if (carry === 0) return this.strip();
-
-    // Subtraction overflow
-    assert(carry === -1);
-    carry = 0;
-    for (i = 0; i < this.length; i++) {
-      w = -(this.words[i] | 0) + carry;
-      carry = w >> 26;
-      this.words[i] = w & 0x3ffffff;
-    }
-    this.negative = 1;
-
-    return this.strip();
-  };
-
-  BN.prototype._wordDiv = function _wordDiv (num, mode) {
-    var shift = this.length - num.length;
-
-    var a = this.clone();
-    var b = num;
-
-    // Normalize
-    var bhi = b.words[b.length - 1] | 0;
-    var bhiBits = this._countBits(bhi);
-    shift = 26 - bhiBits;
-    if (shift !== 0) {
-      b = b.ushln(shift);
-      a.iushln(shift);
-      bhi = b.words[b.length - 1] | 0;
-    }
-
-    // Initialize quotient
-    var m = a.length - b.length;
-    var q;
-
-    if (mode !== 'mod') {
-      q = new BN(null);
-      q.length = m + 1;
-      q.words = new Array(q.length);
-      for (var i = 0; i < q.length; i++) {
-        q.words[i] = 0;
-      }
-    }
-
-    var diff = a.clone()._ishlnsubmul(b, 1, m);
-    if (diff.negative === 0) {
-      a = diff;
-      if (q) {
-        q.words[m] = 1;
-      }
-    }
-
-    for (var j = m - 1; j >= 0; j--) {
-      var qj = (a.words[b.length + j] | 0) * 0x4000000 +
-        (a.words[b.length + j - 1] | 0);
-
-      // NOTE: (qj / bhi) is (0x3ffffff * 0x4000000 + 0x3ffffff) / 0x2000000 max
-      // (0x7ffffff)
-      qj = Math.min((qj / bhi) | 0, 0x3ffffff);
-
-      a._ishlnsubmul(b, qj, j);
-      while (a.negative !== 0) {
-        qj--;
-        a.negative = 0;
-        a._ishlnsubmul(b, 1, j);
-        if (!a.isZero()) {
-          a.negative ^= 1;
-        }
-      }
-      if (q) {
-        q.words[j] = qj;
-      }
-    }
-    if (q) {
-      q.strip();
-    }
-    a.strip();
-
-    // Denormalize
-    if (mode !== 'div' && shift !== 0) {
-      a.iushrn(shift);
-    }
-
-    return {
-      div: q || null,
-      mod: a
-    };
-  };
-
-  // NOTE: 1) `mode` can be set to `mod` to request mod only,
-  //       to `div` to request div only, or be absent to
-  //       request both div & mod
-  //       2) `positive` is true if unsigned mod is requested
-  BN.prototype.divmod = function divmod (num, mode, positive) {
-    assert(!num.isZero());
-
-    if (this.isZero()) {
-      return {
-        div: new BN(0),
-        mod: new BN(0)
-      };
-    }
-
-    var div, mod, res;
-    if (this.negative !== 0 && num.negative === 0) {
-      res = this.neg().divmod(num, mode);
-
-      if (mode !== 'mod') {
-        div = res.div.neg();
-      }
-
-      if (mode !== 'div') {
-        mod = res.mod.neg();
-        if (positive && mod.negative !== 0) {
-          mod.iadd(num);
-        }
-      }
-
-      return {
-        div: div,
-        mod: mod
-      };
-    }
-
-    if (this.negative === 0 && num.negative !== 0) {
-      res = this.divmod(num.neg(), mode);
-
-      if (mode !== 'mod') {
-        div = res.div.neg();
-      }
-
-      return {
-        div: div,
-        mod: res.mod
-      };
-    }
-
-    if ((this.negative & num.negative) !== 0) {
-      res = this.neg().divmod(num.neg(), mode);
-
-      if (mode !== 'div') {
-        mod = res.mod.neg();
-        if (positive && mod.negative !== 0) {
-          mod.isub(num);
-        }
-      }
-
-      return {
-        div: res.div,
-        mod: mod
-      };
-    }
-
-    // Both numbers are positive at this point
-
-    // Strip both numbers to approximate shift value
-    if (num.length > this.length || this.cmp(num) < 0) {
-      return {
-        div: new BN(0),
-        mod: this
-      };
-    }
-
-    // Very short reduction
-    if (num.length === 1) {
-      if (mode === 'div') {
-        return {
-          div: this.divn(num.words[0]),
-          mod: null
-        };
-      }
-
-      if (mode === 'mod') {
-        return {
-          div: null,
-          mod: new BN(this.modn(num.words[0]))
-        };
-      }
-
-      return {
-        div: this.divn(num.words[0]),
-        mod: new BN(this.modn(num.words[0]))
-      };
-    }
-
-    return this._wordDiv(num, mode);
-  };
-
-  // Find `this` / `num`
-  BN.prototype.div = function div (num) {
-    return this.divmod(num, 'div', false).div;
-  };
-
-  // Find `this` % `num`
-  BN.prototype.mod = function mod (num) {
-    return this.divmod(num, 'mod', false).mod;
-  };
-
-  BN.prototype.umod = function umod (num) {
-    return this.divmod(num, 'mod', true).mod;
-  };
-
-  // Find Round(`this` / `num`)
-  BN.prototype.divRound = function divRound (num) {
-    var dm = this.divmod(num);
-
-    // Fast case - exact division
-    if (dm.mod.isZero()) return dm.div;
-
-    var mod = dm.div.negative !== 0 ? dm.mod.isub(num) : dm.mod;
-
-    var half = num.ushrn(1);
-    var r2 = num.andln(1);
-    var cmp = mod.cmp(half);
-
-    // Round down
-    if (cmp < 0 || r2 === 1 && cmp === 0) return dm.div;
-
-    // Round up
-    return dm.div.negative !== 0 ? dm.div.isubn(1) : dm.div.iaddn(1);
-  };
-
-  BN.prototype.modn = function modn (num) {
-    assert(num <= 0x3ffffff);
-    var p = (1 << 26) % num;
-
-    var acc = 0;
-    for (var i = this.length - 1; i >= 0; i--) {
-      acc = (p * acc + (this.words[i] | 0)) % num;
-    }
-
-    return acc;
-  };
-
-  // In-place division by number
-  BN.prototype.idivn = function idivn (num) {
-    assert(num <= 0x3ffffff);
-
-    var carry = 0;
-    for (var i = this.length - 1; i >= 0; i--) {
-      var w = (this.words[i] | 0) + carry * 0x4000000;
-      this.words[i] = (w / num) | 0;
-      carry = w % num;
-    }
-
-    return this.strip();
-  };
-
-  BN.prototype.divn = function divn (num) {
-    return this.clone().idivn(num);
-  };
-
-  BN.prototype.egcd = function egcd (p) {
-    assert(p.negative === 0);
-    assert(!p.isZero());
-
-    var x = this;
-    var y = p.clone();
-
-    if (x.negative !== 0) {
-      x = x.umod(p);
-    } else {
-      x = x.clone();
-    }
-
-    // A * x + B * y = x
-    var A = new BN(1);
-    var B = new BN(0);
-
-    // C * x + D * y = y
-    var C = new BN(0);
-    var D = new BN(1);
-
-    var g = 0;
-
-    while (x.isEven() && y.isEven()) {
-      x.iushrn(1);
-      y.iushrn(1);
-      ++g;
-    }
-
-    var yp = y.clone();
-    var xp = x.clone();
-
-    while (!x.isZero()) {
-      for (var i = 0, im = 1; (x.words[0] & im) === 0 && i < 26; ++i, im <<= 1);
-      if (i > 0) {
-        x.iushrn(i);
-        while (i-- > 0) {
-          if (A.isOdd() || B.isOdd()) {
-            A.iadd(yp);
-            B.isub(xp);
-          }
-
-          A.iushrn(1);
-          B.iushrn(1);
-        }
-      }
-
-      for (var j = 0, jm = 1; (y.words[0] & jm) === 0 && j < 26; ++j, jm <<= 1);
-      if (j > 0) {
-        y.iushrn(j);
-        while (j-- > 0) {
-          if (C.isOdd() || D.isOdd()) {
-            C.iadd(yp);
-            D.isub(xp);
-          }
-
-          C.iushrn(1);
-          D.iushrn(1);
-        }
-      }
-
-      if (x.cmp(y) >= 0) {
-        x.isub(y);
-        A.isub(C);
-        B.isub(D);
-      } else {
-        y.isub(x);
-        C.isub(A);
-        D.isub(B);
-      }
-    }
-
-    return {
-      a: C,
-      b: D,
-      gcd: y.iushln(g)
-    };
-  };
-
-  // This is reduced incarnation of the binary EEA
-  // above, designated to invert members of the
-  // _prime_ fields F(p) at a maximal speed
-  BN.prototype._invmp = function _invmp (p) {
-    assert(p.negative === 0);
-    assert(!p.isZero());
-
-    var a = this;
-    var b = p.clone();
-
-    if (a.negative !== 0) {
-      a = a.umod(p);
-    } else {
-      a = a.clone();
-    }
-
-    var x1 = new BN(1);
-    var x2 = new BN(0);
-
-    var delta = b.clone();
-
-    while (a.cmpn(1) > 0 && b.cmpn(1) > 0) {
-      for (var i = 0, im = 1; (a.words[0] & im) === 0 && i < 26; ++i, im <<= 1);
-      if (i > 0) {
-        a.iushrn(i);
-        while (i-- > 0) {
-          if (x1.isOdd()) {
-            x1.iadd(delta);
-          }
-
-          x1.iushrn(1);
-        }
-      }
-
-      for (var j = 0, jm = 1; (b.words[0] & jm) === 0 && j < 26; ++j, jm <<= 1);
-      if (j > 0) {
-        b.iushrn(j);
-        while (j-- > 0) {
-          if (x2.isOdd()) {
-            x2.iadd(delta);
-          }
-
-          x2.iushrn(1);
-        }
-      }
-
-      if (a.cmp(b) >= 0) {
-        a.isub(b);
-        x1.isub(x2);
-      } else {
-        b.isub(a);
-        x2.isub(x1);
-      }
-    }
-
-    var res;
-    if (a.cmpn(1) === 0) {
-      res = x1;
-    } else {
-      res = x2;
-    }
-
-    if (res.cmpn(0) < 0) {
-      res.iadd(p);
-    }
-
-    return res;
-  };
-
-  BN.prototype.gcd = function gcd (num) {
-    if (this.isZero()) return num.abs();
-    if (num.isZero()) return this.abs();
-
-    var a = this.clone();
-    var b = num.clone();
-    a.negative = 0;
-    b.negative = 0;
-
-    // Remove common factor of two
-    for (var shift = 0; a.isEven() && b.isEven(); shift++) {
-      a.iushrn(1);
-      b.iushrn(1);
-    }
-
-    do {
-      while (a.isEven()) {
-        a.iushrn(1);
-      }
-      while (b.isEven()) {
-        b.iushrn(1);
-      }
-
-      var r = a.cmp(b);
-      if (r < 0) {
-        // Swap `a` and `b` to make `a` always bigger than `b`
-        var t = a;
-        a = b;
-        b = t;
-      } else if (r === 0 || b.cmpn(1) === 0) {
-        break;
-      }
-
-      a.isub(b);
-    } while (true);
-
-    return b.iushln(shift);
-  };
-
-  // Invert number in the field F(num)
-  BN.prototype.invm = function invm (num) {
-    return this.egcd(num).a.umod(num);
-  };
-
-  BN.prototype.isEven = function isEven () {
-    return (this.words[0] & 1) === 0;
-  };
-
-  BN.prototype.isOdd = function isOdd () {
-    return (this.words[0] & 1) === 1;
-  };
-
-  // And first word and num
-  BN.prototype.andln = function andln (num) {
-    return this.words[0] & num;
-  };
-
-  // Increment at the bit position in-line
-  BN.prototype.bincn = function bincn (bit) {
-    assert(typeof bit === 'number');
-    var r = bit % 26;
-    var s = (bit - r) / 26;
-    var q = 1 << r;
-
-    // Fast case: bit is much higher than all existing words
-    if (this.length <= s) {
-      this._expand(s + 1);
-      this.words[s] |= q;
-      return this;
-    }
-
-    // Add bit and propagate, if needed
-    var carry = q;
-    for (var i = s; carry !== 0 && i < this.length; i++) {
-      var w = this.words[i] | 0;
-      w += carry;
-      carry = w >>> 26;
-      w &= 0x3ffffff;
-      this.words[i] = w;
-    }
-    if (carry !== 0) {
-      this.words[i] = carry;
-      this.length++;
-    }
-    return this;
-  };
-
-  BN.prototype.isZero = function isZero () {
-    return this.length === 1 && this.words[0] === 0;
-  };
-
-  BN.prototype.cmpn = function cmpn (num) {
-    var negative = num < 0;
-
-    if (this.negative !== 0 && !negative) return -1;
-    if (this.negative === 0 && negative) return 1;
-
-    this.strip();
-
-    var res;
-    if (this.length > 1) {
-      res = 1;
-    } else {
-      if (negative) {
-        num = -num;
-      }
-
-      assert(num <= 0x3ffffff, 'Number is too big');
-
-      var w = this.words[0] | 0;
-      res = w === num ? 0 : w < num ? -1 : 1;
-    }
-    if (this.negative !== 0) return -res | 0;
-    return res;
-  };
-
-  // Compare two numbers and return:
-  // 1 - if `this` > `num`
-  // 0 - if `this` == `num`
-  // -1 - if `this` < `num`
-  BN.prototype.cmp = function cmp (num) {
-    if (this.negative !== 0 && num.negative === 0) return -1;
-    if (this.negative === 0 && num.negative !== 0) return 1;
-
-    var res = this.ucmp(num);
-    if (this.negative !== 0) return -res | 0;
-    return res;
-  };
-
-  // Unsigned comparison
-  BN.prototype.ucmp = function ucmp (num) {
-    // At this point both numbers have the same sign
-    if (this.length > num.length) return 1;
-    if (this.length < num.length) return -1;
-
-    var res = 0;
-    for (var i = this.length - 1; i >= 0; i--) {
-      var a = this.words[i] | 0;
-      var b = num.words[i] | 0;
-
-      if (a === b) continue;
-      if (a < b) {
-        res = -1;
-      } else if (a > b) {
-        res = 1;
-      }
-      break;
-    }
-    return res;
-  };
-
-  BN.prototype.gtn = function gtn (num) {
-    return this.cmpn(num) === 1;
-  };
-
-  BN.prototype.gt = function gt (num) {
-    return this.cmp(num) === 1;
-  };
-
-  BN.prototype.gten = function gten (num) {
-    return this.cmpn(num) >= 0;
-  };
-
-  BN.prototype.gte = function gte (num) {
-    return this.cmp(num) >= 0;
-  };
-
-  BN.prototype.ltn = function ltn (num) {
-    return this.cmpn(num) === -1;
-  };
-
-  BN.prototype.lt = function lt (num) {
-    return this.cmp(num) === -1;
-  };
-
-  BN.prototype.lten = function lten (num) {
-    return this.cmpn(num) <= 0;
-  };
-
-  BN.prototype.lte = function lte (num) {
-    return this.cmp(num) <= 0;
-  };
-
-  BN.prototype.eqn = function eqn (num) {
-    return this.cmpn(num) === 0;
-  };
-
-  BN.prototype.eq = function eq (num) {
-    return this.cmp(num) === 0;
-  };
-
-  //
-  // A reduce context, could be using montgomery or something better, depending
-  // on the `m` itself.
-  //
-  BN.red = function red (num) {
-    return new Red(num);
-  };
-
-  BN.prototype.toRed = function toRed (ctx) {
-    assert(!this.red, 'Already a number in reduction context');
-    assert(this.negative === 0, 'red works only with positives');
-    return ctx.convertTo(this)._forceRed(ctx);
-  };
-
-  BN.prototype.fromRed = function fromRed () {
-    assert(this.red, 'fromRed works only with numbers in reduction context');
-    return this.red.convertFrom(this);
-  };
-
-  BN.prototype._forceRed = function _forceRed (ctx) {
-    this.red = ctx;
-    return this;
-  };
-
-  BN.prototype.forceRed = function forceRed (ctx) {
-    assert(!this.red, 'Already a number in reduction context');
-    return this._forceRed(ctx);
-  };
-
-  BN.prototype.redAdd = function redAdd (num) {
-    assert(this.red, 'redAdd works only with red numbers');
-    return this.red.add(this, num);
-  };
-
-  BN.prototype.redIAdd = function redIAdd (num) {
-    assert(this.red, 'redIAdd works only with red numbers');
-    return this.red.iadd(this, num);
-  };
-
-  BN.prototype.redSub = function redSub (num) {
-    assert(this.red, 'redSub works only with red numbers');
-    return this.red.sub(this, num);
-  };
-
-  BN.prototype.redISub = function redISub (num) {
-    assert(this.red, 'redISub works only with red numbers');
-    return this.red.isub(this, num);
-  };
-
-  BN.prototype.redShl = function redShl (num) {
-    assert(this.red, 'redShl works only with red numbers');
-    return this.red.shl(this, num);
-  };
-
-  BN.prototype.redMul = function redMul (num) {
-    assert(this.red, 'redMul works only with red numbers');
-    this.red._verify2(this, num);
-    return this.red.mul(this, num);
-  };
-
-  BN.prototype.redIMul = function redIMul (num) {
-    assert(this.red, 'redMul works only with red numbers');
-    this.red._verify2(this, num);
-    return this.red.imul(this, num);
-  };
-
-  BN.prototype.redSqr = function redSqr () {
-    assert(this.red, 'redSqr works only with red numbers');
-    this.red._verify1(this);
-    return this.red.sqr(this);
-  };
-
-  BN.prototype.redISqr = function redISqr () {
-    assert(this.red, 'redISqr works only with red numbers');
-    this.red._verify1(this);
-    return this.red.isqr(this);
-  };
-
-  // Square root over p
-  BN.prototype.redSqrt = function redSqrt () {
-    assert(this.red, 'redSqrt works only with red numbers');
-    this.red._verify1(this);
-    return this.red.sqrt(this);
-  };
-
-  BN.prototype.redInvm = function redInvm () {
-    assert(this.red, 'redInvm works only with red numbers');
-    this.red._verify1(this);
-    return this.red.invm(this);
-  };
-
-  // Return negative clone of `this` % `red modulo`
-  BN.prototype.redNeg = function redNeg () {
-    assert(this.red, 'redNeg works only with red numbers');
-    this.red._verify1(this);
-    return this.red.neg(this);
-  };
-
-  BN.prototype.redPow = function redPow (num) {
-    assert(this.red && !num.red, 'redPow(normalNum)');
-    this.red._verify1(this);
-    return this.red.pow(this, num);
-  };
-
-  // Prime numbers with efficient reduction
-  var primes = {
-    k256: null,
-    p224: null,
-    p192: null,
-    p25519: null
-  };
-
-  // Pseudo-Mersenne prime
-  function MPrime (name, p) {
-    // P = 2 ^ N - K
-    this.name = name;
-    this.p = new BN(p, 16);
-    this.n = this.p.bitLength();
-    this.k = new BN(1).iushln(this.n).isub(this.p);
-
-    this.tmp = this._tmp();
-  }
-
-  MPrime.prototype._tmp = function _tmp () {
-    var tmp = new BN(null);
-    tmp.words = new Array(Math.ceil(this.n / 13));
-    return tmp;
-  };
-
-  MPrime.prototype.ireduce = function ireduce (num) {
-    // Assumes that `num` is less than `P^2`
-    // num = HI * (2 ^ N - K) + HI * K + LO = HI * K + LO (mod P)
-    var r = num;
-    var rlen;
-
-    do {
-      this.split(r, this.tmp);
-      r = this.imulK(r);
-      r = r.iadd(this.tmp);
-      rlen = r.bitLength();
-    } while (rlen > this.n);
-
-    var cmp = rlen < this.n ? -1 : r.ucmp(this.p);
-    if (cmp === 0) {
-      r.words[0] = 0;
-      r.length = 1;
-    } else if (cmp > 0) {
-      r.isub(this.p);
-    } else {
-      if (r.strip !== undefined) {
-        // r is BN v4 instance
-        r.strip();
-      } else {
-        // r is BN v5 instance
-        r._strip();
-      }
-    }
-
-    return r;
-  };
-
-  MPrime.prototype.split = function split (input, out) {
-    input.iushrn(this.n, 0, out);
-  };
-
-  MPrime.prototype.imulK = function imulK (num) {
-    return num.imul(this.k);
-  };
-
-  function K256 () {
-    MPrime.call(
-      this,
-      'k256',
-      'ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe fffffc2f');
-  }
-  inherits(K256, MPrime);
-
-  K256.prototype.split = function split (input, output) {
-    // 256 = 9 * 26 + 22
-    var mask = 0x3fffff;
-
-    var outLen = Math.min(input.length, 9);
-    for (var i = 0; i < outLen; i++) {
-      output.words[i] = input.words[i];
-    }
-    output.length = outLen;
-
-    if (input.length <= 9) {
-      input.words[0] = 0;
-      input.length = 1;
-      return;
-    }
-
-    // Shift by 9 limbs
-    var prev = input.words[9];
-    output.words[output.length++] = prev & mask;
-
-    for (i = 10; i < input.length; i++) {
-      var next = input.words[i] | 0;
-      input.words[i - 10] = ((next & mask) << 4) | (prev >>> 22);
-      prev = next;
-    }
-    prev >>>= 22;
-    input.words[i - 10] = prev;
-    if (prev === 0 && input.length > 10) {
-      input.length -= 10;
-    } else {
-      input.length -= 9;
-    }
-  };
-
-  K256.prototype.imulK = function imulK (num) {
-    // K = 0x1000003d1 = [ 0x40, 0x3d1 ]
-    num.words[num.length] = 0;
-    num.words[num.length + 1] = 0;
-    num.length += 2;
-
-    // bounded at: 0x40 * 0x3ffffff + 0x3d0 = 0x100000390
-    var lo = 0;
-    for (var i = 0; i < num.length; i++) {
-      var w = num.words[i] | 0;
-      lo += w * 0x3d1;
-      num.words[i] = lo & 0x3ffffff;
-      lo = w * 0x40 + ((lo / 0x4000000) | 0);
-    }
-
-    // Fast length reduction
-    if (num.words[num.length - 1] === 0) {
-      num.length--;
-      if (num.words[num.length - 1] === 0) {
-        num.length--;
-      }
-    }
-    return num;
-  };
-
-  function P224 () {
-    MPrime.call(
-      this,
-      'p224',
-      'ffffffff ffffffff ffffffff ffffffff 00000000 00000000 00000001');
-  }
-  inherits(P224, MPrime);
-
-  function P192 () {
-    MPrime.call(
-      this,
-      'p192',
-      'ffffffff ffffffff ffffffff fffffffe ffffffff ffffffff');
-  }
-  inherits(P192, MPrime);
-
-  function P25519 () {
-    // 2 ^ 255 - 19
-    MPrime.call(
-      this,
-      '25519',
-      '7fffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffed');
-  }
-  inherits(P25519, MPrime);
-
-  P25519.prototype.imulK = function imulK (num) {
-    // K = 0x13
-    var carry = 0;
-    for (var i = 0; i < num.length; i++) {
-      var hi = (num.words[i] | 0) * 0x13 + carry;
-      var lo = hi & 0x3ffffff;
-      hi >>>= 26;
-
-      num.words[i] = lo;
-      carry = hi;
-    }
-    if (carry !== 0) {
-      num.words[num.length++] = carry;
-    }
-    return num;
-  };
-
-  // Exported mostly for testing purposes, use plain name instead
-  BN._prime = function prime (name) {
-    // Cached version of prime
-    if (primes[name]) return primes[name];
-
-    var prime;
-    if (name === 'k256') {
-      prime = new K256();
-    } else if (name === 'p224') {
-      prime = new P224();
-    } else if (name === 'p192') {
-      prime = new P192();
-    } else if (name === 'p25519') {
-      prime = new P25519();
-    } else {
-      throw new Error('Unknown prime ' + name);
-    }
-    primes[name] = prime;
-
-    return prime;
-  };
-
-  //
-  // Base reduction engine
-  //
-  function Red (m) {
-    if (typeof m === 'string') {
-      var prime = BN._prime(m);
-      this.m = prime.p;
-      this.prime = prime;
-    } else {
-      assert(m.gtn(1), 'modulus must be greater than 1');
-      this.m = m;
-      this.prime = null;
-    }
-  }
-
-  Red.prototype._verify1 = function _verify1 (a) {
-    assert(a.negative === 0, 'red works only with positives');
-    assert(a.red, 'red works only with red numbers');
-  };
-
-  Red.prototype._verify2 = function _verify2 (a, b) {
-    assert((a.negative | b.negative) === 0, 'red works only with positives');
-    assert(a.red && a.red === b.red,
-      'red works only with red numbers');
-  };
-
-  Red.prototype.imod = function imod (a) {
-    if (this.prime) return this.prime.ireduce(a)._forceRed(this);
-    return a.umod(this.m)._forceRed(this);
-  };
-
-  Red.prototype.neg = function neg (a) {
-    if (a.isZero()) {
-      return a.clone();
-    }
-
-    return this.m.sub(a)._forceRed(this);
-  };
-
-  Red.prototype.add = function add (a, b) {
-    this._verify2(a, b);
-
-    var res = a.add(b);
-    if (res.cmp(this.m) >= 0) {
-      res.isub(this.m);
-    }
-    return res._forceRed(this);
-  };
-
-  Red.prototype.iadd = function iadd (a, b) {
-    this._verify2(a, b);
-
-    var res = a.iadd(b);
-    if (res.cmp(this.m) >= 0) {
-      res.isub(this.m);
-    }
-    return res;
-  };
-
-  Red.prototype.sub = function sub (a, b) {
-    this._verify2(a, b);
-
-    var res = a.sub(b);
-    if (res.cmpn(0) < 0) {
-      res.iadd(this.m);
-    }
-    return res._forceRed(this);
-  };
-
-  Red.prototype.isub = function isub (a, b) {
-    this._verify2(a, b);
-
-    var res = a.isub(b);
-    if (res.cmpn(0) < 0) {
-      res.iadd(this.m);
-    }
-    return res;
-  };
-
-  Red.prototype.shl = function shl (a, num) {
-    this._verify1(a);
-    return this.imod(a.ushln(num));
-  };
-
-  Red.prototype.imul = function imul (a, b) {
-    this._verify2(a, b);
-    return this.imod(a.imul(b));
-  };
-
-  Red.prototype.mul = function mul (a, b) {
-    this._verify2(a, b);
-    return this.imod(a.mul(b));
-  };
-
-  Red.prototype.isqr = function isqr (a) {
-    return this.imul(a, a.clone());
-  };
-
-  Red.prototype.sqr = function sqr (a) {
-    return this.mul(a, a);
-  };
-
-  Red.prototype.sqrt = function sqrt (a) {
-    if (a.isZero()) return a.clone();
-
-    var mod3 = this.m.andln(3);
-    assert(mod3 % 2 === 1);
-
-    // Fast case
-    if (mod3 === 3) {
-      var pow = this.m.add(new BN(1)).iushrn(2);
-      return this.pow(a, pow);
-    }
-
-    // Tonelli-Shanks algorithm (Totally unoptimized and slow)
-    //
-    // Find Q and S, that Q * 2 ^ S = (P - 1)
-    var q = this.m.subn(1);
-    var s = 0;
-    while (!q.isZero() && q.andln(1) === 0) {
-      s++;
-      q.iushrn(1);
-    }
-    assert(!q.isZero());
-
-    var one = new BN(1).toRed(this);
-    var nOne = one.redNeg();
-
-    // Find quadratic non-residue
-    // NOTE: Max is such because of generalized Riemann hypothesis.
-    var lpow = this.m.subn(1).iushrn(1);
-    var z = this.m.bitLength();
-    z = new BN(2 * z * z).toRed(this);
-
-    while (this.pow(z, lpow).cmp(nOne) !== 0) {
-      z.redIAdd(nOne);
-    }
-
-    var c = this.pow(z, q);
-    var r = this.pow(a, q.addn(1).iushrn(1));
-    var t = this.pow(a, q);
-    var m = s;
-    while (t.cmp(one) !== 0) {
-      var tmp = t;
-      for (var i = 0; tmp.cmp(one) !== 0; i++) {
-        tmp = tmp.redSqr();
-      }
-      assert(i < m);
-      var b = this.pow(c, new BN(1).iushln(m - i - 1));
-
-      r = r.redMul(b);
-      c = b.redSqr();
-      t = t.redMul(c);
-      m = i;
-    }
-
-    return r;
-  };
-
-  Red.prototype.invm = function invm (a) {
-    var inv = a._invmp(this.m);
-    if (inv.negative !== 0) {
-      inv.negative = 0;
-      return this.imod(inv).redNeg();
-    } else {
-      return this.imod(inv);
-    }
-  };
-
-  Red.prototype.pow = function pow (a, num) {
-    if (num.isZero()) return new BN(1).toRed(this);
-    if (num.cmpn(1) === 0) return a.clone();
-
-    var windowSize = 4;
-    var wnd = new Array(1 << windowSize);
-    wnd[0] = new BN(1).toRed(this);
-    wnd[1] = a;
-    for (var i = 2; i < wnd.length; i++) {
-      wnd[i] = this.mul(wnd[i - 1], a);
-    }
-
-    var res = wnd[0];
-    var current = 0;
-    var currentLen = 0;
-    var start = num.bitLength() % 26;
-    if (start === 0) {
-      start = 26;
-    }
-
-    for (i = num.length - 1; i >= 0; i--) {
-      var word = num.words[i];
-      for (var j = start - 1; j >= 0; j--) {
-        var bit = (word >> j) & 1;
-        if (res !== wnd[0]) {
-          res = this.sqr(res);
-        }
-
-        if (bit === 0 && current === 0) {
-          currentLen = 0;
-          continue;
-        }
-
-        current <<= 1;
-        current |= bit;
-        currentLen++;
-        if (currentLen !== windowSize && (i !== 0 || j !== 0)) continue;
-
-        res = this.mul(res, wnd[current]);
-        currentLen = 0;
-        current = 0;
-      }
-      start = 26;
-    }
-
-    return res;
-  };
-
-  Red.prototype.convertTo = function convertTo (num) {
-    var r = num.umod(this.m);
-
-    return r === num ? r.clone() : r;
-  };
-
-  Red.prototype.convertFrom = function convertFrom (num) {
-    var res = num.clone();
-    res.red = null;
-    return res;
-  };
-
-  //
-  // Montgomery method engine
-  //
-
-  BN.mont = function mont (num) {
-    return new Mont(num);
-  };
-
-  function Mont (m) {
-    Red.call(this, m);
-
-    this.shift = this.m.bitLength();
-    if (this.shift % 26 !== 0) {
-      this.shift += 26 - (this.shift % 26);
-    }
-
-    this.r = new BN(1).iushln(this.shift);
-    this.r2 = this.imod(this.r.sqr());
-    this.rinv = this.r._invmp(this.m);
-
-    this.minv = this.rinv.mul(this.r).isubn(1).div(this.m);
-    this.minv = this.minv.umod(this.r);
-    this.minv = this.r.sub(this.minv);
-  }
-  inherits(Mont, Red);
-
-  Mont.prototype.convertTo = function convertTo (num) {
-    return this.imod(num.ushln(this.shift));
-  };
-
-  Mont.prototype.convertFrom = function convertFrom (num) {
-    var r = this.imod(num.mul(this.rinv));
-    r.red = null;
-    return r;
-  };
-
-  Mont.prototype.imul = function imul (a, b) {
-    if (a.isZero() || b.isZero()) {
-      a.words[0] = 0;
-      a.length = 1;
-      return a;
-    }
-
-    var t = a.imul(b);
-    var c = t.maskn(this.shift).mul(this.minv).imaskn(this.shift).mul(this.m);
-    var u = t.isub(c).iushrn(this.shift);
-    var res = u;
-
-    if (u.cmp(this.m) >= 0) {
-      res = u.isub(this.m);
-    } else if (u.cmpn(0) < 0) {
-      res = u.iadd(this.m);
-    }
-
-    return res._forceRed(this);
-  };
-
-  Mont.prototype.mul = function mul (a, b) {
-    if (a.isZero() || b.isZero()) return new BN(0)._forceRed(this);
-
-    var t = a.mul(b);
-    var c = t.maskn(this.shift).mul(this.minv).imaskn(this.shift).mul(this.m);
-    var u = t.isub(c).iushrn(this.shift);
-    var res = u;
-    if (u.cmp(this.m) >= 0) {
-      res = u.isub(this.m);
-    } else if (u.cmpn(0) < 0) {
-      res = u.iadd(this.m);
-    }
-
-    return res._forceRed(this);
-  };
-
-  Mont.prototype.invm = function invm (a) {
-    // (AR)^-1 * R^2 = (A^-1 * R^-1) * R^2 = A^-1 * R
-    var res = this.imod(a._invmp(this.m).mul(this.r2));
-    return res._forceRed(this);
-  };
-})(typeof module === 'undefined' || module, this);
-
-},{"buffer":79}],290:[function(require,module,exports){
+},{"create-hash":161,"safe-buffer":358}],314:[function(require,module,exports){
+arguments[4][58][0].apply(exports,arguments)
+},{"buffer":104,"dup":58}],315:[function(require,module,exports){
 var parseKeys = require('parse-asn1')
 var mgf = require('./mgf')
 var xor = require('./xor')
@@ -74701,7 +75668,7 @@ function compare (a, b) {
   return dif
 }
 
-},{"./mgf":288,"./withPublic":292,"./xor":293,"bn.js":289,"browserify-rsa":100,"create-hash":136,"parse-asn1":275,"safe-buffer":333}],291:[function(require,module,exports){
+},{"./mgf":313,"./withPublic":317,"./xor":318,"bn.js":314,"browserify-rsa":125,"create-hash":161,"parse-asn1":300,"safe-buffer":358}],316:[function(require,module,exports){
 var parseKeys = require('parse-asn1')
 var randomBytes = require('randombytes')
 var createHash = require('create-hash')
@@ -74791,7 +75758,7 @@ function nonZero (len) {
   return out
 }
 
-},{"./mgf":288,"./withPublic":292,"./xor":293,"bn.js":289,"browserify-rsa":100,"create-hash":136,"parse-asn1":275,"randombytes":302,"safe-buffer":333}],292:[function(require,module,exports){
+},{"./mgf":313,"./withPublic":317,"./xor":318,"bn.js":314,"browserify-rsa":125,"create-hash":161,"parse-asn1":300,"randombytes":327,"safe-buffer":358}],317:[function(require,module,exports){
 var BN = require('bn.js')
 var Buffer = require('safe-buffer').Buffer
 
@@ -74805,7 +75772,7 @@ function withPublic (paddedMsg, key) {
 
 module.exports = withPublic
 
-},{"bn.js":289,"safe-buffer":333}],293:[function(require,module,exports){
+},{"bn.js":314,"safe-buffer":358}],318:[function(require,module,exports){
 module.exports = function xor (a, b) {
   var len = a.length
   var i = -1
@@ -74815,7 +75782,7 @@ module.exports = function xor (a, b) {
   return a
 }
 
-},{}],294:[function(require,module,exports){
+},{}],319:[function(require,module,exports){
 'use strict';
 
 var replace = String.prototype.replace;
@@ -74835,7 +75802,7 @@ module.exports = {
     RFC3986: 'RFC3986'
 };
 
-},{}],295:[function(require,module,exports){
+},{}],320:[function(require,module,exports){
 'use strict';
 
 var stringify = require('./stringify');
@@ -74848,7 +75815,7 @@ module.exports = {
     stringify: stringify
 };
 
-},{"./formats":294,"./parse":296,"./stringify":297}],296:[function(require,module,exports){
+},{"./formats":319,"./parse":321,"./stringify":322}],321:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -75024,7 +75991,7 @@ module.exports = function (str, opts) {
     return utils.compact(obj);
 };
 
-},{"./utils":298}],297:[function(require,module,exports){
+},{"./utils":323}],322:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -75236,7 +76203,7 @@ module.exports = function (object, opts) {
     return joined.length > 0 ? prefix + joined : '';
 };
 
-},{"./formats":294,"./utils":298}],298:[function(require,module,exports){
+},{"./formats":319,"./utils":323}],323:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty;
@@ -75451,7 +76418,7 @@ module.exports = {
     merge: merge
 };
 
-},{}],299:[function(require,module,exports){
+},{}],324:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75537,7 +76504,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],300:[function(require,module,exports){
+},{}],325:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75624,13 +76591,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],301:[function(require,module,exports){
+},{}],326:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":299,"./encode":300}],302:[function(require,module,exports){
+},{"./decode":324,"./encode":325}],327:[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -75684,7 +76651,7 @@ function randomBytes (size, cb) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":284,"safe-buffer":333}],303:[function(require,module,exports){
+},{"_process":309,"safe-buffer":358}],328:[function(require,module,exports){
 (function (process,global){
 'use strict'
 
@@ -75796,10 +76763,10 @@ function randomFillSync (buf, offset, size) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":284,"randombytes":302,"safe-buffer":333}],304:[function(require,module,exports){
+},{"_process":309,"randombytes":327,"safe-buffer":358}],329:[function(require,module,exports){
 module.exports = require('./lib/_stream_duplex.js');
 
-},{"./lib/_stream_duplex.js":305}],305:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":330}],330:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75931,7 +76898,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":307,"./_stream_writable":309,"core-util-is":133,"inherits":238,"process-nextick-args":283}],306:[function(require,module,exports){
+},{"./_stream_readable":332,"./_stream_writable":334,"core-util-is":158,"inherits":263,"process-nextick-args":308}],331:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -75979,7 +76946,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":308,"core-util-is":133,"inherits":238}],307:[function(require,module,exports){
+},{"./_stream_transform":333,"core-util-is":158,"inherits":263}],332:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -77001,7 +77968,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":305,"./internal/streams/BufferList":310,"./internal/streams/destroy":311,"./internal/streams/stream":312,"_process":284,"core-util-is":133,"events":173,"inherits":238,"isarray":241,"process-nextick-args":283,"safe-buffer":313,"string_decoder/":314,"util":79}],308:[function(require,module,exports){
+},{"./_stream_duplex":330,"./internal/streams/BufferList":335,"./internal/streams/destroy":336,"./internal/streams/stream":337,"_process":309,"core-util-is":158,"events":198,"inherits":263,"isarray":266,"process-nextick-args":308,"safe-buffer":338,"string_decoder/":339,"util":104}],333:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -77216,7 +78183,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":305,"core-util-is":133,"inherits":238}],309:[function(require,module,exports){
+},{"./_stream_duplex":330,"core-util-is":158,"inherits":263}],334:[function(require,module,exports){
 (function (process,global,setImmediate){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -77906,7 +78873,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"./_stream_duplex":305,"./internal/streams/destroy":311,"./internal/streams/stream":312,"_process":284,"core-util-is":133,"inherits":238,"process-nextick-args":283,"safe-buffer":313,"timers":389,"util-deprecate":409}],310:[function(require,module,exports){
+},{"./_stream_duplex":330,"./internal/streams/destroy":336,"./internal/streams/stream":337,"_process":309,"core-util-is":158,"inherits":263,"process-nextick-args":308,"safe-buffer":338,"timers":414,"util-deprecate":435}],335:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -77986,7 +78953,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":313,"util":79}],311:[function(require,module,exports){
+},{"safe-buffer":338,"util":104}],336:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -78061,9 +79028,9 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":283}],312:[function(require,module,exports){
-arguments[4][121][0].apply(exports,arguments)
-},{"dup":121,"events":173}],313:[function(require,module,exports){
+},{"process-nextick-args":308}],337:[function(require,module,exports){
+arguments[4][146][0].apply(exports,arguments)
+},{"dup":146,"events":198}],338:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -78127,7 +79094,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":128}],314:[function(require,module,exports){
+},{"buffer":153}],339:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -78424,10 +79391,10 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":313}],315:[function(require,module,exports){
+},{"safe-buffer":338}],340:[function(require,module,exports){
 module.exports = require('./readable').PassThrough
 
-},{"./readable":316}],316:[function(require,module,exports){
+},{"./readable":341}],341:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -78436,13 +79403,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":305,"./lib/_stream_passthrough.js":306,"./lib/_stream_readable.js":307,"./lib/_stream_transform.js":308,"./lib/_stream_writable.js":309}],317:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":330,"./lib/_stream_passthrough.js":331,"./lib/_stream_readable.js":332,"./lib/_stream_transform.js":333,"./lib/_stream_writable.js":334}],342:[function(require,module,exports){
 module.exports = require('./readable').Transform
 
-},{"./readable":316}],318:[function(require,module,exports){
+},{"./readable":341}],343:[function(require,module,exports){
 module.exports = require('./lib/_stream_writable.js');
 
-},{"./lib/_stream_writable.js":309}],319:[function(require,module,exports){
+},{"./lib/_stream_writable.js":334}],344:[function(require,module,exports){
 // Copyright 2010-2012 Mikeal Rogers
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
@@ -78599,7 +79566,7 @@ Object.defineProperty(request, 'debug', {
   }
 })
 
-},{"./lib/cookies":321,"./lib/helpers":325,"./request":331,"extend":175}],320:[function(require,module,exports){
+},{"./lib/cookies":346,"./lib/helpers":350,"./request":356,"extend":200}],345:[function(require,module,exports){
 'use strict'
 
 var caseless = require('caseless')
@@ -78768,7 +79735,7 @@ Auth.prototype.onResponse = function (response) {
 
 exports.Auth = Auth
 
-},{"./helpers":325,"caseless":130,"uuid/v4":415}],321:[function(require,module,exports){
+},{"./helpers":350,"caseless":155,"uuid/v4":441}],346:[function(require,module,exports){
 'use strict'
 
 var tough = require('tough-cookie')
@@ -78808,7 +79775,7 @@ exports.jar = function (store) {
   return new RequestJar(store)
 }
 
-},{"tough-cookie":390}],322:[function(require,module,exports){
+},{"tough-cookie":415}],347:[function(require,module,exports){
 (function (process){
 'use strict'
 
@@ -78891,7 +79858,7 @@ function getProxyFromURI (uri) {
 module.exports = getProxyFromURI
 
 }).call(this,require('_process'))
-},{"_process":284}],323:[function(require,module,exports){
+},{"_process":309}],348:[function(require,module,exports){
 'use strict'
 
 var fs = require('fs')
@@ -79098,7 +80065,7 @@ Har.prototype.options = function (options) {
 
 exports.Har = Har
 
-},{"extend":175,"fs":125,"har-validator":201,"querystring":301}],324:[function(require,module,exports){
+},{"extend":200,"fs":150,"har-validator":226,"querystring":326}],349:[function(require,module,exports){
 'use strict'
 
 var crypto = require('crypto')
@@ -79189,7 +80156,7 @@ exports.header = function (uri, method, opts) {
   return header
 }
 
-},{"crypto":140}],325:[function(require,module,exports){
+},{"crypto":165}],350:[function(require,module,exports){
 (function (process,setImmediate){
 'use strict'
 
@@ -79259,7 +80226,7 @@ exports.version = version
 exports.defer = defer
 
 }).call(this,require('_process'),require("timers").setImmediate)
-},{"_process":284,"crypto":140,"json-stringify-safe":246,"safe-buffer":333,"timers":389}],326:[function(require,module,exports){
+},{"_process":309,"crypto":165,"json-stringify-safe":271,"safe-buffer":358,"timers":414}],351:[function(require,module,exports){
 'use strict'
 
 var uuid = require('uuid/v4')
@@ -79373,7 +80340,7 @@ Multipart.prototype.onRequest = function (options) {
 
 exports.Multipart = Multipart
 
-},{"combined-stream":132,"isstream":242,"safe-buffer":333,"uuid/v4":415}],327:[function(require,module,exports){
+},{"combined-stream":157,"isstream":267,"safe-buffer":358,"uuid/v4":441}],352:[function(require,module,exports){
 'use strict'
 
 var url = require('url')
@@ -79523,7 +80490,7 @@ OAuth.prototype.onRequest = function (_oauth) {
 
 exports.OAuth = OAuth
 
-},{"caseless":130,"crypto":140,"oauth-sign":258,"qs":295,"safe-buffer":333,"url":407,"uuid/v4":415}],328:[function(require,module,exports){
+},{"caseless":155,"crypto":165,"oauth-sign":283,"qs":320,"safe-buffer":358,"url":433,"uuid/v4":441}],353:[function(require,module,exports){
 'use strict'
 
 var qs = require('qs')
@@ -79575,7 +80542,7 @@ Querystring.prototype.unescape = querystring.unescape
 
 exports.Querystring = Querystring
 
-},{"qs":295,"querystring":301}],329:[function(require,module,exports){
+},{"qs":320,"querystring":326}],354:[function(require,module,exports){
 'use strict'
 
 var url = require('url')
@@ -79731,7 +80698,7 @@ Redirect.prototype.onResponse = function (response) {
 
 exports.Redirect = Redirect
 
-},{"url":407}],330:[function(require,module,exports){
+},{"url":433}],355:[function(require,module,exports){
 'use strict'
 
 var url = require('url')
@@ -79908,7 +80875,7 @@ Tunnel.defaultProxyHeaderWhiteList = defaultProxyHeaderWhiteList
 Tunnel.defaultProxyHeaderExclusiveList = defaultProxyHeaderExclusiveList
 exports.Tunnel = Tunnel
 
-},{"tunnel-agent":397,"url":407}],331:[function(require,module,exports){
+},{"tunnel-agent":423,"url":433}],356:[function(require,module,exports){
 (function (process){
 'use strict'
 
@@ -81465,7 +82432,7 @@ Request.prototype.toJSON = requestToJSON
 module.exports = Request
 
 }).call(this,require('_process'))
-},{"./lib/auth":320,"./lib/cookies":321,"./lib/getProxyFromURI":322,"./lib/har":323,"./lib/hawk":324,"./lib/helpers":325,"./lib/multipart":326,"./lib/oauth":327,"./lib/querystring":328,"./lib/redirect":329,"./lib/tunnel":330,"_process":284,"aws-sign2":71,"aws4":72,"caseless":130,"extend":175,"forever-agent":179,"form-data":180,"http":369,"http-signature":231,"https":236,"is-typedarray":240,"isstream":242,"mime-types":253,"performance-now":282,"safe-buffer":333,"stream":368,"url":407,"util":412,"zlib":124}],332:[function(require,module,exports){
+},{"./lib/auth":345,"./lib/cookies":346,"./lib/getProxyFromURI":347,"./lib/har":348,"./lib/hawk":349,"./lib/helpers":350,"./lib/multipart":351,"./lib/oauth":352,"./lib/querystring":353,"./lib/redirect":354,"./lib/tunnel":355,"_process":309,"aws-sign2":96,"aws4":97,"caseless":155,"extend":200,"forever-agent":204,"form-data":205,"http":394,"http-signature":256,"https":261,"is-typedarray":265,"isstream":267,"mime-types":278,"performance-now":307,"safe-buffer":358,"stream":393,"url":433,"util":438,"zlib":149}],357:[function(require,module,exports){
 'use strict'
 var Buffer = require('buffer').Buffer
 var inherits = require('inherits')
@@ -81630,7 +82597,7 @@ function fn5 (a, b, c, d, e, m, k, s) {
 
 module.exports = RIPEMD160
 
-},{"buffer":128,"hash-base":202,"inherits":238}],333:[function(require,module,exports){
+},{"buffer":153,"hash-base":227,"inherits":263}],358:[function(require,module,exports){
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
@@ -81697,7 +82664,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":128}],334:[function(require,module,exports){
+},{"buffer":153}],359:[function(require,module,exports){
 (function (process){
 /* eslint-disable node/no-deprecated-api */
 
@@ -81778,7 +82745,7 @@ if (!safer.constants) {
 module.exports = safer
 
 }).call(this,require('_process'))
-},{"_process":284,"buffer":128}],335:[function(require,module,exports){
+},{"_process":309,"buffer":153}],360:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 // prototype class for hash functions
@@ -81861,7 +82828,7 @@ Hash.prototype._update = function () {
 
 module.exports = Hash
 
-},{"safe-buffer":333}],336:[function(require,module,exports){
+},{"safe-buffer":358}],361:[function(require,module,exports){
 var exports = module.exports = function SHA (algorithm) {
   algorithm = algorithm.toLowerCase()
 
@@ -81878,7 +82845,7 @@ exports.sha256 = require('./sha256')
 exports.sha384 = require('./sha384')
 exports.sha512 = require('./sha512')
 
-},{"./sha":337,"./sha1":338,"./sha224":339,"./sha256":340,"./sha384":341,"./sha512":342}],337:[function(require,module,exports){
+},{"./sha":362,"./sha1":363,"./sha224":364,"./sha256":365,"./sha384":366,"./sha512":367}],362:[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-0, as defined
  * in FIPS PUB 180-1
@@ -81974,7 +82941,7 @@ Sha.prototype._hash = function () {
 
 module.exports = Sha
 
-},{"./hash":335,"inherits":238,"safe-buffer":333}],338:[function(require,module,exports){
+},{"./hash":360,"inherits":263,"safe-buffer":358}],363:[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
  * in FIPS PUB 180-1
@@ -82075,7 +83042,7 @@ Sha1.prototype._hash = function () {
 
 module.exports = Sha1
 
-},{"./hash":335,"inherits":238,"safe-buffer":333}],339:[function(require,module,exports){
+},{"./hash":360,"inherits":263,"safe-buffer":358}],364:[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -82130,7 +83097,7 @@ Sha224.prototype._hash = function () {
 
 module.exports = Sha224
 
-},{"./hash":335,"./sha256":340,"inherits":238,"safe-buffer":333}],340:[function(require,module,exports){
+},{"./hash":360,"./sha256":365,"inherits":263,"safe-buffer":358}],365:[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -82267,7 +83234,7 @@ Sha256.prototype._hash = function () {
 
 module.exports = Sha256
 
-},{"./hash":335,"inherits":238,"safe-buffer":333}],341:[function(require,module,exports){
+},{"./hash":360,"inherits":263,"safe-buffer":358}],366:[function(require,module,exports){
 var inherits = require('inherits')
 var SHA512 = require('./sha512')
 var Hash = require('./hash')
@@ -82326,7 +83293,7 @@ Sha384.prototype._hash = function () {
 
 module.exports = Sha384
 
-},{"./hash":335,"./sha512":342,"inherits":238,"safe-buffer":333}],342:[function(require,module,exports){
+},{"./hash":360,"./sha512":367,"inherits":263,"safe-buffer":358}],367:[function(require,module,exports){
 var inherits = require('inherits')
 var Hash = require('./hash')
 var Buffer = require('safe-buffer').Buffer
@@ -82588,7 +83555,7 @@ Sha512.prototype._hash = function () {
 
 module.exports = Sha512
 
-},{"./hash":335,"inherits":238,"safe-buffer":333}],343:[function(require,module,exports){
+},{"./hash":360,"inherits":263,"safe-buffer":358}],368:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 var Buffer = require('safer-buffer').Buffer;
@@ -82758,7 +83725,7 @@ module.exports = {
 	curves: curves
 };
 
-},{"safer-buffer":334}],344:[function(require,module,exports){
+},{"safer-buffer":359}],369:[function(require,module,exports){
 // Copyright 2016 Joyent, Inc.
 
 module.exports = Certificate;
@@ -83170,7 +84137,7 @@ Certificate._oldVersionDetect = function (obj) {
 	return ([1, 0]);
 };
 
-},{"./algs":343,"./errors":347,"./fingerprint":348,"./formats/openssh-cert":351,"./formats/x509":360,"./formats/x509-pem":359,"./identity":361,"./key":363,"./private-key":364,"./signature":365,"./utils":367,"assert-plus":66,"crypto":140,"safer-buffer":334,"util":412}],345:[function(require,module,exports){
+},{"./algs":368,"./errors":372,"./fingerprint":373,"./formats/openssh-cert":376,"./formats/x509":385,"./formats/x509-pem":384,"./identity":386,"./key":388,"./private-key":389,"./signature":390,"./utils":392,"assert-plus":65,"crypto":165,"safer-buffer":359,"util":438}],370:[function(require,module,exports){
 // Copyright 2017 Joyent, Inc.
 
 module.exports = {
@@ -83569,7 +84536,7 @@ function generateECDSA(curve) {
 	}
 }
 
-},{"./algs":343,"./key":363,"./private-key":364,"./utils":367,"assert-plus":66,"crypto":140,"ecc-jsbn":153,"ecc-jsbn/lib/ec":154,"jsbn":243,"safer-buffer":334,"tweetnacl":398}],346:[function(require,module,exports){
+},{"./algs":368,"./key":388,"./private-key":389,"./utils":392,"assert-plus":65,"crypto":165,"ecc-jsbn":178,"ecc-jsbn/lib/ec":179,"jsbn":268,"safer-buffer":359,"tweetnacl":424}],371:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = {
@@ -83663,7 +84630,7 @@ Signer.prototype.sign = function () {
 	return (sigObj);
 };
 
-},{"./signature":365,"assert-plus":66,"safer-buffer":334,"stream":368,"tweetnacl":398,"util":412}],347:[function(require,module,exports){
+},{"./signature":390,"assert-plus":65,"safer-buffer":359,"stream":393,"tweetnacl":424,"util":438}],372:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 var assert = require('assert-plus');
@@ -83749,7 +84716,7 @@ module.exports = {
 	CertificateParseError: CertificateParseError
 };
 
-},{"assert-plus":66,"util":412}],348:[function(require,module,exports){
+},{"assert-plus":65,"util":438}],373:[function(require,module,exports){
 // Copyright 2018 Joyent, Inc.
 
 module.exports = Fingerprint;
@@ -83971,7 +84938,7 @@ Fingerprint._oldVersionDetect = function (obj) {
 	return ([1, 0]);
 };
 
-},{"./algs":343,"./certificate":344,"./errors":347,"./key":363,"./private-key":364,"./utils":367,"assert-plus":66,"crypto":140,"safer-buffer":334}],349:[function(require,module,exports){
+},{"./algs":368,"./certificate":369,"./errors":372,"./key":388,"./private-key":389,"./utils":392,"assert-plus":65,"crypto":165,"safer-buffer":359}],374:[function(require,module,exports){
 // Copyright 2018 Joyent, Inc.
 
 module.exports = {
@@ -84097,7 +85064,7 @@ function write(key, options) {
 	throw (new Error('"auto" format cannot be used for writing'));
 }
 
-},{"../key":363,"../private-key":364,"../utils":367,"./dnssec":350,"./pem":352,"./putty":355,"./rfc4253":356,"./ssh":358,"assert-plus":66,"safer-buffer":334}],350:[function(require,module,exports){
+},{"../key":388,"../private-key":389,"../utils":392,"./dnssec":375,"./pem":377,"./putty":380,"./rfc4253":381,"./ssh":383,"assert-plus":65,"safer-buffer":359}],375:[function(require,module,exports){
 // Copyright 2017 Joyent, Inc.
 
 module.exports = {
@@ -84386,7 +85353,7 @@ function write(key, options) {
 	}
 }
 
-},{"../dhe":345,"../key":363,"../private-key":364,"../ssh-buffer":366,"../utils":367,"assert-plus":66,"safer-buffer":334}],351:[function(require,module,exports){
+},{"../dhe":370,"../key":388,"../private-key":389,"../ssh-buffer":391,"../utils":392,"assert-plus":65,"safer-buffer":359}],376:[function(require,module,exports){
 // Copyright 2017 Joyent, Inc.
 
 module.exports = {
@@ -84740,7 +85707,7 @@ function getCertType(key) {
 	throw (new Error('Unsupported key type ' + key.type));
 }
 
-},{"../algs":343,"../certificate":344,"../identity":361,"../key":363,"../private-key":364,"../signature":365,"../ssh-buffer":366,"../utils":367,"./rfc4253":356,"assert-plus":66,"crypto":140,"safer-buffer":334}],352:[function(require,module,exports){
+},{"../algs":368,"../certificate":369,"../identity":386,"../key":388,"../private-key":389,"../signature":390,"../ssh-buffer":391,"../utils":392,"./rfc4253":381,"assert-plus":65,"crypto":165,"safer-buffer":359}],377:[function(require,module,exports){
 // Copyright 2018 Joyent, Inc.
 
 module.exports = {
@@ -85032,7 +85999,7 @@ function write(key, options, type) {
 	return (buf.slice(0, o));
 }
 
-},{"../algs":343,"../errors":347,"../key":363,"../private-key":364,"../utils":367,"./pkcs1":353,"./pkcs8":354,"./rfc4253":356,"./ssh-private":357,"asn1":65,"assert-plus":66,"crypto":140,"safer-buffer":334}],353:[function(require,module,exports){
+},{"../algs":368,"../errors":372,"../key":388,"../private-key":389,"../utils":392,"./pkcs1":378,"./pkcs8":379,"./rfc4253":381,"./ssh-private":382,"asn1":64,"assert-plus":65,"crypto":165,"safer-buffer":359}],378:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = {
@@ -85407,7 +86374,7 @@ function writePkcs1EdDSAPublic(der, key) {
 	throw (new Error('Public keys are not supported for EdDSA PKCS#1'));
 }
 
-},{"../algs":343,"../key":363,"../private-key":364,"../utils":367,"./pem":352,"./pkcs8":354,"asn1":65,"assert-plus":66,"safer-buffer":334}],354:[function(require,module,exports){
+},{"../algs":368,"../key":388,"../private-key":389,"../utils":392,"./pem":377,"./pkcs8":379,"asn1":64,"assert-plus":65,"safer-buffer":359}],379:[function(require,module,exports){
 // Copyright 2018 Joyent, Inc.
 
 module.exports = {
@@ -86040,7 +87007,7 @@ function writePkcs8EdDSAPrivate(key, der) {
 	der.endSequence();
 }
 
-},{"../algs":343,"../key":363,"../private-key":364,"../utils":367,"./pem":352,"asn1":65,"assert-plus":66,"safer-buffer":334}],355:[function(require,module,exports){
+},{"../algs":368,"../key":388,"../private-key":389,"../utils":392,"./pem":377,"asn1":64,"assert-plus":65,"safer-buffer":359}],380:[function(require,module,exports){
 // Copyright 2018 Joyent, Inc.
 
 module.exports = {
@@ -86141,7 +87108,7 @@ function wrap(txt, len) {
 	return (lines);
 }
 
-},{"../errors":347,"../key":363,"./rfc4253":356,"assert-plus":66,"safer-buffer":334}],356:[function(require,module,exports){
+},{"../errors":372,"../key":388,"./rfc4253":381,"assert-plus":65,"safer-buffer":359}],381:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = {
@@ -86309,7 +87276,7 @@ function write(key, options) {
 	return (buf.toBuffer());
 }
 
-},{"../algs":343,"../key":363,"../private-key":364,"../ssh-buffer":366,"../utils":367,"assert-plus":66,"safer-buffer":334}],357:[function(require,module,exports){
+},{"../algs":368,"../key":388,"../private-key":389,"../ssh-buffer":391,"../utils":392,"assert-plus":65,"safer-buffer":359}],382:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = {
@@ -86573,7 +87540,7 @@ function write(key, options) {
 	return (buf.slice(0, o));
 }
 
-},{"../algs":343,"../errors":347,"../key":363,"../private-key":364,"../ssh-buffer":366,"../utils":367,"./pem":352,"./rfc4253":356,"asn1":65,"assert-plus":66,"bcrypt-pbkdf":75,"crypto":140,"safer-buffer":334}],358:[function(require,module,exports){
+},{"../algs":368,"../errors":372,"../key":388,"../private-key":389,"../ssh-buffer":391,"../utils":392,"./pem":377,"./rfc4253":381,"asn1":64,"assert-plus":65,"bcrypt-pbkdf":100,"crypto":165,"safer-buffer":359}],383:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = {
@@ -86690,7 +87657,7 @@ function write(key, options) {
 	return (Buffer.from(parts.join(' ')));
 }
 
-},{"../key":363,"../private-key":364,"../utils":367,"./rfc4253":356,"./ssh-private":357,"assert-plus":66,"safer-buffer":334}],359:[function(require,module,exports){
+},{"../key":388,"../private-key":389,"../utils":392,"./rfc4253":381,"./ssh-private":382,"assert-plus":65,"safer-buffer":359}],384:[function(require,module,exports){
 // Copyright 2016 Joyent, Inc.
 
 var x509 = require('./x509');
@@ -86780,7 +87747,7 @@ function write(cert, options) {
 	return (buf.slice(0, o));
 }
 
-},{"../algs":343,"../certificate":344,"../identity":361,"../key":363,"../private-key":364,"../signature":365,"../utils":367,"./pem":352,"./x509":360,"asn1":65,"assert-plus":66,"safer-buffer":334}],360:[function(require,module,exports){
+},{"../algs":368,"../certificate":369,"../identity":386,"../key":388,"../private-key":389,"../signature":390,"../utils":392,"./pem":377,"./x509":385,"asn1":64,"assert-plus":65,"safer-buffer":359}],385:[function(require,module,exports){
 // Copyright 2017 Joyent, Inc.
 
 module.exports = {
@@ -87534,7 +88501,7 @@ function writeBitField(setBits, bitIndex) {
 	return (bits);
 }
 
-},{"../algs":343,"../certificate":344,"../identity":361,"../key":363,"../private-key":364,"../signature":365,"../utils":367,"./pem":352,"./pkcs8":354,"asn1":65,"assert-plus":66,"safer-buffer":334}],361:[function(require,module,exports){
+},{"../algs":368,"../certificate":369,"../identity":386,"../key":388,"../private-key":389,"../signature":390,"../utils":392,"./pem":377,"./pkcs8":379,"asn1":64,"assert-plus":65,"safer-buffer":359}],386:[function(require,module,exports){
 // Copyright 2017 Joyent, Inc.
 
 module.exports = Identity;
@@ -87909,7 +88876,7 @@ Identity._oldVersionDetect = function (obj) {
 	return ([1, 0]);
 };
 
-},{"./algs":343,"./errors":347,"./fingerprint":348,"./signature":365,"./utils":367,"asn1":65,"assert-plus":66,"crypto":140,"safer-buffer":334,"util":412}],362:[function(require,module,exports){
+},{"./algs":368,"./errors":372,"./fingerprint":373,"./signature":390,"./utils":392,"asn1":64,"assert-plus":65,"crypto":165,"safer-buffer":359,"util":438}],387:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 var Key = require('./key');
@@ -87951,7 +88918,7 @@ module.exports = {
 	CertificateParseError: errs.CertificateParseError
 };
 
-},{"./certificate":344,"./errors":347,"./fingerprint":348,"./identity":361,"./key":363,"./private-key":364,"./signature":365}],363:[function(require,module,exports){
+},{"./certificate":369,"./errors":372,"./fingerprint":373,"./identity":386,"./key":388,"./private-key":389,"./signature":390}],388:[function(require,module,exports){
 (function (Buffer){
 // Copyright 2018 Joyent, Inc.
 
@@ -88249,7 +89216,7 @@ Key._oldVersionDetect = function (obj) {
 };
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":239,"./algs":343,"./dhe":345,"./ed-compat":346,"./errors":347,"./fingerprint":348,"./formats/auto":349,"./formats/dnssec":350,"./formats/pem":352,"./formats/pkcs1":353,"./formats/pkcs8":354,"./formats/putty":355,"./formats/rfc4253":356,"./formats/ssh":358,"./formats/ssh-private":357,"./private-key":364,"./signature":365,"./utils":367,"assert-plus":66,"crypto":140}],364:[function(require,module,exports){
+},{"../../is-buffer/index.js":264,"./algs":368,"./dhe":370,"./ed-compat":371,"./errors":372,"./fingerprint":373,"./formats/auto":374,"./formats/dnssec":375,"./formats/pem":377,"./formats/pkcs1":378,"./formats/pkcs8":379,"./formats/putty":380,"./formats/rfc4253":381,"./formats/ssh":383,"./formats/ssh-private":382,"./private-key":389,"./signature":390,"./utils":392,"assert-plus":65,"crypto":165}],389:[function(require,module,exports){
 // Copyright 2017 Joyent, Inc.
 
 module.exports = PrivateKey;
@@ -88497,7 +89464,7 @@ PrivateKey._oldVersionDetect = function (obj) {
 	return ([1, 0]);
 };
 
-},{"./algs":343,"./dhe":345,"./ed-compat":346,"./errors":347,"./fingerprint":348,"./formats/auto":349,"./formats/dnssec":350,"./formats/pem":352,"./formats/pkcs1":353,"./formats/pkcs8":354,"./formats/rfc4253":356,"./formats/ssh-private":357,"./key":363,"./signature":365,"./utils":367,"assert-plus":66,"crypto":140,"safer-buffer":334,"tweetnacl":398,"util":412}],365:[function(require,module,exports){
+},{"./algs":368,"./dhe":370,"./ed-compat":371,"./errors":372,"./fingerprint":373,"./formats/auto":374,"./formats/dnssec":375,"./formats/pem":377,"./formats/pkcs1":378,"./formats/pkcs8":379,"./formats/rfc4253":381,"./formats/ssh-private":382,"./key":388,"./signature":390,"./utils":392,"assert-plus":65,"crypto":165,"safer-buffer":359,"tweetnacl":424,"util":438}],390:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = Signature;
@@ -88813,7 +89780,7 @@ Signature._oldVersionDetect = function (obj) {
 	return ([1, 0]);
 };
 
-},{"./algs":343,"./errors":347,"./ssh-buffer":366,"./utils":367,"asn1":65,"assert-plus":66,"crypto":140,"safer-buffer":334}],366:[function(require,module,exports){
+},{"./algs":368,"./errors":372,"./ssh-buffer":391,"./utils":392,"asn1":64,"assert-plus":65,"crypto":165,"safer-buffer":359}],391:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = SSHBuffer;
@@ -88964,7 +89931,7 @@ SSHBuffer.prototype.write = function (buf) {
 	this._offset += buf.length;
 };
 
-},{"assert-plus":66,"safer-buffer":334}],367:[function(require,module,exports){
+},{"assert-plus":65,"safer-buffer":359}],392:[function(require,module,exports){
 // Copyright 2015 Joyent, Inc.
 
 module.exports = {
@@ -89370,7 +90337,7 @@ function opensshCipherInfo(cipher) {
 	return (inf);
 }
 
-},{"./algs":343,"./key":363,"./private-key":364,"asn1":65,"assert-plus":66,"crypto":140,"ecc-jsbn/lib/ec":154,"jsbn":243,"safer-buffer":334,"tweetnacl":398}],368:[function(require,module,exports){
+},{"./algs":368,"./key":388,"./private-key":389,"asn1":64,"assert-plus":65,"crypto":165,"ecc-jsbn/lib/ec":179,"jsbn":268,"safer-buffer":359,"tweetnacl":424}],393:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -89499,7 +90466,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":173,"inherits":238,"readable-stream/duplex.js":304,"readable-stream/passthrough.js":315,"readable-stream/readable.js":316,"readable-stream/transform.js":317,"readable-stream/writable.js":318}],369:[function(require,module,exports){
+},{"events":198,"inherits":263,"readable-stream/duplex.js":329,"readable-stream/passthrough.js":340,"readable-stream/readable.js":341,"readable-stream/transform.js":342,"readable-stream/writable.js":343}],394:[function(require,module,exports){
 (function (global){
 var ClientRequest = require('./lib/request')
 var response = require('./lib/response')
@@ -89587,7 +90554,7 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":371,"./lib/response":372,"builtin-status-codes":129,"url":407,"xtend":418}],370:[function(require,module,exports){
+},{"./lib/request":396,"./lib/response":397,"builtin-status-codes":154,"url":433,"xtend":444}],395:[function(require,module,exports){
 (function (global){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
 
@@ -89650,7 +90617,7 @@ function isFunction (value) {
 xhr = null // Help gc
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],371:[function(require,module,exports){
+},{}],396:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -89968,7 +90935,7 @@ var unsafeHeaders = [
 ]
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":370,"./response":372,"_process":284,"buffer":128,"inherits":238,"readable-stream":387}],372:[function(require,module,exports){
+},{"./capability":395,"./response":397,"_process":309,"buffer":153,"inherits":263,"readable-stream":412}],397:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -90179,39 +91146,39 @@ IncomingMessage.prototype._onXHRProgress = function () {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":370,"_process":284,"buffer":128,"inherits":238,"readable-stream":387}],373:[function(require,module,exports){
-arguments[4][108][0].apply(exports,arguments)
-},{"dup":108}],374:[function(require,module,exports){
-arguments[4][109][0].apply(exports,arguments)
-},{"./_stream_readable":376,"./_stream_writable":378,"_process":284,"dup":109,"inherits":238}],375:[function(require,module,exports){
-arguments[4][110][0].apply(exports,arguments)
-},{"./_stream_transform":377,"dup":110,"inherits":238}],376:[function(require,module,exports){
-arguments[4][111][0].apply(exports,arguments)
-},{"../errors":373,"./_stream_duplex":374,"./internal/streams/async_iterator":379,"./internal/streams/buffer_list":380,"./internal/streams/destroy":381,"./internal/streams/from":383,"./internal/streams/state":385,"./internal/streams/stream":386,"_process":284,"buffer":128,"dup":111,"events":173,"inherits":238,"string_decoder/":388,"util":79}],377:[function(require,module,exports){
-arguments[4][112][0].apply(exports,arguments)
-},{"../errors":373,"./_stream_duplex":374,"dup":112,"inherits":238}],378:[function(require,module,exports){
-arguments[4][113][0].apply(exports,arguments)
-},{"../errors":373,"./_stream_duplex":374,"./internal/streams/destroy":381,"./internal/streams/state":385,"./internal/streams/stream":386,"_process":284,"buffer":128,"dup":113,"inherits":238,"util-deprecate":409}],379:[function(require,module,exports){
-arguments[4][114][0].apply(exports,arguments)
-},{"./end-of-stream":382,"_process":284,"dup":114}],380:[function(require,module,exports){
-arguments[4][115][0].apply(exports,arguments)
-},{"buffer":128,"dup":115,"util":79}],381:[function(require,module,exports){
-arguments[4][116][0].apply(exports,arguments)
-},{"_process":284,"dup":116}],382:[function(require,module,exports){
-arguments[4][117][0].apply(exports,arguments)
-},{"../../../errors":373,"dup":117}],383:[function(require,module,exports){
-arguments[4][118][0].apply(exports,arguments)
-},{"dup":118}],384:[function(require,module,exports){
-arguments[4][119][0].apply(exports,arguments)
-},{"../../../errors":373,"./end-of-stream":382,"dup":119}],385:[function(require,module,exports){
-arguments[4][120][0].apply(exports,arguments)
-},{"../../../errors":373,"dup":120}],386:[function(require,module,exports){
-arguments[4][121][0].apply(exports,arguments)
-},{"dup":121,"events":173}],387:[function(require,module,exports){
-arguments[4][122][0].apply(exports,arguments)
-},{"./lib/_stream_duplex.js":374,"./lib/_stream_passthrough.js":375,"./lib/_stream_readable.js":376,"./lib/_stream_transform.js":377,"./lib/_stream_writable.js":378,"./lib/internal/streams/end-of-stream.js":382,"./lib/internal/streams/pipeline.js":384,"dup":122}],388:[function(require,module,exports){
-arguments[4][314][0].apply(exports,arguments)
-},{"dup":314,"safe-buffer":333}],389:[function(require,module,exports){
+},{"./capability":395,"_process":309,"buffer":153,"inherits":263,"readable-stream":412}],398:[function(require,module,exports){
+arguments[4][133][0].apply(exports,arguments)
+},{"dup":133}],399:[function(require,module,exports){
+arguments[4][134][0].apply(exports,arguments)
+},{"./_stream_readable":401,"./_stream_writable":403,"_process":309,"dup":134,"inherits":263}],400:[function(require,module,exports){
+arguments[4][135][0].apply(exports,arguments)
+},{"./_stream_transform":402,"dup":135,"inherits":263}],401:[function(require,module,exports){
+arguments[4][136][0].apply(exports,arguments)
+},{"../errors":398,"./_stream_duplex":399,"./internal/streams/async_iterator":404,"./internal/streams/buffer_list":405,"./internal/streams/destroy":406,"./internal/streams/from":408,"./internal/streams/state":410,"./internal/streams/stream":411,"_process":309,"buffer":153,"dup":136,"events":198,"inherits":263,"string_decoder/":413,"util":104}],402:[function(require,module,exports){
+arguments[4][137][0].apply(exports,arguments)
+},{"../errors":398,"./_stream_duplex":399,"dup":137,"inherits":263}],403:[function(require,module,exports){
+arguments[4][138][0].apply(exports,arguments)
+},{"../errors":398,"./_stream_duplex":399,"./internal/streams/destroy":406,"./internal/streams/state":410,"./internal/streams/stream":411,"_process":309,"buffer":153,"dup":138,"inherits":263,"util-deprecate":435}],404:[function(require,module,exports){
+arguments[4][139][0].apply(exports,arguments)
+},{"./end-of-stream":407,"_process":309,"dup":139}],405:[function(require,module,exports){
+arguments[4][140][0].apply(exports,arguments)
+},{"buffer":153,"dup":140,"util":104}],406:[function(require,module,exports){
+arguments[4][141][0].apply(exports,arguments)
+},{"_process":309,"dup":141}],407:[function(require,module,exports){
+arguments[4][142][0].apply(exports,arguments)
+},{"../../../errors":398,"dup":142}],408:[function(require,module,exports){
+arguments[4][143][0].apply(exports,arguments)
+},{"dup":143}],409:[function(require,module,exports){
+arguments[4][144][0].apply(exports,arguments)
+},{"../../../errors":398,"./end-of-stream":407,"dup":144}],410:[function(require,module,exports){
+arguments[4][145][0].apply(exports,arguments)
+},{"../../../errors":398,"dup":145}],411:[function(require,module,exports){
+arguments[4][146][0].apply(exports,arguments)
+},{"dup":146,"events":198}],412:[function(require,module,exports){
+arguments[4][147][0].apply(exports,arguments)
+},{"./lib/_stream_duplex.js":399,"./lib/_stream_passthrough.js":400,"./lib/_stream_readable.js":401,"./lib/_stream_transform.js":402,"./lib/_stream_writable.js":403,"./lib/internal/streams/end-of-stream.js":407,"./lib/internal/streams/pipeline.js":409,"dup":147}],413:[function(require,module,exports){
+arguments[4][339][0].apply(exports,arguments)
+},{"dup":339,"safe-buffer":358}],414:[function(require,module,exports){
 (function (setImmediate,clearImmediate){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -90290,7 +91257,7 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":284,"timers":389}],390:[function(require,module,exports){
+},{"process/browser.js":309,"timers":414}],415:[function(require,module,exports){
 /*!
  * Copyright (c) 2015, Salesforce.com, Inc.
  * All rights reserved.
@@ -91774,7 +92741,7 @@ exports.permuteDomain = require('./permuteDomain').permuteDomain;
 exports.permutePath = permutePath;
 exports.canonicalDomain = canonicalDomain;
 
-},{"./memstore":391,"./pathMatch":392,"./permuteDomain":393,"./pubsuffix-psl":394,"./store":395,"./version":396,"net":125,"punycode":126,"url":407,"util":412}],391:[function(require,module,exports){
+},{"./memstore":416,"./pathMatch":417,"./permuteDomain":418,"./pubsuffix-psl":419,"./store":420,"./version":421,"net":150,"punycode":151,"url":433,"util":438}],416:[function(require,module,exports){
 /*!
  * Copyright (c) 2015, Salesforce.com, Inc.
  * All rights reserved.
@@ -91957,7 +92924,7 @@ MemoryCookieStore.prototype.getAllCookies = function(cb) {
   cb(null, cookies);
 };
 
-},{"./pathMatch":392,"./permuteDomain":393,"./store":395,"util":412}],392:[function(require,module,exports){
+},{"./pathMatch":417,"./permuteDomain":418,"./store":420,"util":438}],417:[function(require,module,exports){
 /*!
  * Copyright (c) 2015, Salesforce.com, Inc.
  * All rights reserved.
@@ -92020,7 +92987,7 @@ function pathMatch (reqPath, cookiePath) {
 
 exports.pathMatch = pathMatch;
 
-},{}],393:[function(require,module,exports){
+},{}],418:[function(require,module,exports){
 /*!
  * Copyright (c) 2015, Salesforce.com, Inc.
  * All rights reserved.
@@ -92078,7 +93045,7 @@ function permuteDomain (domain) {
 
 exports.permuteDomain = permuteDomain;
 
-},{"./pubsuffix-psl":394}],394:[function(require,module,exports){
+},{"./pubsuffix-psl":419}],419:[function(require,module,exports){
 /*!
  * Copyright (c) 2018, Salesforce.com, Inc.
  * All rights reserved.
@@ -92118,7 +93085,7 @@ function getPublicSuffix(domain) {
 
 exports.getPublicSuffix = getPublicSuffix;
 
-},{"psl":286}],395:[function(require,module,exports){
+},{"psl":311}],420:[function(require,module,exports){
 /*!
  * Copyright (c) 2015, Salesforce.com, Inc.
  * All rights reserved.
@@ -92195,11 +93162,299 @@ Store.prototype.getAllCookies = function(cb) {
   throw new Error('getAllCookies is not implemented (therefore jar cannot be serialized)');
 };
 
-},{}],396:[function(require,module,exports){
+},{}],421:[function(require,module,exports){
 // generated by genversion
 module.exports = '2.5.0'
 
-},{}],397:[function(require,module,exports){
+},{}],422:[function(require,module,exports){
+(function (global){
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/* global global, define, System, Reflect, Promise */
+var __extends;
+var __assign;
+var __rest;
+var __decorate;
+var __param;
+var __metadata;
+var __awaiter;
+var __generator;
+var __exportStar;
+var __values;
+var __read;
+var __spread;
+var __spreadArrays;
+var __await;
+var __asyncGenerator;
+var __asyncDelegator;
+var __asyncValues;
+var __makeTemplateObject;
+var __importStar;
+var __importDefault;
+var __classPrivateFieldGet;
+var __classPrivateFieldSet;
+var __createBinding;
+(function (factory) {
+    var root = typeof global === "object" ? global : typeof self === "object" ? self : typeof this === "object" ? this : {};
+    if (typeof define === "function" && define.amd) {
+        define("tslib", ["exports"], function (exports) { factory(createExporter(root, createExporter(exports))); });
+    }
+    else if (typeof module === "object" && typeof module.exports === "object") {
+        factory(createExporter(root, createExporter(module.exports)));
+    }
+    else {
+        factory(createExporter(root));
+    }
+    function createExporter(exports, previous) {
+        if (exports !== root) {
+            if (typeof Object.create === "function") {
+                Object.defineProperty(exports, "__esModule", { value: true });
+            }
+            else {
+                exports.__esModule = true;
+            }
+        }
+        return function (id, v) { return exports[id] = previous ? previous(id, v) : v; };
+    }
+})
+(function (exporter) {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+
+    __extends = function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+
+    __rest = function (s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    };
+
+    __decorate = function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+
+    __param = function (paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    };
+
+    __metadata = function (metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    };
+
+    __awaiter = function (thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    };
+
+    __generator = function (thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    };
+
+    __createBinding = function(o, m, k, k2) {
+        if (k2 === undefined) k2 = k;
+        o[k2] = m[k];
+    };
+
+    __exportStar = function (m, exports) {
+        for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) exports[p] = m[p];
+    };
+
+    __values = function (o) {
+        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+        if (m) return m.call(o);
+        if (o && typeof o.length === "number") return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+    };
+
+    __read = function (o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    };
+
+    __spread = function () {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    };
+
+    __spreadArrays = function () {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    };
+
+    __await = function (v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    };
+
+    __asyncGenerator = function (thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);  }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    };
+
+    __asyncDelegator = function (o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    };
+
+    __asyncValues = function (o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    };
+
+    __makeTemplateObject = function (cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    __importStar = function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result["default"] = mod;
+        return result;
+    };
+
+    __importDefault = function (mod) {
+        return (mod && mod.__esModule) ? mod : { "default": mod };
+    };
+
+    __classPrivateFieldGet = function (receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to get private field on non-instance");
+        }
+        return privateMap.get(receiver);
+    };
+
+    __classPrivateFieldSet = function (receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to set private field on non-instance");
+        }
+        privateMap.set(receiver, value);
+        return value;
+    };
+
+    exporter("__extends", __extends);
+    exporter("__assign", __assign);
+    exporter("__rest", __rest);
+    exporter("__decorate", __decorate);
+    exporter("__param", __param);
+    exporter("__metadata", __metadata);
+    exporter("__awaiter", __awaiter);
+    exporter("__generator", __generator);
+    exporter("__exportStar", __exportStar);
+    exporter("__createBinding", __createBinding);
+    exporter("__values", __values);
+    exporter("__read", __read);
+    exporter("__spread", __spread);
+    exporter("__spreadArrays", __spreadArrays);
+    exporter("__await", __await);
+    exporter("__asyncGenerator", __asyncGenerator);
+    exporter("__asyncDelegator", __asyncDelegator);
+    exporter("__asyncValues", __asyncValues);
+    exporter("__makeTemplateObject", __makeTemplateObject);
+    exporter("__importStar", __importStar);
+    exporter("__importDefault", __importDefault);
+    exporter("__classPrivateFieldGet", __classPrivateFieldGet);
+    exporter("__classPrivateFieldSet", __classPrivateFieldSet);
+});
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],423:[function(require,module,exports){
 (function (process){
 'use strict'
 
@@ -92447,7 +93702,7 @@ if (process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)) {
 exports.debug = debug // for test
 
 }).call(this,require('_process'))
-},{"_process":284,"assert":67,"events":173,"http":369,"https":236,"net":125,"safe-buffer":333,"tls":125,"util":412}],398:[function(require,module,exports){
+},{"_process":309,"assert":66,"events":198,"http":394,"https":261,"net":150,"safe-buffer":358,"tls":150,"util":438}],424:[function(require,module,exports){
 (function(nacl) {
 'use strict';
 
@@ -94837,7 +96092,7 @@ nacl.setPRNG = function(fn) {
 
 })(typeof module !== 'undefined' && module.exports ? module.exports : (self.nacl = self.nacl || {}));
 
-},{"crypto":79}],399:[function(require,module,exports){
+},{"crypto":104}],425:[function(require,module,exports){
 //  Twitter Endpoints
 module.exports = {
     API_HOST      : 'https://api.twitter.com/'
@@ -94849,7 +96104,7 @@ module.exports = {
   , OA_REQ        : 'https://api.twitter.com/oauth/request_token'
   , OA_ACCESS     : 'https://api.twitter.com/oauth/access_token'
 }
-},{}],400:[function(require,module,exports){
+},{}],426:[function(require,module,exports){
 var assert = require('assert');
 var fs = require('fs');
 var mime = require('mime');
@@ -95005,7 +96260,7 @@ FileUploader.prototype._initMedia = function (cb) {
 
 module.exports = FileUploader
 
-},{"assert":67,"fs":125,"mime":254,"util":412}],401:[function(require,module,exports){
+},{"assert":66,"fs":150,"mime":279,"util":438}],427:[function(require,module,exports){
 (function (Buffer){
 var querystring = require('querystring');
 var request = require('request');
@@ -95137,7 +96392,7 @@ exports.getBearerToken = function (consumer_key, consumer_secret, cb) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"./endpoints":399,"buffer":128,"querystring":301,"request":319}],402:[function(require,module,exports){
+},{"./endpoints":425,"buffer":153,"querystring":326,"request":344}],428:[function(require,module,exports){
 //
 //  Parser - for Twitter Streaming API
 //
@@ -95195,11 +96450,11 @@ Parser.prototype.parse = function (chunk) {
   this.message = chunk.slice(start, size);
 };
 
-},{"events":173,"util":412}],403:[function(require,module,exports){
+},{"events":198,"util":438}],429:[function(require,module,exports){
 // set of status codes where we don't attempt reconnecting to Twitter
 exports.STATUS_CODES_TO_ABORT_ON = [ 400, 401, 403, 404, 406, 410, 413, 422 ];
 
-},{}],404:[function(require,module,exports){
+},{}],430:[function(require,module,exports){
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
@@ -95544,7 +96799,7 @@ StreamingAPIConnection.prototype._updateOauthTimestampOffsetFromResponse = funct
 
 module.exports = StreamingAPIConnection
 
-},{"./helpers":401,"./parser":402,"./settings":403,"events":173,"request":319,"util":412}],405:[function(require,module,exports){
+},{"./helpers":427,"./parser":428,"./settings":429,"events":198,"request":344,"util":438}],431:[function(require,module,exports){
 (function (process){
 //
 //  Twitter API Wrapper
@@ -96064,7 +97319,7 @@ Twitter.prototype._validateConfigOrThrow = function (config) {
 module.exports = Twitter
 
 }).call(this,require('_process'))
-},{"./endpoints":399,"./file_uploader":400,"./helpers":401,"./settings":403,"./streaming-api-connection":404,"_process":284,"assert":67,"bluebird":76,"request":319,"util":412}],406:[function(require,module,exports){
+},{"./endpoints":425,"./file_uploader":426,"./helpers":427,"./settings":429,"./streaming-api-connection":430,"_process":309,"assert":66,"bluebird":101,"request":344,"util":438}],432:[function(require,module,exports){
 /** @license URI.js v4.2.1 (c) 2011 Gary Court. License: http://github.com/garycourt/uri-js */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -97455,7 +98710,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
 
 
-},{}],407:[function(require,module,exports){
+},{}],433:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -98189,7 +99444,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":408,"punycode":126,"querystring":301}],408:[function(require,module,exports){
+},{"./util":434,"punycode":151,"querystring":326}],434:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -98207,7 +99462,7 @@ module.exports = {
   }
 };
 
-},{}],409:[function(require,module,exports){
+},{}],435:[function(require,module,exports){
 (function (global){
 
 /**
@@ -98278,13 +99533,13 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],410:[function(require,module,exports){
+},{}],436:[function(require,module,exports){
+arguments[4][67][0].apply(exports,arguments)
+},{"dup":67}],437:[function(require,module,exports){
 arguments[4][68][0].apply(exports,arguments)
-},{"dup":68}],411:[function(require,module,exports){
+},{"dup":68}],438:[function(require,module,exports){
 arguments[4][69][0].apply(exports,arguments)
-},{"dup":69}],412:[function(require,module,exports){
-arguments[4][70][0].apply(exports,arguments)
-},{"./support/isBuffer":411,"_process":284,"dup":70,"inherits":410}],413:[function(require,module,exports){
+},{"./support/isBuffer":437,"_process":309,"dup":69,"inherits":436}],439:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -98312,7 +99567,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],414:[function(require,module,exports){
+},{}],440:[function(require,module,exports){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -98348,7 +99603,7 @@ if (getRandomValues) {
   };
 }
 
-},{}],415:[function(require,module,exports){
+},{}],441:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -98379,7 +99634,7 @@ function v4(options, buf, offset) {
 
 module.exports = v4;
 
-},{"./lib/bytesToUuid":413,"./lib/rng":414}],416:[function(require,module,exports){
+},{"./lib/bytesToUuid":439,"./lib/rng":440}],442:[function(require,module,exports){
 /*
  * verror.js: richer JavaScript errors
  */
@@ -98832,7 +100087,7 @@ WError.prototype.cause = function we_cause(c)
 	return (this.jse_cause);
 };
 
-},{"assert-plus":66,"core-util-is":133,"extsprintf":176,"util":412}],417:[function(require,module,exports){
+},{"assert-plus":65,"core-util-is":158,"extsprintf":201,"util":438}],443:[function(require,module,exports){
 var indexOf = function (xs, item) {
     if (xs.indexOf) return xs.indexOf(item);
     else for (var i = 0; i < xs.length; i++) {
@@ -98983,7 +100238,7 @@ exports.createContext = Script.createContext = function (context) {
     return copy;
 };
 
-},{}],418:[function(require,module,exports){
+},{}],444:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -99004,4 +100259,209 @@ function extend() {
     return target
 }
 
-},{}]},{},[1]);
+},{}],445:[function(require,module,exports){
+
+console.log("content working");
+let greyTwit = "images/greytwitview.png";
+let twitLogo = "images/twitView48.png";
+
+
+const Autolinker = require( 'autolinker' );
+
+const Twit = require("twit");
+let T = new Twit({
+  consumer_key: 'MT9iShqi7z8HASwCBkHvQVq40',
+  consumer_secret: 'T0o5AU8NBcUaLAv8YfyDHPl6God3ocwywQdscoMPAgyFgd2yxO',
+  access_token: '1254584570575351814-xl64J2QaqRzLUfvTURAVgeHmeSYvWE',
+  access_token_secret: 'H1kWtw9tgB7Denk7iDY5TJIsjXkt3iKhrqvMBkEgJ2ADG',
+});
+
+let replies;
+let since_id;
+let max_id;
+let screenName;
+let tweetId;
+let firstTweet;
+let tweets;
+let addModal;
+
+
+//was going to remove the listener but it's good to keep it on I think
+let getIds = function(request) {
+  console.log("Max ID: " + request.maxId + " Since ID: " +request.sinceId);
+  since_id = request.sinceId;
+  max_id = request.maxId;
+  twitView();
+}
+
+chrome.runtime.onMessage.addListener(getIds);
+// do i have to remove? then re add maybe?
+
+
+function twitView() {
+  
+  addModal = function() {
+    
+    console.log("check");
+    let elements = document.querySelector("main");
+    let modalCheck = document.querySelector("div[class=modal-content]");
+    console.log(elements);
+
+    if (elements) {
+      if (modalCheck){
+        console.log("modal present");
+
+      }else {
+      //inject style sheet
+      var style = document.createElement('link');
+      console.log(style);
+      style.rel = 'stylesheet';
+      style.type = 'text/css';
+      style.href = chrome.extension.getURL('style.css');
+      (document.head||document.documentElement).appendChild(style);
+
+      //overall div
+      let modal = document.createElement("DIV");
+      modal.setAttribute("class", "modal-content");
+      elements.appendChild(modal);
+      
+      //exit symbol
+      let exit = document.createElement("SPAN");
+      exit.setAttribute("class", "modal-close");
+      exit.innerHTML = "&times;";
+      modal.appendChild(exit);
+      exit.addEventListener('click', function(){
+        console.log("click remove");
+        modal.remove();
+        style.remove();
+      })
+      
+      //logo header
+      let logo = document.createElement("DIV");
+      logo.setAttribute("class", "logo");
+      modal.appendChild(logo);
+      
+      //image
+      let imgLogo = document.createElement("IMG"); 
+      imgLogo.src = chrome.runtime.getURL(twitLogo);
+      logo.appendChild(imgLogo); 
+
+
+      //ul
+      // let ulContent = document.createElement("ul");
+      // ulContent.setAttribute("class", "ulContent");
+      // modal.appendChild(ulContent);
+    }
+    }
+  }
+  addModal();
+
+  
+  T.get("statuses/show", { id: since_id, count: 1 }, function (err, data, response) {
+    // tweets = data.statuses;
+    tweets = data;
+
+    // console.log(JSON.stringify(data, null, ' '));
+
+    // screenName = ('@' + data["user"]["screen_name"]);
+    screenName = data["user"]["screen_name"];
+    // console.log(screenName);
+
+    firstTweet = data["id_str"];
+    // console.log(firstTweet);
+
+    // tweetId = data["id_str"];
+    // console.log(tweetId);
+
+    tweetId = BigInt(data["id_str"]) - 1n;
+    // console.log(tweetId);
+
+    tweetId = tweetId.toString();
+    // console.log(tweetId);
+    threadSort();
+  });
+
+
+
+  function threadSort() {
+    // console.log(typeof tweetId);
+    params = {
+      screen_name: screenName,
+      since_id: tweetId,
+      max_id: max_id,
+      include_rts: false,
+      tweet_mode: 'extended',
+      count: 1600,
+    };
+    // console.log("           up" + screenName);
+
+    //since_id is the oldest 1257907084156301312
+    //max_id is the newest newest 1257958024888627200
+
+    console.log(params);
+
+    T.get("statuses/user_timeline", params, function (err, data, response) {
+
+
+      let replies = [];
+      let comments = [];
+      let count = 0;
+      let previousId;
+
+      for (var i = data.length - 1; i >= 0; i--) {
+
+        // console.log(JSON.stringify(data[i]["user"]["screen_name"], null, ' '));
+
+        if ((data[i]["in_reply_to_status_id_str"]) === firstTweet || (data[i]["id_str"]) === firstTweet) {
+          if ((data[i]["user"]["screen_name"]) === screenName) {
+            count += 1;
+            replies[i] = data[i];
+          } else {
+            comments[i] = data[i];
+          }
+        } else if ((data[i]["in_reply_to_status_id_str"]) === previousId && (data[i]["user"]["screen_name"]) === screenName) {
+          replies[i] = data[i];
+        } else {
+          comments[i] = data[i];
+        }
+        previousId = data[i].id_str;
+      }
+      // for (var i = comments.length - 1; i >= 0; i--) {
+      //   if (comments[i] != undefined) {
+      //     console.log([i] + " Comments      " + comments[i]);
+      //   }
+      // }
+
+      //Json filter
+      // replies = JSON.stringify(replies); 
+      // console.log(replies);
+
+
+     
+
+
+      let ulContent = document.querySelector("div[class=modal-content]");
+      for (var i = (replies.length - 1); i >= 0; i--) {
+        if (replies[i] != undefined) {
+          // console.log([i] + " Replies      \n\n " + (JSON.stringify(replies[i]["full_text"], null, ' ')));
+          console.log([i] + " " + replies[i]["full_text"]);
+          console.log(replies[i]);
+
+          let pContent = document.createElement("p");
+          
+
+          pContent.innerHTML =  Autolinker.link(([i] + " " + replies[i]["full_text"]));
+          // pContent.innerHTML = ([i] + " " + replies[i]["full_text"]);
+          
+          ulContent.appendChild(pContent);
+          console.log(ulContent);
+        }
+      }
+
+    });
+
+  }
+}
+
+
+},{"autolinker":74,"twit":431}]},{},[445]);
